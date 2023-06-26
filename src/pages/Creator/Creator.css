@@ -1,0 +1,71 @@
+.creator{
+    padding: 100px 3%;
+}
+
+.creator .top{
+    margin: 0;
+}
+
+.creator .desc{
+    color: var(--white);
+    font-size: 14px;
+}
+
+.creator .user-info-top{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.creator .tags{
+    padding: 10px 0px 10px 50px;
+    display: flex;
+    gap: 10px;
+}
+
+.creator .infos{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 6px;
+    margin: 40px 0 ;
+    max-width: 200px;
+}
+
+.creator .info {
+    display: flex;
+    align-items: center;
+    column-gap: 6px;
+    font-size: 12px;
+    color : var(--grey);
+}
+
+.creator .info.location{
+    padding: 5px 10px;
+    background-color: var(--white-01);
+    width: fit-content;
+    border-radius: 3px;
+}
+
+.portfolio{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.pf-item{
+    width: 100%;
+    height: 40vw;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pf-item .media{
+    height: 100%;
+}
+
+.accordion-list{
+    margin: 40px 0 0;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}

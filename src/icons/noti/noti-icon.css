@@ -1,0 +1,8 @@
+.noti-icon{
+    width: 30px;
+    height: 30px;
+}
+
+.noti-icon path{
+    fill : var(--white-01);
+}

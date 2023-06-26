@@ -1,0 +1,28 @@
+{
+    "tags" : {
+        "influencer" : {
+            "en" : "influencer",
+            "fr" : "influenceur"
+        },
+        "streamer" : {
+            "en" : "streamer",
+            "fr" : "streamer"
+        },
+        "ugc" : {
+            "en" : "ugc",
+            "fr" : "créateur ugc"
+        },
+        "photographer" : {
+            "en" : "photographer",
+            "fr" : "photographe"
+        },
+        "videoeditor" : {
+            "en" : "video editor",
+            "fr" : "monteur vidéo"
+        },
+        "blogger" : {
+            "en" : "blogger",
+            "fr" : "blogueur"
+        }
+    }
+}

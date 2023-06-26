@@ -1,0 +1,41 @@
+.filter-settings{
+    position: fixed;
+    top: 40px;
+    padding: 10px;
+    background-color: var(--black);
+    border-radius: 5px;
+    color: var(--white);
+    font-size: 16px;
+    display: none;
+    max-width: 94%;
+    box-sizing: border-box;
+    z-index: 20;
+}
+
+.filter-settings#active{
+    display: block;
+}
+
+.filter-settings .input{
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    width: 100%;
+    box-sizing: border-box
+}
+
+.filter-settings .input label{
+    white-space: nowrap;
+}
+
+.filter-settings .input input{
+    background-color: var(--white-01);
+    border: 0;
+    outline: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    color: var(--white);
+    width: 100%;
+    max-width: 100%;
+}

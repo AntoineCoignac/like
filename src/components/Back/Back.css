@@ -1,0 +1,16 @@
+.back{
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+}
+
+.back:hover{
+    background-color: var(--white-01);
+}

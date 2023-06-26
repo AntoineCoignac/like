@@ -1,0 +1,8 @@
+.cross{
+    width: 14px;
+    height: 14px;
+}
+
+.cross path{
+    fill: var(--grey);
+}

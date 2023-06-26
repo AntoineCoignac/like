@@ -1,0 +1,39 @@
+.searchbar-ctn{
+    width: 100%;
+    position: relative;
+}
+
+.searchbar{
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: var(--white-01);
+    border: 0;
+    border-radius: 3px;
+    outline: 0;
+    color: white;
+}
+
+.searchbar::placeholder{
+    color: var(--grey);
+}
+
+.searchbar-ctn .delete{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    padding: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background-color: transparent;
+}
+
+.searchbar-ctn .delete.active{
+    display: flex;
+}

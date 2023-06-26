@@ -1,0 +1,54 @@
+[
+    {
+        "rateId": "1",
+        "userId":"1",
+        "tag":"blogger",
+        "title": "Rédaction d'article de voyage",
+        "price": 100,
+        "delay": 3,
+        "desc": "Bienvenue sur ma page dédiée à la rédaction d'articles de voyage passionnants ! Si vous recherchez des contenus captivants, informatifs et inspirants sur les destinations les plus exotiques du monde, vous êtes au bon endroit.\n\nEn tant que rédacteur spécialisé dans le domaine du voyage, je m'engage à vous offrir des articles de haute qualité qui transportent vos lecteurs vers de nouveaux horizons. Que vous ayez besoin de descriptions détaillées de lieux touristiques, de récits d'aventures palpitantes ou de conseils pratiques pour les voyageurs, je suis là pour vous aider.\n\nMon approche repose sur une recherche approfondie et une compréhension des cultures locales, des paysages époustouflants et des expériences uniques que chaque destination a à offrir. Je m'efforce de capturer l'essence de chaque lieu et de transmettre cette magie à travers mes mots.\n\nCe que vous pouvez attendre de ma prestation :\n1. Des articles bien structurés et optimisés pour les moteurs de recherche, afin de vous aider à attirer un trafic qualifié.\n2. Un ton engageant et authentique qui suscite l'envie de voyager chez vos lecteurs.\n3. Une grande attention aux détails et à l'exactitude des informations fournies.\n4. Un respect strict des délais convenus.\n\nJe suis également ouvert à des demandes spécifiques telles que des articles sur des thèmes particuliers, des comparaisons entre différentes destinations ou des guides de voyage complets.\n\nN'hésitez pas à me contacter pour discuter de vos besoins et de vos attentes. Ensemble, nous créerons des articles de voyage qui feront rêver vos lecteurs et les inciteront à explorer le monde.\n\nAlors, qu'attendez-vous ? Faites appel à mes services de rédaction d'articles de voyage dès maintenant et laissez-moi donner vie à vos idées de voyages les plus audacieuses !",
+        "cover" : {
+            "type" : "video",
+            "src" : "/img/post/video/video2.mp4"
+        }
+    },
+    {
+        "rateId": "2",
+        "userId": "2",
+        "tag": "photographer",
+        "title": "Shooting de vos/votre produit",
+        "price": 200,
+        "delay": 10,
+        "desc": "Bienvenue sur ma page dédiée au shooting photo de produits ! Si vous recherchez des images de qualité professionnelle qui mettent en valeur vos produits de manière attrayante et captivante, vous êtes au bon endroit.\n\nEn tant que photographe spécialisé dans la mise en scène et la photographie de produits, je m'engage à créer des images qui reflètent l'esthétique et la valeur de vos produits. Que vous ayez une boutique en ligne, que vous soyez un artisan ou un entrepreneur cherchant à promouvoir vos articles, je suis là pour vous aider à présenter vos produits sous leur meilleur jour.\n\nMa méthode de travail repose sur une attention méticuleuse aux détails, la recherche de l'éclairage parfait et l'utilisation de techniques de composition créatives. J'utilise un équipement de pointe et des logiciels de retouche professionnels pour garantir des images de haute qualité qui attirent l'attention de vos clients potentiels.\n\nCe que vous pouvez attendre de ma prestation :\n1. Une séance de shooting professionnelle qui mettra en valeur les caractéristiques uniques de vos produits.\n2. Une mise en scène soignée pour créer des images visuellement attrayantes et captivantes.\n3. Une retouche minutieuse pour optimiser les couleurs, la netteté et l'apparence générale de vos produits.\n4. Une livraison rapide des images finales, prêtes à être utilisées pour votre site web, vos réseaux sociaux ou vos supports marketing.\n\nJe suis également ouvert aux demandes spécifiques, telles que des prises de vue en studio ou en extérieur, des angles de vue particuliers ou des mises en scène spéciales pour correspondre à votre branding.\n\nN'hésitez pas à me contacter pour discuter de vos besoins et de vos attentes. Ensemble, nous créerons des images qui feront ressortir l'essence et la qualité de vos produits, aidant ainsi à attirer l'attention de vos clients et à stimuler vos ventes.\n\nAlors, qu'attendez-vous ? Faites appel à mes services de shooting photo de produits dès maintenant et laissez-moi transformer vos produits en véritables œuvres d'art visuelles !",
+        "cover" : {
+            "type" : "image",
+            "src" : "/img/post/image/image2.jpg"
+        }
+    },
+    {
+        "rateId": "3",
+        "userId": "3",
+        "tag": "videoeditor",
+        "title": "Montage et tournage vidéo 30s à 1min",
+        "price": 370,
+        "delay": 6,
+        "desc": "Que vous ayez besoin de vidéos promotionnelles, de démonstrations de produits, de témoignages clients ou de contenus pour les réseaux sociaux, je suis là pour vous aider.\n\nMon approche repose sur une compréhension approfondie de votre marque et de vos objectifs. Je travaillerai en étroite collaboration avec vous pour capturer les séquences, les images et les angles qui reflètent au mieux votre identité et votre vision.\n\nCe que vous pouvez attendre de ma prestation :\n1. Un tournage professionnel et bien orchestré pour obtenir les meilleures prises de vue.\n2. Un montage créatif et dynamique qui mettra en valeur les points forts de votre entreprise.\n3. L'ajout d'effets visuels, de transitions fluides et de musique adaptée pour renforcer l'impact de votre vidéo.\n4. Une livraison rapide de la vidéo finale, prête à être diffusée sur vos plateformes préférées.\n\nJe suis également ouvert aux demandes spécifiques, telles que des vidéos avec des acteurs, des animations graphiques personnalisées ou des formats spéciaux pour répondre à vos besoins spécifiques.\n\nN'hésitez pas à me contacter pour discuter de vos besoins et de vos attentes. Ensemble, nous créerons des vidéos percutantes qui attireront l'attention de votre public cible et boosteront votre présence en ligne.\n\nAlors, qu'attendez-vous ? Faites appel à mes services de montage et de tournage vidéo de 30 secondes à 1 minute dès maintenant et laissez-moi donner vie à votre vision à travers des vidéos de qualité professionnelle !",
+        "cover" : {
+            "type" : "video",
+            "src" : "/img/post/video/video1.mp4"
+        }
+    },
+    {
+        "rateId": "4",
+        "userId": "1",
+        "tag": "blogger",
+        "title": "Rédaction d'article de cuisine",
+        "price": 280,
+        "delay": 1,
+        "desc": "Vous recherchez des contenus culinaires alléchants, instructifs et inspirants, vous êtes au bon endroit.\n\nEn tant que rédacteur spécialisé dans le domaine de la cuisine, je m'engage à vous offrir des articles de haute qualité qui éveillent les papilles de vos lecteurs. Que vous ayez besoin de recettes détaillées, de conseils culinaires, d'informations sur les techniques de cuisine ou d'articles sur les tendances gastronomiques, je suis là pour vous aider.\n\nMon approche repose sur une passion pour la gastronomie et une connaissance approfondie des ingrédients, des saveurs et des techniques de préparation. Je m'efforce de rendre chaque article informatif, engageant et appétissant.\n\nCe que vous pouvez attendre de ma prestation :\n1. Des articles bien structurés et faciles à suivre, avec des instructions claires.\n2. Des descriptions détaillées des ingrédients, des techniques et des étapes de préparation.\n3. Des conseils et astuces pour améliorer les compétences culinaires.\n4. Un respect strict des délais convenus.\n\nJe suis également ouvert à des demandes spécifiques telles que des articles sur des régimes alimentaires particuliers, des recettes internationales ou des articles sur les dernières tendances culinaires.\n\nN'hésitez pas à me contacter pour discuter de vos besoins et de vos attentes. Ensemble, nous créerons des articles de cuisine qui mettront l'eau à la bouche de vos lecteurs et les inspireront à découvrir de nouvelles saveurs.\n\nAlors, qu'attendez-vous ? Faites appel à mes services de rédaction d'articles de cuisine dès maintenant et laissez-moi donner vie à vos idées culinaires les plus délicieuses !",
+        "cover" : {
+            "type" : "video",
+            "src" : "/img/post/video/video7.mp4"
+        }
+    }
+]

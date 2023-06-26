@@ -1,0 +1,11 @@
+.chat-top{
+    width: 100%;
+}
+
+.chat-top .profile{
+    width: fit-content;
+}
+
+.chat-top .profile:hover{
+    background-color: var(--white-01);
+}

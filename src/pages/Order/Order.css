@@ -1,0 +1,42 @@
+.order-top span.title{
+    color : var(--white);
+    font-size: 14px;
+    max-width: 100%;
+    text-overflow: initial;
+    white-space:initial;
+}
+
+.order-top{
+    width: 100%;
+    display: block;
+}
+
+.order-info{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 40px 3% 40px;
+    color : var(--white)
+}
+
+.order-info-top{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+
+.order-info .link{
+    text-decoration: underline;
+    appearance: none;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    color: var(--grey);
+    margin-top: 40px;
+}
+
+.order-info .profile:hover{
+    background-color: var(--white-01);
+}

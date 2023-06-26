@@ -1,0 +1,65 @@
+.chat{
+    width: 100%;
+    padding: 0 3% 20px;
+    box-sizing: border-box;
+    height: 60vh;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.chat.fullscreen{
+    height: calc(100vh - 82px);
+    max-height: calc(100vh - 82px);
+}
+
+.send{
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.send input{
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: var(--white-01);
+    border: 0;
+    border-radius: 3px;
+    outline: 0;
+    color: white;
+}
+
+.send input::placeholder{
+    color: var(--grey);
+}
+
+.send-btn{
+    position: absolute;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+}
+
+.messages{
+    width: 100%;
+    padding: 0 0 40px;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: scroll;
+    -webkit-mask-image: linear-gradient(to top, transparent 0, black 40px);
+    mask-image: linear-gradient(to top, transparent 0, black 40px);
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    border-top: 1px solid var(--white-01);
+}

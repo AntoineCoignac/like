@@ -1,0 +1,12 @@
+.send-icon {
+    width: 20px;
+    height: 20px;
+}
+
+button:disabled .send-icon path {
+    fill: var(--grey);
+}
+
+.send-icon path{
+    fill: var(--white);
+}

@@ -1,0 +1,20 @@
+.navwork{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 3%;
+    top: 80px;
+    position: fixed;
+    display: flex;
+    column-gap: calc(20px + 1%);
+    font-size: 14px;
+}
+
+.navwork a{
+    color : var(--grey);
+    font-weight: 500;
+    padding: 10px 0;
+}
+
+.navwork a.active{
+    color : var(--white);
+}
