@@ -40,7 +40,6 @@ function Card({ rateId, userId }) {
                     </div>
                     <div className="rate">
                         <div className="rate-info">
-                            <button className="filter" id={rate.tag}>{translations.tags[rate.tag].fr}</button>
                             <span className="title">{rate.title}</span>
                             <span className="price">{rate.price} €</span>
                         </div>
@@ -52,6 +51,7 @@ function Card({ rateId, userId }) {
                                 </React.Fragment>
                             ))}
                         </p>
+                        <button className="filter" id={rate.tag}>{translations.tags[rate.tag].fr}</button>
                         <p className="delay">Livraison : {rate.delay} jour{rate.delay > 1 ? "s" : ""}</p>
                     </div>
                 </div>

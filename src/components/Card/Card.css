@@ -105,7 +105,11 @@
 
 .profile span{
     display: block;
-    min-width: fit-content;
+    width: fit-content;
+}
+
+.txt .profile:hover{
+    background-color: var(--white-01);
 }
 
 .rate{
