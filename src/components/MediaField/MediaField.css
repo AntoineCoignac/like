@@ -1,0 +1,30 @@
+.media-field{
+    width: 100%;
+    position: relative;
+}
+
+.media-field img, .media-field video, .media-field input{
+    width: 100%;
+}
+
+.media-field img, .media-field video{
+    border-radius: 5px;
+}
+
+.media-field .delete {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    appearance: none;
+    border: 0;
+    border-radius: 3px;
+    background-color: var(--black);
+    width: 32px;
+    height: 32px;
+    font-size: 24px;
+    font-weight: 200;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
