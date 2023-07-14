@@ -2,13 +2,8 @@
     padding: 100px 3%;
 }
 
-.creator .top{
-    margin: 0;
-}
-
 .creator .desc{
     color: var(--white);
-    font-size: 14px;
 }
 
 .creator .user-info-top{
@@ -35,7 +30,6 @@
     display: flex;
     align-items: center;
     column-gap: 6px;
-    font-size: 12px;
     color : var(--grey);
 }
 

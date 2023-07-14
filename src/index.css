@@ -2,6 +2,11 @@
 
 *{
   font-family: "Poppins";
+  margin : 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+  line-height: 140%;
 }
 
 body {
@@ -21,12 +26,14 @@ code {
 
 :root{
   --font : "Poppins";
-  --black : #1f1f1f;
-  --black-filter : rgba(30, 30, 30, 0.8);
+  --black : #0b0b0b;
+  --dark : #1f1f1f;
+  --black-filter : rgba(30, 30, 30, 0.5);
   --black-filter-01 : rgba(30, 30, 30, 0.1);
   --white : #F8F8F8;
   --white-01 : rgba(255, 255, 255, 0.1);
   --white-005 : rgba(255, 255, 255, 0.05);
   --red : #D91A3D;
+  --blue : #29B9F2;
   --grey : #A7A7A7;
 }

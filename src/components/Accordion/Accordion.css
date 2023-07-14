@@ -3,17 +3,12 @@
     color: var(--white);
 }
 
-.accordion .title{
-    font-size: 14px;
-}
-
 .accordion-header{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 20px;
-    box-sizing: border-box;
     background-color: var(--white-01);
     border-radius: 10px;
 }
@@ -23,6 +18,5 @@
 }
 
 .accordion-content{
-    font-size: 14px;
     padding: 20px 0;
 }

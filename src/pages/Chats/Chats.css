@@ -1,6 +1,5 @@
 .chats-ctn{
     padding: 160px 3% 100px;
-    box-sizing: border-box;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr; 
@@ -8,22 +7,20 @@
 }
 
 .chat-item {
-    box-sizing: border-box;
     width: 100%;
     display: flex;
     align-items: center;
     column-gap: 20px;
     padding: 10px 20px 10px 10px ;
-    background-color: var(--white-01);
+    background-color: var(--dark);
     border-radius: 10px;
 }
 
 .chat-item:hover{
-    background-color: var(--white-005);
+    background-color: var(--white-01);
 }
 
 .chat-item p {
-    font-size: 12px;
     color : var(--grey);
     overflow: hidden;
     display: -webkit-box;

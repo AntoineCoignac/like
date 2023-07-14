@@ -1,15 +1,13 @@
 .filters{
     display: flex;
     align-items: center;
-    box-sizing: border-box;
-    padding: 0 0 10px 3%;
+    padding: 0 0 10px 20px;
     position: fixed;
     top: 80px;
     max-width: 100%;
     overflow-x: initial;
     overflow-y: visible;
     z-index: 10;
-    filter: drop-shadow(0 0 2rem var(--black-filter));
 }
 
 .filters button:hover{
@@ -36,15 +34,19 @@
     border: 1px solid var(--white);
     background-color: transparent;
     color: var(--white);
-    font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
 }
 
 .filter.active{
     background-color: var(--red);
     border-color: var(--red);
+}
+
+.border-icon-btn{
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
 }

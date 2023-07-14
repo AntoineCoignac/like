@@ -1,5 +1,4 @@
-.card{
-    box-sizing: border-box;
+.card {
     width: 100%;
     height: 100%;
     scroll-snap-align: center;
@@ -7,46 +6,7 @@
     position: relative;
 }
 
-.background{
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-    z-index: 0;
-}
-
-.bg-filter{
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    backdrop-filter: blur(12px);
-    background-color: var(--black-filter);
-}
-
-.scrollable{
-    box-sizing: border-box;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    padding-top: calc(100vh - 175px);
-    overflow-y: scroll;
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-}
-
-.media-ctn{
+.media-ctn {
     overflow: hidden;
     width: 100%;
     height: 100vh;
@@ -60,97 +20,85 @@
     align-items: center;
 }
 
-.scrollable::before{
-    z-index: 10;
-    content: "";
-    top: 0;
-    left:0;
-    position: fixed;
-    width: 100%;
-    height: 100px;
-    background: linear-gradient(0deg, transparent 0%, var(--black-filter-01) 100%);
+.card-content {
+    position: absolute;
+    z-index: 2;
+    bottom: 30px;
+    padding: 0 20px;
+    color: var(--white);
 }
 
-.txt{
-    box-sizing: border-box;
-    z-index: 2;
-    width: 100%;
+.card-content a:not(.btn) {
+    color: var(--white);
+}
+
+.card-content .user {
     display: flex;
     flex-direction: column;
-    color: var(--white);
-    padding: 0 2% 30px;
-    background: linear-gradient(180deg, transparent 0px, var(--black-filter) 200px);
+    row-gap: 26px;
+    margin-bottom: 26px;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
 }
 
-.top{
-    margin-top: 30px;
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--white);
-}
-
-.profile{
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    color: var(--white);
-    column-gap: 10px;
-    padding: 5px 10px;
-    border-radius: 3px;
+.card-content .user a {
     width: fit-content;
-}
-
-.profile span{
     display: block;
-    width: fit-content;
 }
 
-.txt .profile:hover{
-    background-color: var(--white-01);
-}
-
-.rate{
-    box-sizing: border-box;
-    width: 100%;
-}
-
-.rate-info{
-    padding: 10px 0;
-    box-sizing: border-box;
-    width: 100%;
+.card-content>div:first-child {
     display: flex;
+    align-items: flex-end;
     justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--white-01);
-    column-gap: 10px;
+    gap: 50px;
 }
 
-.title{
-    font-size: 12px;
-    font-weight: 500;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.card-content .title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
+}
+
+.card-content .desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    width: 100%;
+    text-overflow: ellipsis;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
 }
 
-.price{
-    font-weight: 500;
-    white-space: nowrap;
+.card-content .infos {
+    padding: 16px 0;
 }
 
-.desc{
-    font-size: 12px;
+.card-content .info {
+    background-color: var(--black-filter);
 }
 
-.delay{
-    font-size: 12px;
-    border-radius: 3px;
-    background-color: var(--white-01);
-    width: fit-content;
-    padding: 5px 10px;
-    color: var(--white);
+@media screen and (min-width : 600px) {
+    .card {
+        height: fit-content;
+        padding: 20px;
+        display: flex;
+        align-items: flex-end;
+        gap: 26px;
+    }
+
+    .media-ctn {
+        min-width: calc(180px + 4.5vw);
+        width: calc(180px + 4.5vw);
+        height: calc(320px + 8vw);
+        position: static;
+        z-index: 1;
+        border-radius: 10px;
+    }
+
+    .card-content {
+        position: static;
+        padding: 0;
+    }
+
+    .card-content .btn{
+        width: fit-content;
+    }
 }

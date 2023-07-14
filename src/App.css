@@ -48,7 +48,6 @@ a{
   border-radius: 50%;
   background-color: transparent;
   border: 1px solid var(--white);
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,17 +56,15 @@ a{
 
 .btn{
   padding: 0 15px;
-  font-size: 14px;
   min-height: 36px;
   line-height: 1em;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--black);
   background-color: var(--white);
   border-radius: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  filter: drop-shadow(0 0 2rem var(--black-filter));
 }
 
 .btn.absolute{
@@ -87,9 +84,8 @@ a{
 .top-bar{
   max-width: 100%;
   width: 100%;
-  box-sizing: border-box;
   height: fit-content;
-  padding: 20px 3%;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -101,6 +97,19 @@ a{
   z-index: 1000;
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
+}
+
+.infos{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.info{
+  padding: 3px 10px;
+  border-radius: 3px;
+  background-color: var(--dark);
 }
 
 /* ===== Scrollbar CSS ===== */

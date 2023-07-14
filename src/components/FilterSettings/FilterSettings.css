@@ -1,14 +1,12 @@
 .filter-settings{
-    position: fixed;
+    position: absolute;
     top: 40px;
     padding: 10px;
     background-color: var(--black);
     border-radius: 5px;
     color: var(--white);
-    font-size: 16px;
     display: none;
     max-width: 94%;
-    box-sizing: border-box;
     z-index: 20;
 }
 
@@ -30,7 +28,7 @@
 }
 
 .filter-settings .input input{
-    background-color: var(--white-01);
+    background-color: var(--dark);
     border: 0;
     outline: none;
     border-radius: 3px;

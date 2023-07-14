@@ -6,7 +6,6 @@
     position: fixed;
     display: flex;
     column-gap: calc(20px + 1%);
-    font-size: 14px;
 }
 
 .navwork a{

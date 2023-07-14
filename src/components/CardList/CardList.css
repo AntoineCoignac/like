@@ -1,42 +1,60 @@
-.card-list{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    scroll-snap-type: x mandatory;
-    overflow: auto;
-    flex: none;
-    flex-flow: row nowrap;
+.card-list {
+  width: 100%;
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+  overflow: auto;
 }
 
 /* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  .card-list:hover {
-    scrollbar-width: auto;
-    scrollbar-color: transparent transparent;
-  }
+/* Firefox */
+.card-list:hover {
+  scrollbar-width: auto;
+  scrollbar-color: transparent transparent;
+}
 
-  .card-list:hover {
-    scrollbar-width: auto;
-    scrollbar-color: transparent transparent;
-  }
+.card-list:hover {
+  scrollbar-width: auto;
+  scrollbar-color: transparent transparent;
+}
 
-  /* Chrome, Edge, and Safari */
-  .card-list::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
+/* Chrome, Edge, and Safari */
+.card-list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
 
-  .card-list::-webkit-scrollbar-track {
-    background: transparent;
-  }
+.card-list::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  .card-list::-webkit-scrollbar-thumb {
-    scrollbar-width: auto;
-    scrollbar-color: transparent transparent;
-  }
+.card-list::-webkit-scrollbar-thumb {
+  scrollbar-width: auto;
+  scrollbar-color: transparent transparent;
+}
 
-  .card-list:hover::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    border-radius: 10px;
-    border: 3px solid transparent;
+.card-list:hover::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+  border: 3px solid transparent;
+}
+
+@media screen and (min-width : 600px){
+  .card-list {
+    height: fit-content;
+    scroll-snap-type:none;
+    padding-top: 120px;
   }
+}
+
+@media screen and (min-width : 1240px){
+  .card-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (min-width : 1880px){
+  .card-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

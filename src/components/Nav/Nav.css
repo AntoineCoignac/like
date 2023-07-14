@@ -5,9 +5,9 @@
     align-items: center;
     justify-content: space-between;
     position: fixed;
-    padding: 20px 3%;
+    padding: 20px;
     z-index: 100;
-    filter: drop-shadow(0 0 2rem var(--black-filter));
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
 }
 
 .nav-list{

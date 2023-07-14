@@ -1,0 +1,23 @@
+.navsearch{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 20px;
+    gap: 10px;
+}
+
+.navsearch button{
+    padding: 10px 0;
+    background: transparent;
+    border: 0;
+    color: var(--white);
+    background-color: var(--white-005);
+    opacity: 0.3;
+    border-radius: 3px;
+
+}
+
+.navsearch button.active{
+    opacity: 1;
+    background-color: var(--dark);
+}

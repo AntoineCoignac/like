@@ -1,5 +1,46 @@
 .media{
     width: 100%;
-    height: auto;
+    height: 100%;
+    max-height: 100vh;
     object-fit: cover;
 }
+.media::-webkit-media-controls-panel {
+    background: transparent;
+    height: 0px;
+    overflow: hidden;
+}
+
+.media::-webkit-media-controls-fullscreen-button {
+    display: none;
+}
+
+.media::-webkit-media-controls-play-button {
+    display: none;
+}
+
+.media::-webkit-media-controls-timeline {
+    display: block;
+    position: absolute;
+    width: calc(100% - 40px);
+    padding: 0;
+    margin: 0;
+    bottom: 10px;
+    left: 20px;
+}
+.media::-webkit-media-controls-current-time-display{
+    display: none;
+}
+.media::-webkit-media-controls-time-remaining-display {
+    display: none;
+}
+.media::-webkit-media-controls-mute-button {
+    display: none;
+}
+.media::-webkit-media-controls-toggle-closed-captions-button {
+    display: none;
+}
+.media::-webkit-media-controls-volume-slider {
+    display: none;
+}
+
+

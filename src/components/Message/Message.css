@@ -1,22 +1,19 @@
 .message{
     width: 550px;
     max-width: 70%;
-    box-sizing: border-box;
     margin : 20px 0 0 0;
     padding: 20px;
     border-radius: 10px;
-    background-color: var(--white-01);
+    background-color: var(--dark);
     margin-left: auto;
 }
 
 .message.received{
     margin-left: 0;
     background-color: transparent;
-    border: 1px solid var(--white-01);
+    border: 1px solid var(--dark);
 }
 
 .message p{
-    margin: 0;
     color: var(--white);
-    font-size: 14px;
 }
