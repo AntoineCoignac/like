@@ -14,6 +14,7 @@ import TwitterIcon from '../../icons/social/TwitterIcon';
 import TiktokIcon from '../../icons/social/TiktokIcon';
 import Media from '../../components/Media/Media';
 import Accordion from '../../components/Accordion/Accordion';
+import Like from '../../icons/like/Like';
 
 function Creator() {
   let { users, rates, translations } = useContext(GlobalContext);
@@ -25,91 +26,81 @@ function Creator() {
 
   return (
     <>
-      <Nav />
-      <div className="creator">
-        <Link className='btn fixed' to={`/work/chat/${user.userId}`}>Contacter</Link>
+      <div className="top-bar">
+        <Back />
+        <p className="name">{user.username}</p>
+      </div>
+      <div className="profile-ctn">
         <div className="top">
-          <Back />
-          <div className="user-info-top">
-            <div to={`/creator/${user.userId}`} className="profile">
-              <ProfilePicture photo={user.pp} badge={user.badge} />
-              <span>{user.username}</span>
-            </div>
-            <LikeCounter nbr={user.like} />
-          </div>
-
-        </div>
-        <div className="tags">
-        { 
-          user.tags.map(tag => (
-            <button key={tag} className="filter">{translations.tags[tag].fr}</button>
-          )
-          )
-        }
-        </div>
-        <p className="desc">
-          {user.desc}
-        </p>
-        <div className="info location">
-            <LocationIcon/>
-            <span>{user.location}</span>
-          </div>
-        <div className="infos">
-          {
-            user.instagram !== "" ? (
-              <div key={"insta"} className="info">
-                <InstagramIcon/>
-                <span>{user.instagram}</span>
-              </div>
-            ) : null
-          }
-          {
-            user.youtube !== "" ? (
-              <div key={"ytb"} className="info">
-                <YoutubeIcon/>
-                <span>{user.youtube}</span>
-              </div>
-            ) : null
-          }
-          {
-            user.twitter !== "" ? (
-              <div key={"twitter"} className="info">
-                <TwitterIcon/>
-                <span>{user.twitter}</span>
-              </div>
-            ) : null
-          }
-          {
-            user.tiktok !== "" ? (
-              <div key={"tiktok"} className="info">
-                <TiktokIcon/>
-                <span>{user.tiktok}</span>
-              </div>
-            ) : null
-          }
-        </div>
-        <div className="portfolio">
+          <ProfilePicture photo={user.pp} badge={user.badge} />
+          <p className="name">{user.username}</p>
+          <Link className='btn' to={`/work/chat/${user.userId}`}>Contacter {user.username}</Link>
+          <p className="desc">
+            {user.desc}
+          </p>
+          <div className="infos">
+            <span className="info">
+              <Like/>
+              <span>{user.like}</span>
+            </span>
+            <span className="info">
+              <LocationIcon />
+              <span>{user.location}</span>
+            </span>
             {
-              user.gallery.map(media=>(
-                <div className="pf-item">
-                  <Media key={media.src} type={media.type} src={media.src}/>
+              user.instagram !== "" ? (
+                <span key={"insta"} className="info">
+                  <InstagramIcon />
+                  <span>{user.instagram}</span>
+                </span>
+              ) : null
+            }
+            {
+              user.youtube !== "" ? (
+                <span key={"ytb"} className="info">
+                  <YoutubeIcon />
+                  <span>{user.youtube}</span>
+                </span>
+              ) : null
+            }
+            {
+              user.twitter !== "" ? (
+                <span key={"twitter"} className="info">
+                  <TwitterIcon />
+                  <span>{user.twitter}</span>
+                </span>
+              ) : null
+            }
+            {
+              user.tiktok !== "" ? (
+                <span key={"tiktok"} className="info">
+                  <TiktokIcon />
+                  <span>{user.tiktok}</span>
+                </span>
+              ) : null
+            }
+          </div>
+        </div>
+        <div className="section">
+          <span className='section-title'>Prestations</span>
+          <div className="gallery">
+            {
+              userRates.map(rate => (
+                <div className='gig-result'>
+                  <Media key={rate.cover.src} type={rate.cover.type} src={rate.cover.src} />
+                  <Link to={`gig/123`} className="gig">
+                    <p className="title">{rate.title}</p>
+                    <p className='desc'>{rate.desc}</p>
+                    <div className="infos">
+                      <span className="info">{rate.price}€</span>
+                      <span className="info">{rate.delay} jours</span>
+                      <span className="info">{rate.tag}</span>
+                    </div>
+                  </Link>
                 </div>
               ))
             }
-            {
-              userRates.map(rate=>(
-                <div className="pf-item">
-                  <Media key={rate.cover.src} type={rate.cover.type} src={rate.cover.src}/>
-                </div>
-              ))
-            }
-        </div>
-        <div className="accordion-list">
-          {
-            userRates.map(rate => (
-              <Accordion title={rate.title} price={rate.price} content={rate.desc} />
-            ))
-          }
+          </div>
         </div>
       </div>
     </>

@@ -20,7 +20,7 @@ function Chat() {
         <div className='chat-top'>
           <Link to={`/creator/${user.userId}`} className="profile">
               <ProfilePicture photo={user.pp} badge={user.badge}/>
-              <span>{user.username}</span>
+              <p className='name'>{user.username}</p>
           </Link>
         </div>
       </div>

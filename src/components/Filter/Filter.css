@@ -1,52 +1,52 @@
 .filters{
     display: flex;
     align-items: center;
-    padding: 0 0 10px 20px;
+    padding: 0px 20px 10px;
     position: fixed;
     top: 80px;
-    max-width: 100%;
+    width: 100%;
     overflow-x: initial;
     overflow-y: visible;
     z-index: 10;
 }
 
-.filters button:hover{
-    opacity: 0.9;
-}
-
 .filters-list{
-    padding: 0 8px;
+    padding: 0 20px 0 0;
+    margin-left: 8px;
     display: flex;
     align-items: center;
-    column-gap: 8px;
+    column-gap: 5px;
     width: 100%;
     overflow-x: scroll;
-    column-gap: 8px;
-    -webkit-mask-image: linear-gradient(to right, transparent 0, black 8px);
-    mask-image: linear-gradient(to right, transparent 0, black 8px);
+    border-radius: 3px;
 }
 
 .filter{
     white-space: nowrap;
-    padding: 0 10px 1px;
-    height: 24px;
-    border-radius: 12px;
-    border: 1px solid var(--white);
-    background-color: transparent;
+    padding: 3px 10px;
+    border-radius: 3px;
+    border: 0;
+    background-color: var(--black-filter);
     color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
 }
 
 .filter.active{
-    background-color: var(--red);
-    border-color: var(--red);
+    background-color: var(--white);
+    color: var(--black);
 }
 
 .border-icon-btn{
     filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
+}
+
+@media screen and (min-width : 600px) {
+    .filters{
+        background-color: var(--black);
+    }
+    .filter{
+        background-color: var(--dark);
+    }
 }

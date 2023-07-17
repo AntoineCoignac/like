@@ -1,23 +1,21 @@
 .notification{
     box-sizing: border-box;
-    width: 550px;
     display: flex;
-    column-gap: 40px;
-    padding: 20px 10px;
+    column-gap: 26px;
+    padding: 20px 0;
     color: var(--white);
-    max-width: 100%;
-    border-bottom: 1px solid var(--white-01);
+    width: 100%;
+    border-top: 1px solid var(--dark);
 }
 
 .notification:hover .noti-icon path{
     fill: var(--white);
 }
 
-.noti-content p{
-    margin: 10px 0 0 0;
+.noti-icon-ctn {
+    margin: 0 10px;
 }
 
-
-.noti-content p span{
-    font-weight: 500;
+.noti-content p{
+    margin: 10px 0 0 0;
 }

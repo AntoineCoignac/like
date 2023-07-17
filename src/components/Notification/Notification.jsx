@@ -16,7 +16,7 @@ function Notification({ type, from, order }) {
         </div>
         <div className='noti-content'>
           <ProfilePicture photo={"/img/pp/user4.jpg"} badge='premium' />
-          <p><span>Test</span> a liké votre prestation.</p>
+          <p><span className='name'>Test</span> a liké votre prestation.</p>
         </div>
       </Link>
     )
@@ -28,7 +28,7 @@ function Notification({ type, from, order }) {
         </div>
         <div className='noti-content'>
           <ProfilePicture photo={"/img/pp/user5.jpg"} badge=''/>
-          <p><span>Test</span> vous a envoyé un message.</p>
+          <p><span className='name'>Test</span> vous a envoyé un message.</p>
         </div>
       </Link>
     )
@@ -40,7 +40,7 @@ function Notification({ type, from, order }) {
         </div>
         <div className='noti-content'>
           <ProfilePicture photo={"/img/pp/user6.jpg"} badge='starter'/>
-          <p>Il vous reste 1 jour pour rendre la commande de <span>Test</span>.</p>
+          <p>Il vous reste 1 jour pour rendre la commande de <span className='name'>Test</span>.</p>
         </div>
       </Link>
     )
@@ -52,7 +52,7 @@ function Notification({ type, from, order }) {
         </div>
         <div className='noti-content'>
           <ProfilePicture photo={"/img/pp/user7.jpg"} badge='pro' />
-          <p><span>Test</span> a commandé.</p>
+          <p><span className='name'>Test</span> a commandé.</p>
         </div>
       </Link>
 

@@ -35,3 +35,56 @@
 .searchbar-ctn .delete.active{
     display: flex;
 }
+
+.gigs{
+    padding: 20px;
+}
+
+.creators{
+    padding: 20px;
+}
+
+.gig-result{
+    width: 100%;
+    padding: 20px 0;
+    position: relative;
+    border-top: 1px solid var(--dark);
+}
+
+.gig-result .infos{
+    padding: 16px 0;
+}
+
+.gig-result .user{
+    flex-direction: row;
+    align-items: center;
+    column-gap: 26px;
+    margin: 0;
+}
+
+.gig-result .btn{
+    width: fit-content;
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+}
+
+.creator-result{
+    padding: 20px 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--dark);
+}
+
+.profile{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.name{
+    color: var(--white);
+    font-weight: 600;
+}

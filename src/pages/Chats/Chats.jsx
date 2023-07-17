@@ -18,11 +18,11 @@ function Chats() {
         {
           users.map(user => (
             <Link className='chat-item' to={`/work/chat/${user.userId}`}>
-              <div to={`/creator/${user.userId}`} className="profile">
-                  <ProfilePicture photo={user.pp} badge={user.badge} />
-                  <span>{user.username}</span>
+              <ProfilePicture photo={user.pp} badge={user.badge} />
+              <div>
+                <p className="name">{user.username}</p>
+                <p className='last-message'>{messages[Math.floor(Math.random() * messages.length)]}</p>
               </div>
-              <p>{messages[Math.floor(Math.random() * messages.length)]}</p>
             </Link>
           ))
         }

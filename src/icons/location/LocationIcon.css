@@ -4,5 +4,5 @@
 }
 
 .location-icon path {
-    fill :  var(--grey);
+    stroke :  var(--white);
 }

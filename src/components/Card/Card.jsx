@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import Media from '../Media/Media';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import LikeCounter from '../LikeCounter/LikeCounter';
@@ -12,10 +12,46 @@ function Card({ rateId, userId }) {
     let rate = rates.find(rate => rate.rateId === rateId);
     let cardUser = users.find(aUser => aUser.userId === userId);
 
+    const [play, setPlay] = useState(false);
+    const cardRef = useRef(null);
+
+    useEffect(() => {
+        const options = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.8, // Définir la limite à 80% de la visibilité
+        };
+
+        const handleIntersection = (entries) => {
+            entries.forEach((entry) => {
+                if (entry.target === cardRef.current) {
+                    if (entry.intersectionRatio >= 0.8) {
+                        setPlay(true); // Le composant est visible à plus de 80%
+                    } else {
+                        setPlay(false); // Le composant n'est pas suffisamment visible
+                    }
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(handleIntersection, options);
+        if (cardRef.current) {
+            observer.observe(cardRef.current);
+        }
+
+        return () => {
+            if (cardRef.current) {
+                observer.unobserve(cardRef.current);
+            }
+        };
+    }, []);
+
+    const windowWidth = window.innerWidth;
+
     return (
-        <div className="card">
+        <div className="card" ref={cardRef}>
             <div className="media-ctn">
-                <Media type={rate.cover.type} src={rate.cover.src} />
+                <Media type={rate.cover.type} src={rate.cover.src} play={windowWidth < 600 ? play : false} />
             </div>
             <div className="card-content">
                 <div>

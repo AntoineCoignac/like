@@ -8,7 +8,7 @@ function Home() {
   let {rates} = useContext(GlobalContext);
   return (
     <>
-        <Nav />
+        <Nav transparent={true} />
         <Filter />
         <CardList rates={rates}/>
     </>

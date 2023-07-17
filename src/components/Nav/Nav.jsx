@@ -7,9 +7,9 @@ import WorkIcon from '../../icons/nav/WorkIcon';
 import "./Nav.css";
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
-function Nav() {
+function Nav({transparent=false}) {
   return (
-    <nav className='nav'>
+    <nav className={`nav ${transparent ? 'transparent' : ""}`}>
         <a href="/" className='logo-item'>
           <Logo/>
         </a>

@@ -4,4 +4,6 @@
     align-items: center;
     column-gap: 6px;
     width: 32px;
+    color: var(--white);
+    font-weight: 500;
 }

@@ -15,6 +15,9 @@ import Chat from './pages/Chat/Chat';
 import Creator from './pages/Creator/Creator';
 import messages from "./assets/messages.json";
 import EditAccount from './pages/EditAccount/EditAccount';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Register from './pages/Log/Register/Register';
+import Login from './pages/Log/Login/Login';
 
 export const GlobalContext = createContext();
 
@@ -34,6 +37,9 @@ function App() {
         <Route path="/work/chat/:userId" Component={Chat}/>
         <Route path="/creator/:id" Component={Creator}/>
         <Route path="/me" Component={EditAccount}/>
+        <Route path="/dashboard" Component={Dashboard}/>
+        <Route path="/register" Component={Register}/>
+        <Route path="/login" Component={Login}/>
       </Routes>
       </GlobalContext.Provider>
     </Router>

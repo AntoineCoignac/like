@@ -51,7 +51,7 @@ function EditCreator() {
                 <MediaField/> 
               </div>
           </div>
-          <button type="submit">Enregister les modifications</button>
+          <button className='btn' type="submit">Enregister les modifications</button>
         </form>
   )
 }
