@@ -1,17 +1,47 @@
-
+import newRequest from "../../../utils/newRequest"
 import { Link } from 'react-router-dom'
 import Logo from '../../../icons/logo/Logo'
 import "../Log.css";
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const [user, setUser] = useState({
+    username: "",
+    name: "",
+    lastname: "",
+    email: "",
+    password: "",
+    isSeller: true,
+  });
   const [type, setType] = useState("creator");
 
   const handleClick = (event) => {
     const elementId = event.target.id;
     setType(elementId);
+    setUser((prev) => {
+      return { ...prev, isSeller: (elementId === "creator") };
+    });
     console.log(elementId);
   }
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setUser((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await newRequest.post("/auth/register", user);
+      navigate("/login")
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className='log'>
@@ -28,46 +58,46 @@ function Register() {
           <button className={type === "brand" ? "active" : ""} onClick={handleClick} id='brand'>Entreprise</button>
         </div>
         <div className={`log-forms ${type}`} >
-          <form className='form' action="">
+          <form onSubmit={handleSubmit} className='form'>
             <div className="field">
-              <label htmlFor="">Prénom</label>
-              <input type="text" placeholder='ex : Jean' />
+              <label htmlFor="name">Prénom</label>
+              <input onChange={handleChange} name='name' type="text" placeholder='ex : Jean' />
             </div>
             <div className="field">
-              <label htmlFor="">Nom</label>
-              <input type="text" placeholder='ex : Dupont' />
+              <label htmlFor="lastname">Nom</label>
+              <input onChange={handleChange} name='lastname' type="text" placeholder='ex : Dupont' />
             </div>
             <div className="field">
-              <label htmlFor="">Identifiant</label>
-              <input type="text" placeholder='ex : jeandupont' />
+              <label htmlFor="username">Identifiant</label>
+              <input onChange={handleChange} name="username" type="text" placeholder='ex : jeandupont' />
             </div>
             <div className="field">
-              <label htmlFor="">Email</label>
-              <input type="email" placeholder='ex : jeandupont@mail.com' />
+              <label htmlFor="email">Email</label>
+              <input onChange={handleChange} name='email' type="email" placeholder='ex : jeandupont@mail.com' />
             </div>
             <div className="field">
-              <label htmlFor="">Mot de passe</label>
-              <input type="password" placeholder='8 caractères minimum' />
+              <label htmlFor="password">Mot de passe</label>
+              <input onChange={handleChange} name='password' type="password" placeholder='8 caractères minimum' />
             </div>
             <button className='btn' type="submit">S'inscrire</button>
             <Link to="/login" className='link'>J'ai déjà un compte</Link>
           </form>
-          <form className='form' action="">
+          <form onSubmit={handleSubmit} className='form'>
             <div className="field">
-              <label htmlFor="">Dénomination sociale</label>
-              <input type="text" placeholder='ex : Like' />
+              <label htmlFor="name">Dénomination sociale</label>
+              <input onChange={handleChange} name='name' type="text" placeholder='ex : Like' />
             </div>
             <div className="field">
-              <label htmlFor="">Identifiant</label>
-              <input type="text" placeholder='ex : likecompany' />
+              <label htmlFor="username">Identifiant</label>
+              <input onChange={handleChange} name='username' type="text" placeholder='ex : likecompany' />
             </div>
             <div className="field">
-              <label htmlFor="">Email</label>
-              <input type="email" placeholder='ex : like@mail.com' />
+              <label htmlFor="email">Email</label>
+              <input onChange={handleChange} name='email' type="email" placeholder='ex : like@mail.com' />
             </div>
             <div className="field">
-              <label htmlFor="">Mot de passe</label>
-              <input type="password" placeholder='8 caractères minimum' />
+              <label htmlFor="password">Mot de passe</label>
+              <input onChange={handleChange} name='password' type="password" placeholder='8 caractères minimum' />
             </div>
             <button className='btn' type="submit">S'inscrire</button>
             <Link to="/login" className='link'>J'ai déjà un compte</Link>

@@ -6,11 +6,11 @@ function ProfilePicture({photo="/img/pp/noavatar.jpg", badge=""}) {
     <div className='pp'>
         <img className='photo' src={photo} alt="" />
         {
-          badge != "" ? (
+          badge ? (
               <img className="badge" src={
-                badge==="starter" ? "/img/badges/starter.svg" : (
-                  badge==="premium" ? "/img/badges/premium.svg" : (
-                    badge==="pro" ? "/img/badges/pro.svg" : null
+                badge===1 ? "/img/badges/starter.svg" : (
+                  badge===2 ? "/img/badges/premium.svg" : (
+                    badge===3 ? "/img/badges/pro.svg" : null
                   )
                 )
               } alt="" />

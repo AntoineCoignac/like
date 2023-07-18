@@ -3,14 +3,27 @@ import { Link } from 'react-router-dom'
 import Logo from '../../../icons/logo/Logo'
 import "../Log.css";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import newRequest from '../../../utils/newRequest';
 
 function Login() {
   const [type, setType] = useState("creator");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  
+  const navigate = useNavigate();
 
-  const handleClick = (event) => {
-    const elementId = event.target.id;
-    setType(elementId);
-    console.log(elementId);
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
+    try{
+      const res = await newRequest.post("/auth/login", {username,password});
+      localStorage.setItem("currentUser", JSON.stringify(res.data));
+      navigate("/")
+    }catch(err){
+      setError(err.response.data);
+    }
+  
   }
 
   return (
@@ -23,16 +36,17 @@ function Login() {
           <Logo/>
         </Link>
         <p className="log-title">Connexion</p>
-          <form className='form' action="">
+          <form className='form' onSubmit={handleSubmit}>
             <div className="field">
-              <label htmlFor="">Identifiant</label>
-              <input type="text" placeholder='ex : jeandupont' />
+              <label htmlFor="username">Identifiant</label>
+              <input name="username" type="text" placeholder='ex : jeandupont' onChange={e=>setUsername(e.target.value)} />
             </div>
             <div className="field">
-              <label htmlFor="">Mot de passe</label>
-              <input type="password" placeholder='8 caractères minimum' />
+              <label htmlFor="password">Mot de passe</label>
+              <input name='password' type="password" placeholder='8 caractères minimum'onChange={e=>setPassword(e.target.value)}/>
             </div>
             <button className='btn' type="submit">Se connecter</button>
+            {error && error}
             <Link to="/register" className='link'>Je n'ai pas de compte</Link>
           </form>
       </div>

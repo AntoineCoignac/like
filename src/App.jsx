@@ -18,14 +18,18 @@ import EditAccount from './pages/EditAccount/EditAccount';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Register from './pages/Log/Register/Register';
 import Login from './pages/Log/Login/Login';
-
-export const GlobalContext = createContext();
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import Settings from './pages/Settings/Settings';
 
 function App() {
+  const queryClient = new QueryClient();
 
   return (
     <Router>
-      <GlobalContext.Provider value={{users, rates, translations, messages}}>
+      <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="*" Component={Home}/>
         <Route path="/" Component={Home}/>
@@ -40,8 +44,9 @@ function App() {
         <Route path="/dashboard" Component={Dashboard}/>
         <Route path="/register" Component={Register}/>
         <Route path="/login" Component={Login}/>
+        <Route path="/settings" Component={Settings}/>
       </Routes>
-      </GlobalContext.Provider>
+      </QueryClientProvider>
     </Router>
   );
 }

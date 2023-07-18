@@ -8,10 +8,17 @@ import "./Nav.css";
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
 function Nav({transparent=false}) {
+  
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   return (
     <nav className={`nav ${transparent ? 'transparent' : ""}`}>
-        <a href="/" className='logo-item'>
-          <Logo/>
+        <a href="/" className={`logo-item ${
+          !currentUser ? (
+            null
+          ) : (
+            currentUser.isSeller === "true" ? "creator" : "enterprise"
+          )}`}>
+            <Logo />
         </a>
         <div className="nav-list">
             <Link to="/search">
