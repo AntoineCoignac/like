@@ -1,16 +1,12 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Media from '../Media/Media';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import LikeCounter from '../LikeCounter/LikeCounter';
 import { Link } from 'react-router-dom';
 import "./Card.css";
-import { GlobalContext } from '../../App';
 
 function Card({ rateId, userId }) {
     console.log(userId);
-    let { users, rates, translations } = useContext(GlobalContext);
-    let rate = rates.find(rate => rate.rateId === rateId);
-    let cardUser = users.find(aUser => aUser.userId === userId);
 
     const [play, setPlay] = useState(false);
     const cardRef = useRef(null);
@@ -51,27 +47,27 @@ function Card({ rateId, userId }) {
     return (
         <div className="card" ref={cardRef}>
             <div className="media-ctn">
-                <Media type={rate.cover.type} src={rate.cover.src} play={windowWidth < 600 ? play : false} />
+                <Media type="video" src="/img/post/video/video1.mp4" play={windowWidth < 600 ? play : false} />
             </div>
             <div className="card-content">
                 <div>
                     <Link to={`gig/123`} className="gig">
-                        <p className="title">{rate.title}</p>
-                        <p className='desc'>{rate.desc}</p>
+                        <p className="title">Lorem Ipsum</p>
+                        <p className='desc'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos deleniti asperiores amet itaque nulla voluptas ipsam earum autem ab repellendus!</p>
                         <div className="infos">
-                            <span className="info">{rate.price}€</span>
-                            <span className="info">{rate.delay} jour{rate.delay > 1 ? "s" : ""}</span>
-                            <span className="info">{translations.tags[rate.tag].fr}</span>
+                            <span className="info">100€</span>
+                            <span className="info">5 jours</span>
+                            <span className="info">influence</span>
                         </div>
                     </Link>
                     <div className="user">
-                        <Link to={`/creator/${cardUser.userId}`}>
-                            <ProfilePicture photo={cardUser.pp} badge={cardUser.badge} />
+                        <Link to={`/creator/${1}`}>
+                            <ProfilePicture photo="/img/pp/user1.jpg" badge={1} />
                         </Link>
-                        <LikeCounter nbr={cardUser.like} />
+                        <LikeCounter nbr={20} />
                     </div>
                 </div>
-                <Link className='btn' to={`/work/chat/${userId}`}>Contacter {cardUser.username}</Link>
+                <Link className='btn' to={`/work/chat/${1}`}>Contacter {"Lorem"}</Link>
             </div>
         </div>
     )

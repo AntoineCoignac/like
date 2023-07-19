@@ -3,11 +3,8 @@ import SendIcon from '../../icons/send/SendIcon';
 import "./ChatBox.css";
 import Message from '../Message/Message';
 import { useState } from 'react';
-import { useContext } from 'react';
-import { GlobalContext } from '../../App';
 
 function ChatBox({fullscreen = false}) {
-  let { messages } = useContext(GlobalContext);
 
   const [isWriting, setIsWriting] = useState(false);
 
@@ -19,10 +16,10 @@ function ChatBox({fullscreen = false}) {
   return (
     <div className={`chat ${fullscreen ? "fullscreen" : ""}`}>
       <div className="messages">
-        <Message received={true} text={messages[Math.floor(Math.random() * messages.length)]}/>
-        <Message received={false} text={messages[Math.floor(Math.random() * messages.length)]}/>
-        <Message received={false} text={messages[Math.floor(Math.random() * messages.length)]}/>
-        <Message received={true} text={messages[Math.floor(Math.random() * messages.length)]}/>
+        <Message received={true} text="Lorem ipsum dolor sit amet"/>
+        <Message received={false} text="Lorem ipsum dolor sit amet"/>
+        <Message received={false} text="Lorem ipsum dolor sit amet"/>
+        <Message received={true} text="Lorem ipsum dolor sit amet"/>
       </div>
       <div className="send">
         <input onInput={handleInput} type="text" placeholder='Rédiger un message'/>

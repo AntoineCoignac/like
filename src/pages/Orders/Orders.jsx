@@ -3,38 +3,27 @@ import Nav from '../../components/Nav/Nav';
 import NavWork from '../../components/NavWork/NavWork';
 import { Link } from 'react-router-dom';
 import "./Orders.css";
-import { useContext } from 'react';
-import { GlobalContext } from '../../App';
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 
 function Orders() {
-  let { users, rates, translations } = useContext(GlobalContext);
 
   return (
     <>
       <Nav />
       <NavWork />
       <div className="orders-ctn">
-
-        {
-          rates.map(rate => {
-            let user = users.find(aUser => aUser.userId === rate.userId)
-            return (
-              <Link key={rate.rateId} className='order-item' to={`/work/order/${rate.rateId}`}>
-                  <ProfilePicture photo={user.pp} badge={user.badge} />
+              <Link key={1} className='order-item' to={`/work/order/${1}`}>
+                  <ProfilePicture photo={"/img/pp/user1.jpg"} badge={1} />
                   <div>
-                    <p className="title">{rate.title}</p>
+                    <p className="title">{"Lorem Ipsum"}</p>
                     <div className="infos">
-                      <span className="info">{rate.price}€</span>
-                      <span className="info">{rate.delay} jours</span>
-                      <span className="info">{rate.tag}</span>
+                      <span className="info">{100}€</span>
+                      <span className="info">{6} jours</span>
+                      <span className="info">{"influence"}</span>
                     </div>
                   </div>
               </Link>
-            )
-          }
-          )
-        }
+            
         <div className='order-item' id='previous' >
             <ProfilePicture  />
             <div>

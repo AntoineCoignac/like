@@ -10,7 +10,13 @@ function ProfileMenu() {
   return (
     <>
         <button className='pp-btn' type='button' onClick={()=> setOpen(!open)}>
-            <ProfilePicture photo={currentUser.img} badge={currentUser.isSeller ? currentUser.sub : null}/>
+            {
+              currentUser ? (
+                <ProfilePicture photo={currentUser.img} badge={currentUser.isSeller ? currentUser.sub : null}/>
+              ) : (
+                <ProfilePicture />
+              )
+            }
         </button>
         <div className="profile-menu-list" id={open ? "open" : ""}>
             <Link to="/me">Mon compte</Link>

@@ -161,6 +161,33 @@ input[type="file"]::file-selector-button {
     margin-right: 20px;
 }
 
+.suggestions{
+    list-style: none;
+    max-height: 154px;
+    overflow-y: scroll;
+    border-radius: 3px;
+}
+
+.suggestions li{
+    display: block;
+    max-width: 100%;
+    padding: 5px 10px;
+    background-color: var(--white-005);
+    color: grey;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.suggestions li:hover{
+    background-color: var(--dark);
+    color: var(--white);
+}
+
 @media screen and (max-width : 768px) {
     .pf-list{
         grid-template-columns: 1fr 1fr;

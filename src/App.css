@@ -110,8 +110,23 @@ a{
   background-color: var(--dark);
   color: var(--white);
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   column-gap: 5px;
+  max-width: 160px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.info span{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.info svg{
+  min-width: 14px;
 }
 
 .add{
