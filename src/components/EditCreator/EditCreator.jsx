@@ -1,15 +1,38 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import newRequest from "../../utils/newRequest";
+import upload from '../../utils/upload';
+import { useNavigate } from 'react-router-dom';
 
 function EditCreator() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const currentUserJson = localStorage.getItem('currentUser');
+  const currentUser = currentUserJson && currentUserJson !== 'undefined' ? JSON.parse(currentUserJson) : null;
+  const [searchQuery, setSearchQuery] = useState(currentUser.location ? currentUser.location : '');
+  const [preview, setPreview] = useState(currentUser.img ? currentUser.img : "/img/pp/noavatar.jpg");
+  
+  const [updatedUser, setUpdatedUser] = useState({
+    img : currentUser.img ? currentUser.img : null,
+    name : currentUser.name ? currentUser.name : null,
+    lastname : currentUser.lastname ? currentUser.lastname : null,
+    desc : currentUser.desc ? currentUser.desc : null,
+    location : currentUser.location ? currentUser.location : null,
+    instagram : currentUser.instagram ? currentUser.instagram : null,
+    tiktok : currentUser.tiktok ? currentUser.tiktok : null,
+    twitter : currentUser.twitter ? currentUser.twitetr : null,
+    youtube : currentUser.youtube ? currentUser.youtube : null,
+    twitch : currentUser.twitch ? currentUser.twitch : null,
+  });
 
-  const handleInputChange = (event) => {
+  const [file, setFile] = useState(null);
+  const navigate = useNavigate();
+
+  const handleLocationChange = (event) => {
     const value = event.target.value;
     setSearchQuery(value);
     fetchSuggestions(value);
+    handleChange(event);
   };
 
   const fetchSuggestions = (query) => {
@@ -25,33 +48,74 @@ function EditCreator() {
       });
   };
 
+  const handleChange = (e) => {
+    setUpdatedUser((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleChangeFile = (e) => {
+    const newFile = e.target.files[0];
+    if (newFile) {
+      setFile(newFile);
+      const url = URL.createObjectURL(newFile);
+      setPreview(url);
+    }
+  }
+
   const handleCitySelection = (city) => {
     setSearchQuery(city);
     setSuggestions([]);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Upload the image if it has changed
+    let imageUrl = currentUser.img;
+    if (file) {
+      imageUrl = await upload(file);
+    }
+
+    try {
+      await newRequest.put(`/users/${currentUser._id}`, {
+        ...updatedUser,
+        img: imageUrl,
+      });
+
+      localStorage.setItem('currentUser', JSON.stringify({
+        ...currentUser,
+        ...updatedUser,
+        img: imageUrl,
+      }));
+      navigate("/")
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <form className='form' action="">
+    <form className='form' onSubmit={handleSubmit}>
           <div className="image-field">
-            <img src="/img/pp/noavatar.jpg" alt="" />
-            <input type="file" name="" id="" />
+            <img src={preview} alt="" />
+            <input type="file" onChange={handleChangeFile} />
           </div>
           <div className="field">
             <label htmlFor="name">Prénom</label>
-            <input name='name' type="text" placeholder='ex : Jean' />
+            <input name='name' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.name}/>
           </div>
           <div className="field">
-            <label htmlFor="name">Nom</label>
-            <input name='name' type="text" placeholder='ex : Jean' />
+            <label htmlFor="lastname">Nom</label>
+            <input name='lastname' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.lastname ? currentUser.lastname : ""}/>
           </div>
           <div className="field">
             <label htmlFor="desc">Bio</label>
-            <input name='desc' type="text" placeholder='ex : Streamer depuis 5 ans' />
+            <input name='desc' type="text" placeholder='ex : Streamer depuis 5 ans' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
           </div>
           <div className="field">
             <label htmlFor="location">Localisation</label>
             <input name="location" type="text" placeholder='ex : Paris, France' value={searchQuery}
-        onChange={handleInputChange}/>
+        onChange={handleLocationChange}/>
             <ul className='suggestions'>
               {suggestions.map((city, index) => (
                 <li key={index} onClick={() => handleCitySelection(city)}>
@@ -61,24 +125,24 @@ function EditCreator() {
             </ul>
           </div>
           <div className="field">
-            <label htmlFor="">Instagram</label>
-            <input type="text" placeholder='ex : https://www.instagram.com/identifiant' />
+            <label htmlFor="instagram">Instagram</label>
+            <input name='instagram' type="text" placeholder='ex : https://www.instagram.com/identifiant' onChange={handleChange} defaultValue={currentUser.instagram ? currentUser.instagram : ""}/>
           </div>
           <div className="field">
-            <label htmlFor="">TikTok</label>
-            <input type="text" placeholder='ex : https://www.tiktok.com/@identifiant' />
+            <label htmlFor="tiktok">TikTok</label>
+            <input name='tiktok' type="text" placeholder='ex : https://www.tiktok.com/@identifiant' onChange={handleChange} defaultValue={currentUser.tiktok ? currentUser.tiktok : ""}/>
           </div>
           <div className="field">
-            <label htmlFor="">Twitter</label>
-            <input type="text" placeholder='ex : https://www.twitter.com/identifiant' />
+            <label htmlFor="twitter">Twitter</label>
+            <input name='twitter' type="text" placeholder='ex : https://www.twitter.com/identifiant' onChange={handleChange} defaultValue={currentUser.twitter ? currentUser.twitter : ""}/>
           </div>
           <div className="field">
-            <label htmlFor="">YouTube</label>
-            <input type="text" placeholder='ex : https://www.youtube.com/@identifiant' />
+            <label htmlFor="youtube">YouTube</label>
+            <input name='youtube' type="text" placeholder='ex : https://www.youtube.com/@identifiant' onChange={handleChange} defaultValue={currentUser.youtube ? currentUser.youtube : ""}/>
           </div>
           <div className="field">
-            <label htmlFor="">Twitch</label>
-            <input type="text" placeholder='ex : https://www.twitch.tv/identifiant' />
+            <label htmlFor="twitch">Twitch</label>
+            <input name='twitch' type="text" placeholder='ex : https://www.twitch.tv/identifiant' onChange={handleChange} defaultValue={currentUser.twitch ? currentUser.twitch : ""}/>
           </div>
           <button className='btn' type="submit">Enregister les modifications</button>
         </form>
