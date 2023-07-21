@@ -46,7 +46,7 @@ function Dashboard() {
           </Link>
         </div>
         <div className="section">
-          <span className='section-title'>Mes tarifs <button className='add'></button></span>
+          <span className='section-title'>Mes tarifs <Link to="/newgig" className='add'></Link></span>
           <Link className="rate">
             <div>
               <p className="title">{"Lorem Ipsum"}</p>

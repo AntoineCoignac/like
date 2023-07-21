@@ -19,8 +19,8 @@
     row-gap: 5px;
 }
 
-.form input[type="text"], .form input[type="email"], .form input[type="password"] {
-    background-color: var(--white-01);
+.form input[type="text"], .form input[type="email"], .form input[type="password"], .form input[type="number"] , .form select{
+    background-color: var(--dark);
     border: 0;
     outline: none;
     border-radius: 3px;
@@ -28,41 +28,6 @@
     color: var(--white);
     width: 100%;
     max-width: 100%;
-}
-
-.choices {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    width: 100%;
-
-}
-
-.choice {
-    display: flex;
-    align-items: center;
-    column-gap: 6px;
-    padding: 5px 10px;
-    position: relative;
-    border-radius: 3px;
-    background-color: var(--white-005);
-    color: var(--grey);
-}
-
-.choice input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    appearance: none;
-    border-radius: 3px;
-}
-
-.choice:has(input:checked) {
-    background-color: var(--white-01);
-    color: var(--white);
 }
 
 .image-field img {

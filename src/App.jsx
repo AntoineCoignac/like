@@ -1,10 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
-import { createContext } from 'react';
-import users from "./assets/users.json";
-import rates from "./assets/rates.json";
 import translations from "./assets/translations.json";
 import Search from './pages/Search/Search';
 import Notifications from './pages/Notifications/Notifications';
@@ -12,8 +8,6 @@ import Orders from './pages/Orders/Orders';
 import Order from './pages/Order/Order';
 import Chats from './pages/Chats/Chats';
 import Chat from './pages/Chat/Chat';
-import Creator from './pages/Creator/Creator';
-import messages from "./assets/messages.json";
 import EditAccount from './pages/EditAccount/EditAccount';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Register from './pages/Log/Register/Register';
@@ -23,6 +17,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import Settings from './pages/Settings/Settings';
+import NewGig from './pages/NewGig/NewGig';
+import User from './pages/User/User';
 
 function App() {
   const queryClient = new QueryClient();
@@ -39,12 +35,13 @@ function App() {
         <Route path="/work/order/:orderId" Component={Order}/>
         <Route path="/work/chats" Component={Chats}/>
         <Route path="/work/chat/:userId" Component={Chat}/>
-        <Route path="/creator/:id" Component={Creator}/>
+        <Route path="/user/:id" Component={User}/>
         <Route path="/me" Component={EditAccount}/>
         <Route path="/dashboard" Component={Dashboard}/>
         <Route path="/register" Component={Register}/>
         <Route path="/login" Component={Login}/>
         <Route path="/settings" Component={Settings}/>
+        <Route path='/newgig' Component={NewGig}/>
       </Routes>
       </QueryClientProvider>
     </Router>

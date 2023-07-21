@@ -18,7 +18,7 @@ function Nav({transparent=false}) {
           !currentUser ? 
             null
            : (
-            currentUser.isSeller === "true" ? "creator" : "enterprise"
+            currentUser.isSeller ? "creator" : "enterprise"
           )}`}>
             <Logo />
         </a>
