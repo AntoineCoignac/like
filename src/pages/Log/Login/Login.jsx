@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import newRequest from '../../../utils/newRequest';
 
 function Login() {
-  const [type, setType] = useState("creator");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);

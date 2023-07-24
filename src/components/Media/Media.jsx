@@ -46,12 +46,13 @@ function Media({ type = "video", src, play = false }) {
         controlsList='nodownload noremoteplayback noplaybackrate nofullscreen'
         className='media'
         onClick={handleVideoClick}
+        loading="lazy"
       >
         <source src={src} />
       </video>
     );
   } else if (type === "image") {
-    return <img className='media' src={src} alt="" />;
+    return <img className='media' src={src} alt="image" loading="lazy"/>;
   }
 }
 

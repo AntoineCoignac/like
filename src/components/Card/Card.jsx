@@ -4,12 +4,22 @@ import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import LikeCounter from '../LikeCounter/LikeCounter';
 import { Link } from 'react-router-dom';
 import "./Card.css";
+import newRequest from '../../utils/newRequest';
 
-function Card({ rateId, userId }) {
-    console.log(userId);
-
+function Card({ rate, userId }) {
     const [play, setPlay] = useState(false);
     const cardRef = useRef(null);
+
+    const [user, setUser] = useState(null);
+
+    const loadUser = async () => {
+        try {
+            const res = await newRequest.get(`/users/${userId}`);
+            setUser(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     useEffect(() => {
         const options = {
@@ -42,32 +52,47 @@ function Card({ rateId, userId }) {
         };
     }, []);
 
+    useEffect(() => {
+        loadUser(); // Call the loadUser function here to fetch user data
+      }, []);
+
     const windowWidth = window.innerWidth;
 
     return (
         <div className="card" ref={cardRef}>
             <div className="media-ctn">
-                <Media type="video" src="/img/post/video/video1.mp4" play={windowWidth < 600 ? play : false} />
+                <Media type={rate.cover.includes('video/') ? "video" : "image"} src={rate.cover} play={windowWidth < 600 ? play : false} />
             </div>
             <div className="card-content">
                 <div>
-                    <Link to={`gig/123`} className="gig">
-                        <p className="title">Lorem Ipsum</p>
-                        <p className='desc'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos deleniti asperiores amet itaque nulla voluptas ipsam earum autem ab repellendus!</p>
+                    <Link to={`gig/${rate._id}`} className="gig">
+                        <p className="title">{rate.title}</p>
+                        <p className='desc'>{rate.desc}</p>
                         <div className="infos">
-                            <span className="info">100€</span>
-                            <span className="info">5 jours</span>
-                            <span className="info">influence</span>
+                            <span className="info">{rate.price}€</span>
+                            <span className="info">{rate.deliveryTime} jours</span>
+                            <span className="info">{rate.revisionNumber} modifications</span>
+                            <span className="info">{rate.tag}</span>
                         </div>
                     </Link>
-                    <div className="user">
-                        <Link to={`/creator/${1}`}>
-                            <ProfilePicture photo="/img/pp/user1.jpg" badge={1} />
-                        </Link>
-                        <LikeCounter nbr={20} />
-                    </div>
+                    {
+                        user ? (
+                            <div className="user">
+                                <Link to={`/user/${user._id}`}>
+                                    <ProfilePicture photo={user.img} badge={user.sub ? user.sub : 0} />
+                                </Link>
+                                <LikeCounter nbr={user.like} />
+                            </div>
+                        ) : null
+                    }
+
                 </div>
-                <Link className='btn' to={`/work/chat/${1}`}>Contacter {"Lorem"}</Link>
+                {
+                    user ? (
+                        <Link className='btn' to={`/work/chat/${user._id}`}>Contacter {`${user.name} ${user.lastname.charAt(0)}.`}</Link>
+                    ) : null
+                }
+
             </div>
         </div>
     )

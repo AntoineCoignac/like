@@ -3,73 +3,138 @@ import SettingsIcon from '../../icons/settings/SettingsIcon';
 import "./Filter.css";
 import FilterSettings from '../FilterSettings/FilterSettings';
 
-function Filter() {
+function Filter({ filters, setFilters }) {
   const [activeSettings, setActiveSettings] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("me"); // Filtre par défaut sélectionné
 
   const handleClick = (event) => {
     const button = event.target;
     const filterId = button.id;
-    setActiveFilter(filterId);
+    setFilters((prev) => ({
+      ...prev,
+      tag: filterId,
+    }));
   }
 
   return (
     <div className="filters">
       <button className="border-icon-btn" type='button' onClick={() => setActiveSettings(!activeSettings)}>
-        <SettingsIcon/>
+        <SettingsIcon />
       </button>
       <div className="filters-list">
         <button
           onClick={handleClick}
-          className={`filter ${activeFilter === "me" ? "active" : ""}`}
+          className={`filter ${filters.tag === "me" ? "active" : ""}`}
           id="me"
         >
-          pour moi
+          Tous
         </button>
         <button
           onClick={handleClick}
-          className={`filter ${activeFilter === "influencer" ? "active" : ""}`}
-          id="influencer"
+          className={`filter ${filters.tag === "influence" ? "active" : ""}`}
+          id="influence"
         >
-          influenceur
+          Influence
         </button>
         <button
           onClick={handleClick}
-          className={`filter ${activeFilter === "streamer" ? "active" : ""}`}
-          id="streamer"
+          className={`filter ${filters.tag === "streaming" ? "active" : ""}`}
+          id="streaming"
         >
-          streamer
+          Streaming
         </button>
         <button
           onClick={handleClick}
-          className={`filter ${activeFilter === "ugc" ? "active" : ""}`}
+          className={`filter ${filters.tag === "vidéo" ? "active" : ""}`}
+          id="vidéo"
+        >
+          Vidéo
+        </button>
+        <button
+          onClick={handleClick}
+          className={`filter ${filters.tag === "musique" ? "active" : ""}`}
+          id="musique"
+        >
+          Musique
+        </button>
+        <button
+          onClick={handleClick}
+          className={`filter ${filters.tag === "photo" ? "active" : ""}`}
+          id="photo"
+        >
+          Photo
+        </button>
+        <button
+          onClick={handleClick}
+          className={`filter ${filters.tag === "podcast" ? "active" : ""}`}
+          id="podcast"
+        >
+          Podcast
+        </button>
+        <button
+          onClick={handleClick}
+          className={`filter ${filters.tag === "ugc" ? "active" : ""}`}
           id="ugc"
         >
-          créateur ugc
+          UGC
         </button>
         <button
           onClick={handleClick}
-          className={`filter ${activeFilter === "photographer" ? "active" : ""}`}
-          id="photographer"
+          className={`filter ${filters.tag === "montage vidéo" ? "active" : ""}`}
+          id="montage vidéo"
         >
-          photographe
+          Montage vidéo
         </button>
         <button
           onClick={handleClick}
-          className={`filter ${activeFilter === "video editor" ? "active" : ""}`}
-          id="video editor"
+          className={`filter ${filters.tag === "blog" ? "active" : ""}`}
+          id="blog"
         >
-          monteur vidéo
+          Blog
         </button>
         <button
           onClick={handleClick}
-          className={`filter ${activeFilter === "blogger" ? "active" : ""}`}
-          id="blogger"
+          className={`filter ${filters.tag === "design graphique" ? "active" : ""}`}
+          id="design graphique"
         >
-          blogueur
+          Design graphique
+        </button>
+        <button
+          onClick={handleClick}
+          className={`filter ${filters.tag === "animation 2d/3d" ? "active" : ""}`}
+          id="animation 2d/3d"
+        >
+          Animation 2d/3d
+        </button>
+        <button
+          onClick={handleClick}
+          className={`filter ${filters.tag === "ui/ux" ? "active" : ""}`}
+          id="ui/ux"
+        >
+          UI/UX
+        </button>
+        <button
+          onClick={handleClick}
+          className={`filter ${filters.tag === "développement web" ? "active" : ""}`}
+          id="développement web"
+        >
+          Développement web
+        </button>
+        <button
+          onClick={handleClick}
+          className={`filter ${filters.tag === "rédaction" ? "active" : ""}`}
+          id="rédaction"
+        >
+          rédaction
+        </button>
+        <button
+          onClick={handleClick}
+          className={`filter ${filters.tag === "voix off" ? "active" : ""}`}
+          id="voix off"
+        >
+          Voix off
         </button>
       </div>
-      <FilterSettings active={activeSettings ? "active" : ""}/>
+      <FilterSettings active={activeSettings ? "active" : ""} />
     </div>
   )
 }

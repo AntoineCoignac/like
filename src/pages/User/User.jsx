@@ -46,80 +46,81 @@ function User() {
   }, []); // Empty dependency array to ensure this effect runs only once
 
   // Check if user data is still loading
-  if (!user && !userGigs) {
+  if (!user || !userGigs) {
     return <div>Loading user data...</div>;
   } else {
-    return (
-      <>
-        <div className="top-bar">
-          <Back />
-          <p className="name">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
-        </div>
-        <div className="profile-ctn">
-          <div className="top">
-            <ProfilePicture photo={user.img} badge={user.sub} />
+    if (user.isSeller) {
+      return (
+        <>
+          <div className="top-bar">
+            <Back />
             <p className="name">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
-            <Link className='btn' to={`/work/chat/${1}`}>Contacter {user.name}</Link>
-            <p className="desc">
-              {user.desc ? user.desc : "Aucune information"}
-            </p>
-            <div className="infos">
-              <span className="info">
-                <Like />
-                <span>{user.like}</span>
-              </span>
-              {
-                user.location ? (
-                  <span key={"location"} className="info">
-                    <LocationIcon />
-                    <span>{user.location}</span>
-                  </span>
-                ) : null
-              }
-              {
-                user.instagram ? (
-                  <span key={"instagram"} className="info">
-                    <InstagramIcon />
-                    <span>{user.instagram}</span>
-                  </span>
-                ) : null
-              }
-              {
-                user.youtube ? (
-                  <span key={"youtube"} className="info">
-                    <YoutubeIcon />
-                    <span>{user.location}</span>
-                  </span>
-                ) : null
-              }
-              {
-                user.twitter ? (
-                  <span key={"twitter"} className="info">
-                    <TwitterIcon />
-                    <span>{user.twitter}</span>
-                  </span>
-                ) : null
-              }
-              {
-                user.tiktok ? (
-                  <span key={"tiktok"} className="info">
-                    <TiktokIcon />
-                    <span>{user.tiktok}</span>
-                  </span>
-                ) : null
-              }
-            </div>
           </div>
-          <div className="section">
-            <span className='section-title'>Prestations</span>
-            <div className="gallery">
-              {
-                !userGigs ? (
-                  <div>Loading gigs...</div>
-                ) : (
-                  userGigs.map(gig => (
+          <div className="profile-ctn">
+            <div className="top">
+              <ProfilePicture photo={user.img} badge={user.sub} />
+              <p className="name">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
+              <Link className='btn' to={`/work/chat/${1}`}>Contacter {user.name}</Link>
+              <p className="desc">
+                {user.desc ? user.desc : "Aucune information"}
+              </p>
+              <div className="infos">
+                <span className="info">
+                  <Like />
+                  <span>{user.like}</span>
+                </span>
+                {
+                  user.location ? (
+                    <span key={"location"} className="info">
+                      <LocationIcon />
+                      <span>{user.location}</span>
+                    </span>
+                  ) : null
+                }
+                {
+                  user.instagram ? (
+                    <span key={"instagram"} className="info">
+                      <InstagramIcon />
+                      <span>{user.instagram}</span>
+                    </span>
+                  ) : null
+                }
+                {
+                  user.youtube ? (
+                    <span key={"youtube"} className="info">
+                      <YoutubeIcon />
+                      <span>{user.location}</span>
+                    </span>
+                  ) : null
+                }
+                {
+                  user.twitter ? (
+                    <span key={"twitter"} className="info">
+                      <TwitterIcon />
+                      <span>{user.twitter}</span>
+                    </span>
+                  ) : null
+                }
+                {
+                  user.tiktok ? (
+                    <span key={"tiktok"} className="info">
+                      <TiktokIcon />
+                      <span>{user.tiktok}</span>
+                    </span>
+                  ) : null
+                }
+              </div>
+            </div>
+            <div className="section">
+              <span className='section-title'>Prestations</span>
+              <div className="gallery">
+                {
+                  !userGigs ? (
+                    <div>Loading gigs...</div>
+                  ) : (
+                    userGigs.map(gig => (
                       <div key={gig._id} className='gig-result'>
-                        <Media type={gig.cover.includes('/video/') ? "video" : "image" } src={gig.cover} />
+                        <Media type={gig.cover.includes('/video/') ? "video" : "image"} src={gig.cover} />
                         <Link to={`gig/${gig._id}`} className="gig">
                           <p className="title">{gig.title}</p>
                           <p className='desc'>{gig.desc}</p>
@@ -132,14 +133,44 @@ function User() {
                         </Link>
                       </div>
                     )
+                    )
                   )
-                )
-              }
+                }
+              </div>
             </div>
           </div>
-        </div>
-      </>
-    )
+        </>
+      )
+    } else {
+      return (
+        <>
+          <div className="top-bar">
+            <Back />
+            <p className="name">{user.name}</p>
+          </div>
+          <div className="profile-ctn">
+            <div className="top">
+              <ProfilePicture photo={user.img} />
+              <p className="name">{user.name}</p>
+              <Link className='btn' to={`/work/chat/${1}`}>Contacter {user.name}</Link>
+              <p className="desc">
+                {user.desc ? user.desc : "Aucune information"}
+              </p>
+              <div className="infos">
+                {
+                  user.location ? (
+                    <span key={"location"} className="info">
+                      <LocationIcon />
+                      <span>{user.location}</span>
+                    </span>
+                  ) : null
+                }
+              </div>
+            </div>
+          </div>
+        </>
+      )
+    }
   }
 }
 

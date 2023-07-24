@@ -8,9 +8,8 @@ function CardList({rates=[]}) {
     <div className="card-list">
       {
         rates.map(rate => {
-          console.log(rate.userId)
           return (
-            <Card key={rate.rateId} rateId={rate.rateId} userId={rate.userId} />
+            <Card key={rate._id} rate={rate} userId={rate.userId} />
           )
         } 
         )
