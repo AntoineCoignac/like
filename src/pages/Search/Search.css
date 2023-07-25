@@ -40,7 +40,7 @@
     padding: 20px;
 }
 
-.creators{
+.users{
     padding: 20px;
 }
 
@@ -69,7 +69,7 @@
     right: 0;
 }
 
-.creator-result{
+.user-result{
     padding: 20px 0;
     width: 100%;
     display: flex;

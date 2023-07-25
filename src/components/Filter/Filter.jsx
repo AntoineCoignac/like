@@ -124,7 +124,7 @@ function Filter({ filters, setFilters }) {
           className={`filter ${filters.tag === "rédaction" ? "active" : ""}`}
           id="rédaction"
         >
-          rédaction
+          Rédaction
         </button>
         <button
           onClick={handleClick}
@@ -134,7 +134,7 @@ function Filter({ filters, setFilters }) {
           Voix off
         </button>
       </div>
-      <FilterSettings active={activeSettings ? "active" : ""} />
+      <FilterSettings active={activeSettings ? "active" : ""} filters={filters} setFilters={setFilters}/>
     </div>
   )
 }
