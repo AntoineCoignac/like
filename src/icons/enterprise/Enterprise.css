@@ -1,0 +1,8 @@
+.enterprise-icon{
+    width: 32px;
+    height: 22px;
+}
+
+.enterprise-icon path{
+    fill: var(--white);
+}

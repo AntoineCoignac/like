@@ -10,10 +10,10 @@ function NavSearch({ setType, activeType }) {
   return (
     <div className="navsearch">
       <button onClick={handleClick} id="gig" className={activeType === "gig" ? "active" : ""}>
-        Tarif
+        Tarifs
       </button>
       <button onClick={handleClick} id="user" className={activeType === "user" ? "active" : ""}>
-        Profil
+        Profils
       </button>
     </div>
   );

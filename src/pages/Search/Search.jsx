@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 import LikeCounter from '../../components/LikeCounter/LikeCounter';
 import newRequest from '../../utils/newRequest';
+import Enterprise from '../../icons/enterprise/Enterprise';
 
 function Search() {
 
@@ -26,7 +27,6 @@ function Search() {
     setIsSearching(false);
   }
 
-  // Définir loadGigs en tant que callback memoisé
   const loadGigs = async () => {
     try {
       const url = `/gigs?search=${search}`
@@ -37,9 +37,8 @@ function Search() {
     } catch (err) {
       console.log(err);
     }
-  }; 
+  };
 
-  // Définir loadUsers en tant que callback memoisé
   const loadUsers = async () => {
     try {
       const url = `users/search-users?search=${encodeURIComponent(search)}`;
@@ -56,15 +55,16 @@ function Search() {
     setResult([]); // Clear the previous search results
 
     if (type === "gig") {
-        if (search !== "") {
-            await loadGigs();
-        }
+      if (search !== "") {
+        await loadGigs();
+      }
     } else if (type === "user") {
-        if (search !== "") {
-            await loadUsers();
-        }
+      if (search !== "") {
+        await loadUsers();
+      }
     }
-};
+  };
+
 
   useEffect(() => {
     loadSearchResults();
@@ -82,71 +82,55 @@ function Search() {
           </button>
         </div>
       </div>
-      <NavSearch setType={setType} activeType={type} />
-      {
-        type === "gig" ? (
-          <div className="gigs">
-            {
-              result ? (
-              result.map(gig=>(
-                <div key={gig._id} className='gig-result'>
-                  <Link to={`gig/${gig._id}`} className="gig">
-                    <p className="title">{gig.title}</p>
-                    <p className='desc'>{gig.desc}</p>
-                    <div className="infos">
-                      <span className="info">{gig.price}€</span>
-                      <span className="info">{gig.deliveryTime} jours</span>
-                      <span className="info">{gig.revisionNumber} modifications</span>
-                      <span className="info">{gig.tag}</span>
-                    </div>
-                  </Link>
-                  <div className="user">
-                    <Link to={`/creator/`}>
-                      <ProfilePicture photo="/img/pp/user1.jpg" badge="pro" />
-                    </Link>
-                    <LikeCounter nbr={12} />
+      {search !== "" ? <NavSearch setType={setType} activeType={type} /> : null}
+      {type === "gig" ? (
+        <div className="gigs">
+          {result ? (
+            result.map(gig => (
+              <div key={gig._id} className='gig-result'>
+                <Link to={`gig/${gig._id}`} className="gig">
+                  <p className="title">{gig.title}</p>
+                  <p className='desc'>{gig.desc}</p>
+                  <div className="infos">
+                    <span className="info">{gig.price}€</span>
+                    <span className="info">{gig.deliveryTime} jours</span>
+                    <span className="info">{gig.revisionNumber} modifications</span>
+                    <span className="info">{gig.tag}</span>
                   </div>
-                  <Link className='btn' to={`/work/chat/`}>Contacter Name</Link>
+                </Link>
+                {gig.user ? ( /* Add this condition to check if 'gig.user' is defined */
+                  <>
+                    <div className="user">
+                      <Link to={`/user/${gig.userId}`}>
+                        <ProfilePicture photo={gig.user.img} badge={gig.user.sub} />
+                      </Link>
+                      <LikeCounter nbr={gig.user.like} />
+                    </div>
+                    <Link className='btn' to={`/work/chat/${gig.userId}`}>Contacter {gig.user.name}</Link>
+                  </>
+                ) : null}
+              </div>
+            ))
+          ) : null}
+        </div>
+      ) : (
+        <div className="users">
+          {result ? (
+            result.map(user => (
+              <Link key={user._id} to={`/user/${user._id}`} className='user-result'>
+                <div className="profile">
+                  <ProfilePicture photo={user.img} badge={user.sub} />
+                  <p className="name">{user.name} {user.isSeller ? `${user.lastname.charAt(0)}.` : ""}</p>
                 </div>
-              )
-              )) : null
-            }
-          </div>
-        ) : (
-          <div className="users">
-            <Link className='user-result'>
-              <div className="profile">
-                <ProfilePicture photo="/img/pp/user1.jpg" badge="pro" />
-                <p className="name">Prénom Nom</p>
-              </div>
-              <LikeCounter nbr={12} />  
-            </Link>
-            <Link className='user-result'>
-              <div className="profile">
-                <ProfilePicture photo="/img/pp/user1.jpg" badge="pro" />
-                <p className="name">Prénom Nom</p>
-              </div>
-              <LikeCounter nbr={12} />  
-            </Link>
-            <Link className='user-result'>
-              <div className="profile">
-                <ProfilePicture photo="/img/pp/user1.jpg" badge="pro" />
-                <p className="name">Prénom Nom</p>
-              </div>
-              <LikeCounter nbr={12} />  
-            </Link>
-            <Link className='user-result'>
-              <div className="profile">
-                <ProfilePicture photo="/img/pp/user1.jpg" badge="pro" />
-                <p className="name">Prénom Nom</p>
-              </div>
-              <LikeCounter nbr={12} />  
-            </Link>
-          </div>
-        )
-      }
-    </div >
-  )
+                {user.isSeller ? <LikeCounter nbr={user.like} /> : <Enterprise />}
+              </Link>
+            ))
+          ) : null}
+        </div>
+      )}
+    </div>
+  );
+
 }
 
 export default Search
