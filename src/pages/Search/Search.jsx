@@ -88,7 +88,7 @@ function Search() {
           {result ? (
             result.map(gig => (
               <div key={gig._id} className='gig-result'>
-                <Link to={`gig/${gig._id}`} className="gig">
+                <Link to={`/gig/${gig._id}`} className="gig">
                   <p className="title">{gig.title}</p>
                   <p className='desc'>{gig.desc}</p>
                   <div className="infos">

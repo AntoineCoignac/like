@@ -1,0 +1,25 @@
+.gig-ctn {
+    padding: 0 20px 100px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.gig-ctn .desc{
+    display: block;
+}
+
+.top-gig{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fixed-btn{
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(180deg, rgba(11,11,11,0) 0%, rgba(11,11,11,1) 100%);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}

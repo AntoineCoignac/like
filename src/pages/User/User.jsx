@@ -60,7 +60,7 @@ function User() {
             <div className="top">
               <ProfilePicture photo={user.img} badge={user.sub} />
               <p className="name">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
-              <Link className='btn' to={`/work/chat/${1}`}>Contacter {user.name}</Link>
+              <Link className='btn' to={`/chat/${user._id}`}>Discuter</Link>
               <p className="desc">
                 {user.desc ? user.desc : "Aucune information"}
               </p>
@@ -121,7 +121,7 @@ function User() {
                     userGigs.map(gig => (
                       <div key={gig._id} className='gig-result'>
                         <Media type={gig.cover.includes('/video/') ? "video" : "image"} src={gig.cover} />
-                        <Link to={`gig/${gig._id}`} className="gig">
+                        <Link to={`/gig/${gig._id}`} className="gig">
                           <p className="title">{gig.title}</p>
                           <p className='desc'>{gig.desc}</p>
                           <div className="infos">
@@ -152,7 +152,7 @@ function User() {
             <div className="top">
               <ProfilePicture photo={user.img} />
               <p className="name">{user.name}</p>
-              <Link className='btn' to={`/work/chat/${1}`}>Contacter {user.name}</Link>
+              <Link className='btn' to={`/chat/${user._id}`}>Discuter</Link>
               <p className="desc">
                 {user.desc ? user.desc : "Aucune information"}
               </p>

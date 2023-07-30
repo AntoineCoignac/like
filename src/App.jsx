@@ -1,7 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
-import translations from "./assets/translations.json";
 import Search from './pages/Search/Search';
 import Notifications from './pages/Notifications/Notifications';
 import Orders from './pages/Orders/Orders';
@@ -19,6 +18,7 @@ import {
 import Settings from './pages/Settings/Settings';
 import NewGig from './pages/NewGig/NewGig';
 import User from './pages/User/User';
+import Gig from './pages/Gig/Gig';
 
 function App() {
   const queryClient = new QueryClient();
@@ -34,7 +34,7 @@ function App() {
         <Route path="/work/orders" Component={Orders}/>
         <Route path="/work/order/:orderId" Component={Order}/>
         <Route path="/work/chats" Component={Chats}/>
-        <Route path="/work/chat/:userId" Component={Chat}/>
+        <Route path="/chat/:userId" Component={Chat}/>
         <Route path="/user/:id" Component={User}/>
         <Route path="/me" Component={EditAccount}/>
         <Route path="/dashboard" Component={Dashboard}/>
@@ -42,6 +42,7 @@ function App() {
         <Route path="/login" Component={Login}/>
         <Route path="/settings" Component={Settings}/>
         <Route path='/newgig' Component={NewGig}/>
+        <Route path='/gig/:gigId' Component={Gig}/>
       </Routes>
       </QueryClientProvider>
     </Router>

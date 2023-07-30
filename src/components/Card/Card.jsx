@@ -89,7 +89,7 @@ function Card({ rate, userId }) {
                 </div>
                 {
                     user ? (
-                        <Link className='btn' to={`/work/chat/${user._id}`}>Contacter {`${user.name} ${user.lastname.charAt(0)}.`}</Link>
+                        <Link className='btn' to={`/work/chat/${user._id}`}>Commander à {`${user.name} ${user.lastname.charAt(0)}.`}</Link>
                     ) : null
                 }
 
