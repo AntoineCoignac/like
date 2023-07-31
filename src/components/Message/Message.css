@@ -1,19 +1,26 @@
 .message{
-    width: fit-content;
-    max-width: 80%;
+    width: 100%;
     margin : 20px 0 0 0;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: var(--dark);
-    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    column-gap: 10px;
 }
 
 .message.received{
-    margin-left: 0;
-    background-color: transparent;
-    border: 1px solid var(--dark);
+    justify-content: flex-start;
 }
 
 .message p{
+    max-width: 90%;
+    padding: 20px;
     color: var(--white);
+    border-radius: 10px;
+    background-color: var(--dark);
+}
+
+.message.received p{
+    max-width: calc(90% - 42px);
+    background: transparent;
+    border: 1px solid var(--dark);
 }

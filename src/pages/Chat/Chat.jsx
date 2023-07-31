@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 
 function Chat() {
   const { userId } = useParams();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   const loadUser = async () => {
     try {
@@ -23,32 +23,35 @@ function Chat() {
   };
 
   useEffect(() => {
-    loadUser();
-  }, []);
+    if (userId) { // Vérifiez si userId est défini
+      loadUser();
+    }
+  }, [userId]);
 
-  if (user) {
-    return (
-      <>
-        <div className="top-bar">
-          <Back />
-          <div className='chat-top'>
-            <Link to={`/user/${userId}`} className="profile">
-              <ProfilePicture photo={user.img} badge={user.sub} />
-              <p className='name'>{
-                user.isSeller ?
-                  `${user.name} ${user.lastname.charAt(0)}.` : user.name
-              }</p>
-            </Link>
+  return (
+    <>
+      {user ? (
+        <>
+          <div className="top-bar">
+            <Back />
+            <div className='chat-top'>
+              <Link to={`/user/${userId}`} className="profile">
+                <ProfilePicture photo={user.img} badge={user.sub} />
+                <p className='name'>{
+                  user.isSeller ?
+                    `${user.name} ${user.lastname.charAt(0)}.` : user.name
+                }</p>
+              </Link>
+            </div>
           </div>
-        </div>
-        <ChatBox fullscreen={true} user={user} />
-      </>
-    )
-  } else {
-    return (
-      <></>
-    )
-  }
+          <ChatBox fullscreen={true} user={user} />
+        </>
+      ) : (
+        <div>Loading ...</div>
+      )}
+    </>
+  );
+
 }
 
 export default Chat;

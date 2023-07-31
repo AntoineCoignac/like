@@ -1,6 +1,6 @@
 .profile-menu-list{
     position: absolute;
-    top: 60px;
+    top: 70px;
     display: none;
     flex-direction: column;
     padding: 10px;
@@ -8,6 +8,7 @@
     border-radius: 5px;
     min-width: fit-content;
     z-index: 10;
+    border: 1px solid var(--dark);
 }
 
 .profile-menu-list#open{

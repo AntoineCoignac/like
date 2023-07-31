@@ -56,6 +56,6 @@
     -webkit-mask-image: linear-gradient(to top, transparent 0, black 40px);
     mask-image: linear-gradient(to top, transparent 0, black 40px);
     display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: flex-end;
 }
