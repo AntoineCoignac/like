@@ -62,7 +62,7 @@ function Gig() {
             <>
                 <div className="top-bar">
                     <Back />
-                    <p className="name">{gig.title}</p>
+                    <p className="name big-title">{gig.title}</p>
                 </div>
                 <div className="gig-ctn">
                     <div className="top-gig">

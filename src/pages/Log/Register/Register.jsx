@@ -15,6 +15,7 @@ function Register() {
     isSeller: true,
   });
   const [type, setType] = useState("creator");
+  const [error, setError] = useState(null);
 
   const handleClick = (event) => {
     const elementId = event.target.id;
@@ -39,7 +40,7 @@ function Register() {
       await newRequest.post("/auth/register", user);
       navigate("/login")
     } catch (err) {
-      console.log(err);
+      setError(err.response.data);
     }
   };
 
@@ -79,6 +80,7 @@ function Register() {
               <label htmlFor="password">Mot de passe</label>
               <input onChange={handleChange} name='password' type="password" placeholder='8 caractères minimum' />
             </div>
+            {error && error}
             <button className='btn' type="submit">S'inscrire</button>
             <Link to="/login" className='link'>J'ai déjà un compte</Link>
           </form>
@@ -99,6 +101,7 @@ function Register() {
               <label htmlFor="password">Mot de passe</label>
               <input onChange={handleChange} name='password' type="password" placeholder='8 caractères minimum' />
             </div>
+            {error && error}
             <button className='btn' type="submit">S'inscrire</button>
             <Link to="/login" className='link'>J'ai déjà un compte</Link>
           </form>

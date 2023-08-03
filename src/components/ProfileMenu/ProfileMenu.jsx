@@ -20,7 +20,6 @@ function ProfileMenu() {
         </button>
         <div className="profile-menu-list" id={open ? "open" : ""}>
             <Link to="/me">Mon compte</Link>
-            <Link to="/dashboard">Tableau de bord</Link>
             <Link to="/settings">Paramètres</Link>
             <Link to="/help">Aide</Link>
         </div>

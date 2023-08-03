@@ -1,19 +1,21 @@
 .navwork{
     position: fixed;
     top: 80px;
-    width: 100%;
+    width: calc(100% - 40px);
     display: flex;
-    padding: 0 20px;
+    margin: 0 20px;
     gap: 5px;
+    overflow-y: scroll;
+    border-radius: 3px ;
 }
 
 .navwork a{
-    padding: 3px 10px;
+    padding: 5px 10px;
     background: var(--dark);
     border: 0;
     color: var(--white);
     border-radius: 3px;
-
+    white-space: nowrap;
 }
 
 .navwork a.active{

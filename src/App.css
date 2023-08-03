@@ -65,6 +65,7 @@ a{
   justify-content: center;
   align-items: center;
   border: 0;
+  text-align: center;
 }
 
 .btn.absolute{
@@ -100,15 +101,13 @@ a{
 .infos{
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 0 5px;
   flex-wrap: wrap;
 }
 
 .info{
-  padding: 3px 10px;
-  border-radius: 3px;
-  background-color: var(--dark);
-  color: var(--white);
+  padding: 0;
+  color: var(--grey);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -117,6 +116,14 @@ a{
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.info:last-child:after{
+  content: "";
+}
+
+.info::after{
+  content: "·";
 }
 
 .info span{

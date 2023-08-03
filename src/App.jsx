@@ -37,7 +37,7 @@ function App() {
         <Route path="/chat/:userId" Component={Chat}/>
         <Route path="/user/:id" Component={User}/>
         <Route path="/me" Component={EditAccount}/>
-        <Route path="/dashboard" Component={Dashboard}/>
+        <Route path="/work/dashboard" Component={Dashboard}/>
         <Route path="/register" Component={Register}/>
         <Route path="/login" Component={Login}/>
         <Route path="/settings" Component={Settings}/>

@@ -5,6 +5,7 @@ import "./NavWork.css";
 function NavWork() {
   return (
     <div className="navwork">
+        <NavLink to="/work/dashboard">Tableau de bord</NavLink>
         <NavLink to="/work/orders">Commandes</NavLink>
         <NavLink to="/work/chats">Messages</NavLink>
     </div>

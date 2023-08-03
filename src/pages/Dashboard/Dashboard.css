@@ -1,6 +1,6 @@
 .dashboard{
     width: 100%;
-    padding: 100px 20px;
+    padding: 122px 20px 20px;
     color : var(--white);
 }
 
@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
     column-gap: 10vw;
-    padding-bottom: 20px;
+    padding: 20px 0;
     border-bottom: 1px solid var(--dark);
 }
 
@@ -23,6 +23,13 @@
 .big{
     font-size: 24px;
     font-weight: 500;
+}
+
+.big-title{
+    font-size: 15px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .recap p{

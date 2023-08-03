@@ -54,12 +54,12 @@ function User() {
         <>
           <div className="top-bar">
             <Back />
-            <p className="name">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
+            <p className="name big-title">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
           </div>
           <div className="profile-ctn">
             <div className="top">
               <ProfilePicture photo={user.img} badge={user.sub} />
-              <p className="name">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
+              <p className="name big-title">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
               <Link className='btn' to={`/chat/${user._id}`}>Discuter</Link>
               <p className="desc">
                 {user.desc ? user.desc : "Aucune information"}
@@ -112,7 +112,7 @@ function User() {
               </div>
             </div>
             <div className="section">
-              <span className='section-title'>Prestations</span>
+              <span className='section-title big-title'>Prestations</span>
               <div className="gallery">
                 {
                   !userGigs ? (
@@ -146,12 +146,12 @@ function User() {
         <>
           <div className="top-bar">
             <Back />
-            <p className="name">{user.name}</p>
+            <p className="name big-title">{user.name}</p>
           </div>
           <div className="profile-ctn">
             <div className="top">
               <ProfilePicture photo={user.img} />
-              <p className="name">{user.name}</p>
+              <p className="name big-title">{user.name}</p>
               <Link className='btn' to={`/chat/${user._id}`}>Discuter</Link>
               <p className="desc">
                 {user.desc ? user.desc : "Aucune information"}
