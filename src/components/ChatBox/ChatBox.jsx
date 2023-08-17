@@ -1,6 +1,6 @@
 // ChatBox.jsx
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SendIcon from '../../icons/send/SendIcon';
 import "./ChatBox.css";
 import Message from '../Message/Message';
@@ -11,6 +11,8 @@ function ChatBox({ fullscreen = false, user = {} }) {
   const [value, setValue] = useState("");
   const [messages, setMessages] = useState([]); // State pour stocker les messages
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const messagesRef = useRef(null); // Ref for the .messages container
 
   const handleInput = (e) => {
     const inputValue = e.target.value;
@@ -52,9 +54,14 @@ function ChatBox({ fullscreen = false, user = {} }) {
     fetchMessages(); // Appeler fetchMessages lors du montage initial du composant
   }, []);
 
+  useEffect(() => {
+    // Scroll to the bottom of the messages container after updating messages
+    messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+  }, [messages]);
+
   return (
     <div className={`chat ${fullscreen ? "fullscreen" : ""}`}>
-      <div className="messages">
+      <div className="messages" ref={messagesRef}>
         {/* Afficher les messages récupérés */}
         {messages.map((message) => (
           <Message

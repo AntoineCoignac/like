@@ -33,7 +33,7 @@ function Nav({transparent=false}) {
               <Link to="/notifications">
                 <NotificationsIcon/>
               </Link>
-              <Link to="/work/orders">
+              <Link to="/work/dashboard">
                 <WorkIcon/>
               </Link>
               <ProfileMenu />

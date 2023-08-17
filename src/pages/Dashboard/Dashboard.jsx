@@ -31,8 +31,8 @@ function Dashboard() {
     return (
       <>
         <Nav />
-        <NavWork />
         <div className="dashboard">
+          <NavWork />
           <div className="recap">
             <div>
               <span className='big'>1260€</span>

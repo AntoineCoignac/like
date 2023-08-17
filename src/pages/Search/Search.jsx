@@ -76,7 +76,7 @@ function Search() {
       <div className="top-bar">
         <Back />
         <div className='searchbar-ctn'>
-          <input onChange={handleSearch} value={search} className='searchbar' type="text" placeholder='Rechercher' />
+          <input onChange={handleSearch} value={search} className='searchbar' type="text" placeholder='Rechercher' autoFocus />
           <button onClick={handleDelete} className={`delete ${isSearching ? "active" : ""}`}>
             <Cross />
           </button>

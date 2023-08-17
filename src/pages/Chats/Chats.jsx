@@ -26,8 +26,8 @@ function Chats() {
   return (
     <>
       <Nav />
-      <NavWork />
       <div className="chats-ctn">
+        <NavWork />
         {conversations.map((conversation) => (
           <ChatItem key={conversation._id} conversation={conversation} currentUser={currentUser} />
         ))}

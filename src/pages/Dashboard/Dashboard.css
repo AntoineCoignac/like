@@ -1,6 +1,6 @@
 .dashboard{
     width: 100%;
-    padding: 122px 20px 20px;
+    padding: 80px 20px 20px;
     color : var(--white);
 }
 
@@ -9,8 +9,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    column-gap: 10vw;
-    padding: 20px 0;
+    column-gap: 20vw;
+    padding: 40px 0;
     border-bottom: 1px solid var(--dark);
 }
 

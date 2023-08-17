@@ -34,6 +34,7 @@ code {
   --white-01 : rgba(255, 255, 255, 0.1);
   --white-005 : rgba(255, 255, 255, 0.05);
   --red : #D91A3D;
+  --dark-red : #611b28;
   --blue : #29B9F2;
   --grey : #A7A7A7;
 }

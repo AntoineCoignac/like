@@ -19,6 +19,9 @@ import Settings from './pages/Settings/Settings';
 import NewGig from './pages/NewGig/NewGig';
 import User from './pages/User/User';
 import Gig from './pages/Gig/Gig';
+import EditGig from './pages/EditGig/EditGig';
+import Pay from './pages/Pay/Pay';
+import Success from './pages/Success/Success';
 
 function App() {
   const queryClient = new QueryClient();
@@ -43,6 +46,9 @@ function App() {
         <Route path="/settings" Component={Settings}/>
         <Route path='/newgig' Component={NewGig}/>
         <Route path='/gig/:gigId' Component={Gig}/>
+        <Route path='/editgig/:gigId' Component={EditGig}/>
+        <Route path='/pay/:id' Component={Pay}/>
+        <Route path='/success' Component={Success}/>
       </Routes>
       </QueryClientProvider>
     </Router>

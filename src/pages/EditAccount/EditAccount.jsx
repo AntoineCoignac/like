@@ -4,6 +4,7 @@ import "./EditAccount.css";
 import EditBrand from '../../components/EditBrand/EditBrand';
 import EditCreator from '../../components/EditCreator/EditCreator';
 import { useNavigate } from 'react-router-dom';
+import Back from '../../components/Back/Back';
 
 function EditAccount() {
   const navigate = useNavigate();
@@ -13,7 +14,10 @@ function EditAccount() {
   if (currentUser) {
     return (
       <>
-        <Nav></Nav>
+        <div className="top-bar">
+          <Back/>
+          <p className='name big-title'>Modifier mon compte</p>
+        </div>
         <div className='me'>
           {
             currentUser.isSeller ? (

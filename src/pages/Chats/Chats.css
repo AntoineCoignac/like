@@ -1,8 +1,12 @@
 .chats-ctn{
-    padding: 122px 20px 100px;
+    padding: 80px 20px 100px;
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.chats-ctn .navwork{
+    margin-bottom: 20px;
 }
 
 .chat-item {

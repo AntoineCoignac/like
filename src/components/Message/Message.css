@@ -7,6 +7,7 @@
     column-gap: 10px;
 }
 
+
 .message.received{
     justify-content: flex-start;
 }

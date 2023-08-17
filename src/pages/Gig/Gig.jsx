@@ -82,7 +82,7 @@ function Gig() {
                     <p className='desc'>{gig.desc}</p>
                 </div>
                 <div className="fixed-btn">
-                    <Link className='btn' to={``}>Commander à {user.name} {user.lastname}.</Link>
+                    <Link className='btn' to={`/pay/${gig._id}`}>Commander à {user.name} {user.lastname}.</Link>
                 </div>
             </>
         )
