@@ -8,11 +8,12 @@ function Success() {
   const navigate = useNavigate();
   const params = new URLSearchParams(search);
   const payment_intent = params.get("payment_intent");
+  const brief = params.get("brief");
 
   useEffect(()=>{
     const makeRequest = async ()=>{
       try {
-        await newRequest.put("/orders", {payment_intent});
+        await newRequest.put("/orders", {payment_intent, brief});
         setTimeout(()=>{
           navigate("/work/orders");
         }, 5000);

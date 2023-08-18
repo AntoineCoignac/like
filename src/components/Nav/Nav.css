@@ -6,6 +6,7 @@
     justify-content: space-between;
     position: fixed;
     padding: 20px;
+    height: 80px;
     z-index: 1000;
     background-color: var(--black);
 }

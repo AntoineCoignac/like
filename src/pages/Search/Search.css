@@ -69,6 +69,13 @@
     right: 0;
 }
 
+.gig-result .arrow-button{
+    width: fit-content;
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+}
+
 .user-result{
     padding: 20px 0;
     width: 100%;

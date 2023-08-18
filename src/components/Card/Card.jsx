@@ -5,8 +5,11 @@ import LikeCounter from '../LikeCounter/LikeCounter';
 import { Link } from 'react-router-dom';
 import "./Card.css";
 import newRequest from '../../utils/newRequest';
+import BackArrow from '../../icons/back/BackArrow';
 
 function Card({ rate, userId }) {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
     const [play, setPlay] = useState(false);
     const cardRef = useRef(null);
 
@@ -54,7 +57,7 @@ function Card({ rate, userId }) {
 
     useEffect(() => {
         loadUser(); // Call the loadUser function here to fetch user data
-      }, []);
+    }, []);
 
     const windowWidth = window.innerWidth;
 
@@ -87,12 +90,21 @@ function Card({ rate, userId }) {
                     }
 
                 </div>
-                {
-                    user ? (
-                        <Link className='btn' to={`/pay/${rate._id}`}>Commander à {`${user.name} ${user.lastname.charAt(0)}.`}</Link>
-                    ) : null
-                }
-
+                {user ? (
+                    currentUser ? (
+                        userId !== currentUser._id ? (
+                            <Link className='btn' to={`/pay/${rate._id}`}>
+                                Commander à {`${user.name} ${user.lastname.charAt(0)}.`}
+                            </Link>
+                        ) : (
+                            <Link className='arrow-button' to={`/editgig/${rate._id}`}>
+                                <span>Modifier</span>
+                                <BackArrow />
+                            </Link>
+                        )) : <Link className='btn' to={`/login`}>
+                                Commander à {`${user.name} ${user.lastname.charAt(0)}.`}
+                            </Link>
+                ) : null}
             </div>
         </div>
     )

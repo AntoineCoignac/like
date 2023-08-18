@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import LikeCounter from '../../components/LikeCounter/LikeCounter';
 
 function Gig() {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const { gigId } = useParams();
     const [gig, setGig] = useState({});
     const [user, setUser] = useState({});
@@ -81,9 +82,18 @@ function Gig() {
                     </div>
                     <p className='desc'>{gig.desc}</p>
                 </div>
-                <div className="fixed-btn">
-                    <Link className='btn' to={`/pay/${gig._id}`}>Commander à {user.name} {user.lastname}.</Link>
-                </div>
+                {
+                    currentUser ? (
+                        currentUser._id !== user._id ?
+                            <div className="fixed-btn">
+                                <Link className='btn' to={`/pay/${gig._id}`}>Commander à {user.name} {user.lastname}.</Link>
+                            </div>
+                            : null)
+                        : 
+                        <div className="fixed-btn">
+                            <Link className='btn' to={`/login`}>Commander à {user.name} {user.lastname}.</Link>
+                        </div>
+                }
             </>
         )
     } else {

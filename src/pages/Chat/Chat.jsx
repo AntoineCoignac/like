@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Back from '../../components/Back/Back';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 import "./Chat.css";
 import ChatBox from '../../components/ChatBox/ChatBox';
@@ -9,8 +9,10 @@ import { useEffect } from 'react';
 
 
 function Chat() {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const { userId } = useParams();
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   const loadUser = async () => {
     try {
@@ -26,7 +28,12 @@ function Chat() {
     if (userId) { // Vérifiez si userId est défini
       loadUser();
     }
-  }, [userId]);
+
+    // Check if currentUser._id === userId and redirect if necessary
+    if (currentUser._id === userId) {
+      navigate('/'); // Redirect to the homepage using navigate
+    }
+  }, [userId, currentUser, navigate]);
 
   return (
     <>

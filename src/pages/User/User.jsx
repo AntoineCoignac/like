@@ -15,6 +15,7 @@ import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
 
 function User() {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const [user, setUser] = useState(null);
   const [userGigs, setUserGigs] = useState(null);
   const { id } = useParams();
@@ -60,7 +61,12 @@ function User() {
             <div className="top">
               <ProfilePicture photo={user.img} badge={user.sub} />
               <p className="name big-title">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
-              <Link className='btn' to={`/chat/${user._id}`}>Discuter</Link>
+              {
+                currentUser ? (
+                currentUser._id !== user._id ?
+                  <Link className='btn' to={`/chat/${user._id}`}>Discuter</Link> : null) : <Link className='btn' to={`/login`}>Discuter</Link>
+              }
+              
               <p className="desc">
                 {user.desc ? user.desc : "Aucune information"}
               </p>

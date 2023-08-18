@@ -7,15 +7,18 @@ import { useNavigate } from 'react-router-dom';
 function Settings() {
   const navigate = useNavigate();
 
-  const handleClick = async ()=>{
+  const handleClick = async () => {
     try {
       await newRequest.post("/auth/logout");
-      localStorage.setItem('currentUser', undefined)
+      console.log("Before removal:", localStorage.getItem("currentUser"));
+      localStorage.removeItem('currentUser');
+      console.log("After removal:", localStorage.getItem("currentUser"));
       navigate("/");
     } catch (err) {
       console.log(err);
     }
   }
+  
   return (
     <>
       <div className="top-bar">

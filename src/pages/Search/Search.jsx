@@ -8,9 +8,10 @@ import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 import LikeCounter from '../../components/LikeCounter/LikeCounter';
 import newRequest from '../../utils/newRequest';
 import Enterprise from '../../icons/enterprise/Enterprise';
+import BackArrow from '../../icons/back/BackArrow';
 
 function Search() {
-
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const [isSearching, setIsSearching] = useState(false);
   const [type, setType] = useState("gig");
   const [search, setSearch] = useState("");
@@ -106,7 +107,11 @@ function Search() {
                       </Link>
                       <LikeCounter nbr={gig.user.like} />
                     </div>
-                    <Link className='btn' to={`/work/chat/${gig.userId}`}>Contacter {gig.user.name}</Link>
+                    {
+                      currentUser._id !== gig.user._id ?
+                        <Link className='btn' to={`/pay/${gig._id}`}>Commander</Link>
+                        : <Link className='arrow-button' to={`/editgig/${gig._id}`}><span>Modifier</span><BackArrow/></Link>
+                    }
                   </>
                 ) : null}
               </div>
