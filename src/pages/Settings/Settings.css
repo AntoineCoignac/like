@@ -6,13 +6,3 @@
     background-color: var(--red);
     color : var(--white);
 }
-
-.disconnect:hover{
-    box-shadow: -2px 2px 0px 0px var(--dark-red);
-}
-
-.btn:active{
-    color: var(--grey);
-    transform: translate(1px,-1px);
-    box-shadow: -1px 1px 0px 0px var(--dark-red);
-  }
