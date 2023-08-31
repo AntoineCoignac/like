@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import SettingsIcon from '../../icons/settings/SettingsIcon';
 import "./Filter.css";
 import FilterSettings from '../FilterSettings/FilterSettings';
+import { useRef } from 'react';
 
 function Filter({ filters, setFilters }) {
   const [activeSettings, setActiveSettings] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [scrollStartX, setScrollStartX] = useState(0);
+  const scrollContainerRef = useRef(null);
 
   const handleClick = (event) => {
     const button = event.target;
@@ -15,12 +19,31 @@ function Filter({ filters, setFilters }) {
     }));
   }
 
+  const handleMouseDown = (event) => {
+    setIsScrolling(true);
+    setScrollStartX(event.clientX);
+  };
+
+  const handleMouseMove = (event) => {
+    if (!isScrolling) return;
+
+    const offsetX = event.clientX - scrollStartX;
+    scrollContainerRef.current.scrollLeft -= offsetX;
+    setScrollStartX(event.clientX);
+  };
+
+  const handleMouseUp = () => {
+    setIsScrolling(false);
+  };
+
   return (
     <div className="filters">
       <button className="border-icon-btn" type='button' onClick={() => setActiveSettings(!activeSettings)}>
         <SettingsIcon />
       </button>
-      <div className="filters-list">
+      <div className="filters-list" ref={scrollContainerRef} onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
         <button
           onClick={handleClick}
           className={`filter ${filters.tag === "me" ? "active" : ""}`}
@@ -134,7 +157,7 @@ function Filter({ filters, setFilters }) {
           Voix off
         </button>
       </div>
-      <FilterSettings active={activeSettings ? "active" : ""} filters={filters} setFilters={setFilters}/>
+      <FilterSettings active={activeSettings ? "active" : ""} filters={filters} setFilters={setFilters} />
     </div>
   )
 }

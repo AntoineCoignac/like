@@ -30,9 +30,11 @@ function Nav({transparent=false}) {
               <Link to="/search">
                 <SearchIcon/>
               </Link>
+              {/**
               <Link to="/notifications">
                 <NotificationsIcon/>
               </Link>
+              */}
               <Link to="/work/dashboard">
                 <WorkIcon/>
               </Link>

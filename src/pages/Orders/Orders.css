@@ -17,6 +17,71 @@
     display: flex;
 }
 
+.order-item .desc{
+    margin: 0 0 10px;
+    color: var(--grey);
+}
+
 .order-item#previous{
     opacity: 0.5;
+}
+
+.transaction{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: fit-content;
+}
+
+.situation{
+    width: fit-content;
+    padding: 5px 10px;
+    background-color: var(--dark);
+    border-radius: 3px;
+    color: var(--grey);
+    border: 1px solid var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.situation#ok{
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    background-color: transparent;
+}
+
+.situation#wait svg{
+    animation: load 1s infinite linear;
+}
+
+.situation#no{
+    color: var(--red);
+    border: 1px solid var(--red);
+    background-color: transparent;
+}
+
+.situation#no .cross{
+    width: 10px;
+    height: 10px;
+    stroke:var(--red);
+}
+
+@keyframes load {
+    0%{
+        rotate: 0;
+    }
+    100%{
+        rotate: 360deg;
+    }
+}
+
+@media screen and (max-width : 360px) {
+    .transaction{
+        flex-direction: column;
+    }
+
+    .transaction-icon{
+        rotate: 90deg;
+    }
 }

@@ -53,6 +53,10 @@ a{
   justify-content: center;
 }
 
+button, img, video{
+  user-select: none;
+}
+
 .btn{
   padding: 0 15px;
   min-height: 36px;
@@ -67,6 +71,7 @@ a{
   border: 0;
   text-align: center;
   transition: ease 0.1s;
+  user-select: none;
 }
 
 .btn.absolute{
