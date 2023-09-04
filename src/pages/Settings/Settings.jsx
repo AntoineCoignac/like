@@ -26,7 +26,7 @@ function Settings() {
         <p className="name big-title">Paramètres</p>
       </div>
       <div className="settings">
-        <button onClick={handleClick} className='btn disconnect'>Se déconnecter</button>
+        <button onClick={handleClick} className='btn negative'>Se déconnecter</button>
       </div>
     </>
   )

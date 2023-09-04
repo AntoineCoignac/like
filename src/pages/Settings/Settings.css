@@ -2,7 +2,7 @@
     padding: 20px;
 }
 
-.disconnect{
+.negative{
     background-color: var(--red);
     color : var(--white);
 }
