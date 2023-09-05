@@ -44,12 +44,11 @@
 }
 
 .toggle button{
-    padding: 3px 10px;
+    padding: 5px 10px;
     background: var(--dark);
     border: 0;
     color: var(--white);
     border-radius: 3px;
-
 }
 
 .toggle button.active{

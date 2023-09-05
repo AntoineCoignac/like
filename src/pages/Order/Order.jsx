@@ -13,6 +13,7 @@ function Order() {
   const [orderInfo, setOrderInfo] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const [isAccepting, setIsAccepting] = useState(null);
 
   useEffect(() => {
     const loadOrderInfo = async () => {
@@ -35,6 +36,7 @@ function Order() {
         });
 
         setIsLoading(false);
+        setIsAccepting(orderData.acceptedBySeller);
         console.log(orderData, buyerData, sellerData, gigData);
       } catch (err) {
         console.log(err);
@@ -45,13 +47,31 @@ function Order() {
     loadOrderInfo();
   }, [orderId]);
 
+  const handleAccept = async () => {
+    try {
+      await newRequest.put(`/orders/accept/${orderId}`, { acceptedBySeller: true });
+      setIsAccepting(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleReject = async () => {
+    try {
+      await newRequest.put(`/orders/accept/${orderId}`, { acceptedBySeller: false });
+      setIsAccepting(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     isLoading ? (
       <p>Loading...</p>
     ) : (
 
       currentUser._id === orderInfo.seller._id ?
-
+        //l'utilisateur est le vendeur
         <>
           <div className="top-bar">
             <Back />
@@ -63,7 +83,7 @@ function Order() {
             </div>
           </div>
           {
-            orderInfo.order.acceptedBySeller === null ?
+            isAccepting === null ?
               <div className='order-dialogue' id='wait'>
                 <div className="order-title">
                   <p className="big-title">Récapitulatif</p>
@@ -111,12 +131,12 @@ function Order() {
                   </section>
                 </div>
                 <div className="order-bottom">
-                  <button className="btn">Valider le brief</button>
-                  <button className="btn negative">Refuser</button>
+                  <button onClick={handleAccept} className="btn">Valider le brief</button>
+                  <button onClick={handleReject} className="btn negative">Refuser</button>
                 </div>
               </div>
               :
-              (orderInfo.order.acceptedBySeller ?
+              (isAccepting ?
                 <div className='situation' id='ok'>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7.28828 0.815376L11.7903 3.99223C11.91 4.07671 11.9867 4.20945 12 4.35537L12.5002 9.84266C12.5194 10.0533 12.4039 10.2533 12.2119 10.342L7.20966 12.6524C7.07664 12.7138 6.92336 12.7138 6.79034 12.6524L1.7881 10.342C1.59606 10.2533 1.48062 10.0533 1.49982 9.84266L2.00004 4.35536C2.01335 4.20945 2.08998 4.07671 2.2097 3.99223L6.71172 0.815375C6.88456 0.693414 7.11544 0.693414 7.28828 0.815376Z" stroke="#29B9F2" />
@@ -126,16 +146,65 @@ function Order() {
                   <span>Validé</span>
                 </div>
                 :
+                <div className='order-dialogue' id='wait'>
+                <div className="order-title">
+                  <p className="big-title">Récapitulatif</p>
+                </div>
+                <div className="order-content">
+                  <section>
+                    <p className="title">Brief</p>
+                    <p className="desc">{orderInfo.order.brief}</p>
+                    <Link to={`/chat/${orderInfo.seller._id}`}>
+                      <SendIcon />
+                      Discuter avec le créateur
+                    </Link>
+                  </section>
+                  <section>
+                    <p className="title">Vendeur</p>
+                    <p className="desc">{orderInfo.seller.name}</p>
+                  </section>
+                  <section>
+                    <p className="title">Acheteur</p>
+                    <p className="desc">{orderInfo.buyer.name}</p>
+                  </section>
+                  <section>
+                    <p className="title">Tarif</p>
+                    <p className="desc">{orderInfo.gig.title}</p>
+                  </section>
+                  <section>
+                    <p className="title">Description</p>
+                    <p className="desc">{orderInfo.gig.desc}</p>
+                  </section>
+                  <section>
+                    <p className="title">Catégorie</p>
+                    <p className="desc">{orderInfo.gig.tag}</p>
+                  </section>
+                  <section>
+                    <p className="title">Délai</p>
+                    <p className="desc">{orderInfo.gig.deliveryTime} jours</p>
+                  </section>
+                  <section>
+                    <p className="title">Nombre de modifications</p>
+                    <p className="desc">{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                  </section>
+                  <section>
+                    <p className="title">Prix</p>
+                    <p className="desc">{orderInfo.gig.price}€</p>
+                  </section>
+                </div>
+                <div className="order-bottom">
                 <div className='situation' id='no'>
                   <Cross />
                   <span>Non validé</span>
                 </div>
+                </div>
+              </div>
               )
           }
         </>
 
         :
-
+        //l'utilisateur est l'acheteur
         <>
           <div className="top-bar">
             <Back />
@@ -147,7 +216,7 @@ function Order() {
             </div>
           </div>
           {
-            orderInfo.order.acceptedBySeller === null ?
+            isAccepting === null ?
               <div className='order-dialogue' id='wait'>
                 <div className="order-title">
                   <p className="big-title">Récapitulatif</p>
@@ -204,7 +273,7 @@ function Order() {
                 </div>
               </div>
               :
-              (orderInfo.order.acceptedBySeller ?
+              (isAccepting ?
                 <div className='situation' id='ok'>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7.28828 0.815376L11.7903 3.99223C11.91 4.07671 11.9867 4.20945 12 4.35537L12.5002 9.84266C12.5194 10.0533 12.4039 10.2533 12.2119 10.342L7.20966 12.6524C7.07664 12.7138 6.92336 12.7138 6.79034 12.6524L1.7881 10.342C1.59606 10.2533 1.48062 10.0533 1.49982 9.84266L2.00004 4.35536C2.01335 4.20945 2.08998 4.07671 2.2097 3.99223L6.71172 0.815375C6.88456 0.693414 7.11544 0.693414 7.28828 0.815376Z" stroke="#29B9F2" />
@@ -214,10 +283,59 @@ function Order() {
                   <span>Validé</span>
                 </div>
                 :
+                <div className='order-dialogue' id='wait'>
+                <div className="order-title">
+                  <p className="big-title">Récapitulatif</p>
+                </div>
+                <div className="order-content">
+                  <section>
+                    <p className="title">Brief</p>
+                    <p className="desc">{orderInfo.order.brief}</p>
+                    <Link to={`/chat/${orderInfo.seller._id}`}>
+                      <SendIcon />
+                      Discuter avec le créateur
+                    </Link>
+                  </section>
+                  <section>
+                    <p className="title">Vendeur</p>
+                    <p className="desc">{orderInfo.seller.name}</p>
+                  </section>
+                  <section>
+                    <p className="title">Acheteur</p>
+                    <p className="desc">{orderInfo.buyer.name}</p>
+                  </section>
+                  <section>
+                    <p className="title">Tarif</p>
+                    <p className="desc">{orderInfo.gig.title}</p>
+                  </section>
+                  <section>
+                    <p className="title">Description</p>
+                    <p className="desc">{orderInfo.gig.desc}</p>
+                  </section>
+                  <section>
+                    <p className="title">Catégorie</p>
+                    <p className="desc">{orderInfo.gig.tag}</p>
+                  </section>
+                  <section>
+                    <p className="title">Délai</p>
+                    <p className="desc">{orderInfo.gig.deliveryTime} jours</p>
+                  </section>
+                  <section>
+                    <p className="title">Nombre de modifications</p>
+                    <p className="desc">{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                  </section>
+                  <section>
+                    <p className="title">Prix</p>
+                    <p className="desc">{orderInfo.gig.price}€</p>
+                  </section>
+                </div>
+                <div className="order-bottom">
                 <div className='situation' id='no'>
                   <Cross />
                   <span>Non validé</span>
                 </div>
+                </div>
+              </div>
               )
           }
         </>
