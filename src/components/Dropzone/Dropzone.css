@@ -1,0 +1,84 @@
+.dropzone-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+}
+
+.dropzone{
+    padding: 20px;
+    width: 100%;
+    height: 300px;
+    border-radius: 20px;
+    border: 1px solid var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.dropzone.active{
+    border: 1px solid var(--grey);
+    background-color: var(--dark);
+}
+
+.dropzone p{
+    font-size: 15px;
+    color: var(--grey);
+    text-align: center;
+}
+
+.dropzone-container .files{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.dropzone-container .files li{
+    list-style: none;
+    padding: 10px 20px;
+    border: 1px solid var(--dark);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--dark);
+}
+
+.dropzone-container .files li .delete{
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.dropzone-container .files li .delete:hover{
+    background-color: var(--red);
+}
+
+.dropzone-container .files li:has(>.delete:hover) {
+    background-color: transparent;
+}
+
+.dropzone-container .nofile{
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px 20px;
+    line-height: 40px;
+    text-align: center;
+    border: 1px solid var(--dark);
+    border-radius: 5px;
+    color: var(--grey);
+}
+
+.dropzone-container .btn{
+    margin-right: 0;
+    margin-left: auto;
+    width: fit-content;
+}
