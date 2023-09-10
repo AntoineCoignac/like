@@ -20,6 +20,9 @@
     border-radius: 3px;
 }
 
+.profile-menu-list a:hover{
+    background-color: var(--dark);
+}
 
 .pp-btn{
     border : 0;

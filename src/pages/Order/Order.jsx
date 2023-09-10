@@ -15,6 +15,25 @@ function Order() {
   const [isLoading, setIsLoading] = useState(true);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const [isAccepting, setIsAccepting] = useState(null);
+  const [isWaiting, setIsWaiting] = useState(false);
+  const [deliveries, setDeliveries] = useState([]);
+
+  useEffect(() => {
+    const fetchDeliveries = async () => {
+      try {
+        const response = await newRequest.get(`/deliveries/order/${orderId}`);
+        setDeliveries(response.data);
+        console.log(response.data);
+        if (response.data[0].isValid === null){
+          setIsWaiting(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchDeliveries();
+  }, [orderId]);
 
   useEffect(() => {
     const loadOrderInfo = async () => {
@@ -65,6 +84,46 @@ function Order() {
       console.log(err);
     }
   };
+
+  function getFileExtensionFromUrl(url) {
+    // Utilisez la méthode split() pour diviser l'URL en segments en utilisant le caractère "/"
+    const segments = url.split('/');
+    
+    // Prenez le dernier segment (qui devrait être le nom du fichier)
+    const filename = segments[segments.length - 1];
+    
+    // Utilisez la méthode split() à nouveau pour diviser le nom du fichier en parties en utilisant le caractère "."
+    const parts = filename.split('.');
+    
+    // Prenez la dernière partie (qui devrait être l'extension)
+    const extension = parts[parts.length - 1];
+    
+    return extension;
+  }
+
+  function formatDistanceToNow(isoDateString) {
+    const date = new Date(isoDateString);
+    const now = new Date();
+    const timeDifferenceMillis = now - date;
+  
+    const millisecondsPerHour = 3600000; // 1000 ms * 60 min * 60 s
+    const millisecondsPerDay = 86400000; // 1000 ms * 60 min * 60 s * 24 h
+    const millisecondsPerWeek = 604800000; // 1000 ms * 60 min * 60 s * 24 h * 7 jours
+  
+    if (timeDifferenceMillis < millisecondsPerHour) {
+      const minutes = Math.floor(timeDifferenceMillis / 60000);
+      return `il y a ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+    } else if (timeDifferenceMillis < millisecondsPerDay) {
+      const hours = Math.floor(timeDifferenceMillis / millisecondsPerHour);
+      return `il y a ${hours} ${hours === 1 ? 'heure' : 'heures'}`;
+    } else if (timeDifferenceMillis < millisecondsPerWeek) {
+      const days = Math.floor(timeDifferenceMillis / millisecondsPerDay);
+      return `il y a ${days} ${days === 1 ? 'jour' : 'jours'}`;
+    } else {
+      const weeks = Math.floor(timeDifferenceMillis / millisecondsPerWeek);
+      return `il y a ${weeks} ${weeks === 1 ? 'semaine' : 'semaines'}`;
+    }
+  }
 
   return (
     isLoading ? (
@@ -178,7 +237,7 @@ function Order() {
                       </section>
                       <section>
                         <p className="title">Nombre de modifications</p>
-                        <p className="desc">{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                        <p className="desc">{orderInfo.order.remainingRevisions}/{orderInfo.gig.revisionNumber} modifcations disponibles</p>
                       </section>
                       <section>
                         <p className="title">Prix</p>
@@ -187,7 +246,31 @@ function Order() {
                     </div>
                   </div>
                   <div className="management">
-                    <Dropzone/>
+                  {
+                    !isWaiting ? (
+                      <Dropzone order={orderInfo.order} />
+                    ) : (
+                      <div className='deliveries'>
+                        <p className="name big-title">
+                          Mes dernières livraisons
+                        </p>
+                        {deliveries.map(delivery => (
+                          <div className='delivery-item'>
+                            <div className='delivery' key={delivery._id}>
+                              {delivery.docs.map(doc => (
+                                <Link target='_blank' key={doc} to={doc}>
+                                  {getFileExtensionFromUrl(doc)}
+                                </Link>
+                              ))}
+                            </div>
+                            <span>{
+                              delivery.isValid === null ? "En attente d'un retour de l'acheteur · " : null
+                            }{formatDistanceToNow(delivery.createdAt)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )
+                  }
                   </div>
                 </div>
                 :

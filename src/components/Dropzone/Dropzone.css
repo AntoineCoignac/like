@@ -48,6 +48,7 @@
 
 .dropzone-container .files li .delete{
     width: 40px;
+    min-width: 40px;
     height: 40px;
     padding: 0;
     border: 0;
@@ -78,7 +79,12 @@
 }
 
 .dropzone-container .btn{
-    margin-right: 0;
-    margin-left: auto;
     width: fit-content;
+}
+
+.dropzone-container .send-order{
+    display: flex;
+    row-gap: 10px;
+    flex-direction: column;
+    align-items: flex-end;
 }

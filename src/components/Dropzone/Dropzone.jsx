@@ -4,8 +4,36 @@ import { useDropzone } from 'react-dropzone';
 import "./Dropzone.css";
 import Cross from '../../icons/cross/Cross';
 
-const Dropzone = (props) => {
+import upload from '../../utils/upload';
+import newRequest from '../../utils/newRequest';
+import { useNavigate } from 'react-router-dom';
+
+function Dropzone ({ order }) {
     const [acceptedFiles, setAcceptedFiles] = useState([]);
+    const navigate = useNavigate();
+
+    const handleSubmitDelivery = async () => {
+        try {
+            const urls = await Promise.all(acceptedFiles.map(async (file) => {
+                const url = await upload(file);
+                return url;
+            }));
+    
+            urls.forEach((url) => {
+                console.log(url);
+            });
+    
+            const submitDelivery = await newRequest.post(`/deliveries/create`, {
+                orderId: order._id,
+                docs: urls,
+            });
+
+            navigate("/work/orders")
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    
 
     const {
         getRootProps,
@@ -50,17 +78,18 @@ const Dropzone = (props) => {
                         <p className='nofile'>Aucun fichier n'a été déposé</p>
                 }
             </aside>
-            {
-                    acceptedFiles.length > 0 ?
-                        <button className="btn">
-                            Envoyer
-                        </button>
-                    : 
-                        <button className="btn" disabled>
-                            Envoyer
-                        </button>
-            }   
-            
+            <div className="send-order">
+                {
+                        acceptedFiles.length > 0 ?
+                            <button className="btn" onClick={handleSubmitDelivery}>
+                                Envoyer
+                            </button>
+                        : 
+                            <button className="btn" disabled>
+                                Envoyer
+                            </button>
+                }   
+            </div>       
         </section>
     );
 }
