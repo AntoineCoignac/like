@@ -4,8 +4,38 @@ import Filter from '../../components/Filter/Filter';
 import CardList from '../../components/CardList/CardList';
 import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
+import CryptoJS from 'crypto-js';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      console.log(currentUser);
+  
+      if (currentUser && currentUser.password) {
+        try {
+          const secretKey = 'VotreCleSecrete';
+          const res = await newRequest.post("/auth/login", {
+            username: currentUser.username,
+            password: CryptoJS.AES.decrypt(currentUser.password, secretKey).toString(CryptoJS.enc.Utf8)
+          });
+          console.log("reconnexion");
+          localStorage.setItem("currentUser", JSON.stringify({ ...res.data, password: currentUser.password }));
+        } catch (err) {
+          console.log(err);
+        }
+      }else{
+        navigate("/");
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  
   const [filters, setFilters] = useState(
     {
       tag : "me",

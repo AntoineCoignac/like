@@ -5,6 +5,7 @@ import "../Log.css";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import newRequest from '../../../utils/newRequest';
+import CryptoJS from 'crypto-js';
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -17,7 +18,9 @@ function Login() {
     e.preventDefault();
     try{
       const res = await newRequest.post("/auth/login", {username,password});
-      localStorage.setItem("currentUser", JSON.stringify(res.data));
+      const secretKey = 'VotreCleSecrete';
+      const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
+      localStorage.setItem("currentUser", JSON.stringify({...res.data, password: encryptedPassword}));
       navigate("/")
     }catch(err){
       setError(err.response.data);
