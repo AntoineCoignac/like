@@ -51,10 +51,6 @@
     background-color: transparent;
 }
 
-.situation#wait svg{
-    animation: load 1s infinite linear;
-}
-
 .situation#no{
     color: var(--red);
     border: 1px solid var(--red);
@@ -67,14 +63,6 @@
     stroke:var(--red);
 }
 
-@keyframes load {
-    0%{
-        rotate: 0;
-    }
-    100%{
-        rotate: 360deg;
-    }
-}
 
 @media screen and (max-width : 360px) {
     .transaction{

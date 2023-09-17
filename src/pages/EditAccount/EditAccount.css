@@ -19,7 +19,7 @@
     row-gap: 5px;
 }
 
-.form input[type="text"], .form input[type="email"], .form input[type="password"], .form input[type="number"] , .form select{
+.form input[type="text"], .form input[type="email"], .form input[type="password"], .form input[type="number"] , .form select, .form textarea{
     background-color: var(--dark);
     border: 0;
     outline: none;

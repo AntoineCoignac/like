@@ -8,6 +8,7 @@ import newRequest from '../../utils/newRequest';
 import Cross from '../../icons/cross/Cross';
 import SendIcon from '../../icons/send/SendIcon';
 import Dropzone from '../../components/Dropzone/Dropzone';
+import { useNavigate } from 'react-router-dom';
 
 function Order() {
   const { orderId } = useParams();
@@ -17,6 +18,8 @@ function Order() {
   const [isAccepting, setIsAccepting] = useState(null);
   const [isWaiting, setIsWaiting] = useState(false);
   const [deliveries, setDeliveries] = useState([]);
+  const [validation, setValidation] = useState("accept");
+  const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
     const fetchDeliveries = async () => {
@@ -24,8 +27,10 @@ function Order() {
         const response = await newRequest.get(`/deliveries/order/${orderId}`);
         setDeliveries(response.data);
         console.log(response.data);
-        if (response.data[0].isValid === null){
-          setIsWaiting(true);
+        if (response.data.length > 0){
+          if (response.data[0].isValid === null){
+            setIsWaiting(true);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -124,6 +129,20 @@ function Order() {
       return `il y a ${weeks} ${weeks === 1 ? 'semaine' : 'semaines'}`;
     }
   }
+
+  const navigate = useNavigate();
+
+  const handleValidationSubmit = async (e, deliveryId) => { // Ajoutez deliveryId comme paramètre
+    e.preventDefault();
+    try {
+      console.log(validation, deliveryId);
+      const res = await newRequest.patch(`/deliveries/${deliveryId}`, {validation, feedback });
+      navigate("/work/orders");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  
 
   return (
     isLoading ? (
@@ -402,13 +421,103 @@ function Order() {
               </div>
               :
               (isAccepting ?
-                <div className='situation' id='ok'>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7.28828 0.815376L11.7903 3.99223C11.91 4.07671 11.9867 4.20945 12 4.35537L12.5002 9.84266C12.5194 10.0533 12.4039 10.2533 12.2119 10.342L7.20966 12.6524C7.07664 12.7138 6.92336 12.7138 6.79034 12.6524L1.7881 10.342C1.59606 10.2533 1.48062 10.0533 1.49982 9.84266L2.00004 4.35536C2.01335 4.20945 2.08998 4.07671 2.2097 3.99223L6.71172 0.815375C6.88456 0.693414 7.11544 0.693414 7.28828 0.815376Z" stroke="#29B9F2" />
-                    <rect x="4.42705" y="7.62125" width="0.486236" height="2.23073" transform="rotate(-47.2528 4.42705 7.62125)" fill="#29B9F2" stroke="#29B9F2" strokeWidth="0.486236" />
-                    <rect x="6.0651" y="9.13496" width="0.486236" height="5.16859" transform="rotate(-137.253 6.0651 9.13496)" fill="#29B9F2" stroke="#29B9F2" strokeWidth="0.486236" />
-                  </svg>
-                  <span>Validé</span>
+                <div className='order-dashboard' >
+                  <div className="order-recap">
+                    <div className="order-title">
+                      <p className="big-title">Récapitulatif</p>
+                    </div>
+                    <div className="order-content">
+                      <section>
+                        <p className="title">Brief</p>
+                        <p className="desc">{orderInfo.order.brief}</p>
+                        <Link to={`/chat/${orderInfo.seller._id}`}>
+                          <SendIcon />
+                          Discuter avec le créateur
+                        </Link>
+                      </section>
+                      <section>
+                        <p className="title">Vendeur</p>
+                        <p className="desc">{orderInfo.seller.name}</p>
+                      </section>
+                      <section>
+                        <p className="title">Acheteur</p>
+                        <p className="desc">{orderInfo.buyer.name}</p>
+                      </section>
+                      <section>
+                        <p className="title">Tarif</p>
+                        <p className="desc">{orderInfo.gig.title}</p>
+                      </section>
+                      <section>
+                        <p className="title">Description</p>
+                        <p className="desc">{orderInfo.gig.desc}</p>
+                      </section>
+                      <section>
+                        <p className="title">Catégorie</p>
+                        <p className="desc">{orderInfo.gig.tag}</p>
+                      </section>
+                      <section>
+                        <p className="title">Délai</p>
+                        <p className="desc">{orderInfo.gig.deliveryTime} jours</p>
+                      </section>
+                      <section>
+                        <p className="title">Nombre de modifications</p>
+                        <p className="desc">{orderInfo.order.remainingRevisions}/{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                      </section>
+                      <section>
+                        <p className="title">Prix</p>
+                        <p className="desc">{orderInfo.gig.price}€</p>
+                      </section>
+                    </div>
+                  </div>
+                  <div className="management">
+                    <div className='deliveries'>
+                        <p className="name big-title">
+                          Les dernières livraisons
+                        </p>
+                        {
+                          deliveries.length > 0 ?
+                            deliveries.map(delivery => (
+                              <div className='delivery-item'>
+                                <div className='delivery' key={delivery._id}>
+                                  {delivery.docs.map(doc => (
+                                    <Link target='_blank' key={doc} to={doc}>
+                                      {getFileExtensionFromUrl(doc)}
+                                    </Link>
+                                  ))}
+                                </div>
+                                <span>
+                                  {formatDistanceToNow(delivery.createdAt)}
+                                </span>
+                                {
+                                  delivery.isValid === null ?
+                                    <form className="form valid-delivery" onSubmit={(e) => handleValidationSubmit(e, delivery._id)}> {/* Passer l'ID de la livraison ici */}
+                                      <div className="field">
+                                        <label htmlFor="validation">
+                                          Validation
+                                        </label>
+                                        <select required name="validation" onChange={e=>setValidation(e.target.value)}>
+                                          <option value="accept">Valider</option>
+                                          <option value="reject">Refuser</option>
+                                        </select>
+                                      </div>
+                                      <div className="field">
+                                        <label htmlFor="feedback">
+                                          Feedback
+                                        </label>
+                                        <textarea onChange={e=>setFeedback(e.target.value)} placeholder='Expliquez les modifications que vous souhaitez apporter' required name="feedback" cols="30" rows="5">
+                                        </textarea>
+                                      </div>
+                                      <button className='btn' type="submit">Envoyer</button>
+                                    </form>
+                                  : <p>{delivery.feedback}</p>
+                                }
+                              </div>
+                            ))
+                            :
+                            <p className='wait-delivery'>En attente de la première livraison</p>
+                        }
+                      </div>
+                  </div>
                 </div>
                 :
                 <div className='order-dialogue' >

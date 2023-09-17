@@ -199,3 +199,13 @@
     color: var(--grey);
     margin-right: 20px;
 }
+
+.wait-delivery{
+    padding: 20px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--dark);
+    color: var(--grey);
+}
