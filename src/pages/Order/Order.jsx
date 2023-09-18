@@ -20,6 +20,8 @@ function Order() {
   const [deliveries, setDeliveries] = useState([]);
   const [validation, setValidation] = useState("accept");
   const [feedback, setFeedback] = useState("");
+  const [likeText, setLikeText] = useState("Alors, vous likez ?");
+  const [isLiked, setIsLiked] = useState(null);
 
   useEffect(() => {
     const fetchDeliveries = async () => {
@@ -27,8 +29,8 @@ function Order() {
         const response = await newRequest.get(`/deliveries/order/${orderId}`);
         setDeliveries(response.data);
         console.log(response.data);
-        if (response.data.length > 0){
-          if (response.data[0].isValid === null){
+        if (response.data.length > 0) {
+          if (response.data[0].isValid === null) {
             setIsWaiting(true);
           }
         }
@@ -36,7 +38,7 @@ function Order() {
         console.error(error);
       }
     };
-  
+
     fetchDeliveries();
   }, [orderId]);
 
@@ -61,6 +63,7 @@ function Order() {
         });
 
         setIsLoading(false);
+        setIsLiked(orderData.isLiked);
         setIsAccepting(orderData.acceptedBySeller);
         console.log(orderData, buyerData, sellerData, gigData);
       } catch (err) {
@@ -93,16 +96,16 @@ function Order() {
   function getFileExtensionFromUrl(url) {
     // Utilisez la méthode split() pour diviser l'URL en segments en utilisant le caractère "/"
     const segments = url.split('/');
-    
+
     // Prenez le dernier segment (qui devrait être le nom du fichier)
     const filename = segments[segments.length - 1];
-    
+
     // Utilisez la méthode split() à nouveau pour diviser le nom du fichier en parties en utilisant le caractère "."
     const parts = filename.split('.');
-    
+
     // Prenez la dernière partie (qui devrait être l'extension)
     const extension = parts[parts.length - 1];
-    
+
     return extension;
   }
 
@@ -110,11 +113,11 @@ function Order() {
     const date = new Date(isoDateString);
     const now = new Date();
     const timeDifferenceMillis = now - date;
-  
+
     const millisecondsPerHour = 3600000; // 1000 ms * 60 min * 60 s
     const millisecondsPerDay = 86400000; // 1000 ms * 60 min * 60 s * 24 h
     const millisecondsPerWeek = 604800000; // 1000 ms * 60 min * 60 s * 24 h * 7 jours
-  
+
     if (timeDifferenceMillis < millisecondsPerHour) {
       const minutes = Math.floor(timeDifferenceMillis / 60000);
       return `il y a ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
@@ -136,13 +139,13 @@ function Order() {
     e.preventDefault();
     try {
       console.log(validation, deliveryId);
-      const res = await newRequest.patch(`/deliveries/${deliveryId}`, {validation, feedback });
+      const res = await newRequest.patch(`/deliveries/${deliveryId}`, { validation, feedback });
       navigate("/work/orders");
     } catch (err) {
       console.log(err);
     }
   }
-  
+
 
   return (
     isLoading ? (
@@ -202,7 +205,7 @@ function Order() {
                   </section>
                   <section>
                     <p className="title">Nombre de modifications</p>
-                    <p className="desc">{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                    <p className="desc">{orderInfo.gig.revisionNumber} modifications disponibles</p>
                   </section>
                   <section>
                     <p className="title">Prix</p>
@@ -256,7 +259,7 @@ function Order() {
                       </section>
                       <section>
                         <p className="title">Nombre de modifications</p>
-                        <p className="desc">{orderInfo.order.remainingRevisions}/{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                        <p className="desc">{orderInfo.order.remainingRevisions}/{orderInfo.gig.revisionNumber} modifications disponibles</p>
                       </section>
                       <section>
                         <p className="title">Prix</p>
@@ -265,31 +268,47 @@ function Order() {
                     </div>
                   </div>
                   <div className="management">
-                  {
-                    !isWaiting ? (
-                      <Dropzone order={orderInfo.order} />
-                    ) : (
-                      <div className='deliveries'>
-                        <p className="name big-title">
-                          Mes dernières livraisons
-                        </p>
-                        {deliveries.map(delivery => (
-                          <div className='delivery-item'>
-                            <div className='delivery' key={delivery._id}>
-                              {delivery.docs.map(doc => (
-                                <Link target='_blank' key={doc} to={doc}>
-                                  {getFileExtensionFromUrl(doc)}
-                                </Link>
-                              ))}
+                    {
+                      orderInfo.order.isFinished ?
+                        <div className="is-finished">
+                          <p className='big-title name'>Félicitations, la commande est finalisée 🎉</p>
+                        </div> : null
+                    }
+                    {
+                      !isWaiting && !orderInfo.order.isFinished ? (
+                        <Dropzone order={orderInfo.order} />
+                      ) : null
+                    }
+                    {
+                      deliveries.length > 0 ?
+                        <div className='deliveries'>
+                          <p className="name big-title">
+                            Mes dernières livraisons
+                          </p>
+                          {deliveries.map(delivery => (
+                            <div className='delivery-item'>
+                              <div className='delivery' key={delivery._id}>
+                                {delivery.docs.map(doc => (
+                                  <Link target='_blank' key={doc} to={doc}>
+                                    {getFileExtensionFromUrl(doc)}
+                                  </Link>
+                                ))}
+                              </div>
+                              <span>{
+                                delivery.isValid === null ? "En attente d'un retour de l'acheteur · " : null
+                              }{formatDistanceToNow(delivery.createdAt)}</span>
+                              {
+                                delivery.isValid !== null ? <div className='feedback'>
+                                  <p className="name">Feedback<span className='info'>· {formatDistanceToNow(delivery.updatedAt)}</span></p>
+                                  <p className="desc">
+                                    {delivery.feedback}
+                                  </p>
+                                </div> : null
+                              }
                             </div>
-                            <span>{
-                              delivery.isValid === null ? "En attente d'un retour de l'acheteur · " : null
-                            }{formatDistanceToNow(delivery.createdAt)}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )
-                  }
+                          ))}
+                        </div> : null
+                    }
                   </div>
                 </div>
                 :
@@ -332,7 +351,7 @@ function Order() {
                     </section>
                     <section>
                       <p className="title">Nombre de modifications</p>
-                      <p className="desc">{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                      <p className="desc">{orderInfo.gig.revisionNumber} modifications disponibles</p>
                     </section>
                     <section>
                       <p className="title">Prix</p>
@@ -403,7 +422,7 @@ function Order() {
                   </section>
                   <section>
                     <p className="title">Nombre de modifications</p>
-                    <p className="desc">{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                    <p className="desc">{orderInfo.gig.revisionNumber} modifications disponibles</p>
                   </section>
                   <section>
                     <p className="title">Prix</p>
@@ -422,6 +441,27 @@ function Order() {
               :
               (isAccepting ?
                 <div className='order-dashboard' >
+                  {
+                    orderInfo.order.isFinished && (orderInfo.order.isLiked === null) ? 
+                    <div className={`like-popup ${isLiked}`} >
+                      <div className="close-popup">
+                      </div>
+                      <div className="popup">
+                        <p className="big-title name">
+                          {likeText}
+                        </p>
+                        <button className="close">
+                          <Cross/>
+                        </button>
+                        <button className='like-btn'>
+                          <svg width="120" height="98" viewBox="0 0 120 98" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M120 31.0373C120 21.359 115.32 12.0144 107.632 6.34096C102.284 2.00241 95.5989 0 88.9136 0C86.2396 0 83.2312 0.333735 80.5571 1.0012C71.1978 3.67108 63.5097 10.3458 60.1671 19.6903C56.4902 10.6795 49.1365 3.67108 39.7772 1.0012C36.7688 0.333735 33.7604 0 31.0863 0C24.4011 0 17.7159 2.33614 12.3677 6.34096C4.67966 12.3482 0 21.359 0 31.0373C0 51.3951 14.3733 62.0746 31.0863 74.0891C39.7772 80.43 49.4707 87.7722 58.4958 97.1168C58.8301 97.4505 59.4986 97.7842 60.1671 97.7842C60.8356 97.7842 61.1699 97.4505 61.8384 97.1168C70.8635 87.7722 80.5571 80.43 89.2479 74.0891C105.627 62.0746 120 51.3951 120 31.0373Z" fill="white"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    : null
+                  }
                   <div className="order-recap">
                     <div className="order-title">
                       <p className="big-title">Récapitulatif</p>
@@ -461,7 +501,7 @@ function Order() {
                       </section>
                       <section>
                         <p className="title">Nombre de modifications</p>
-                        <p className="desc">{orderInfo.order.remainingRevisions}/{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                        <p className="desc">{orderInfo.order.remainingRevisions}/{orderInfo.gig.revisionNumber} modifications disponibles</p>
                       </section>
                       <section>
                         <p className="title">Prix</p>
@@ -470,53 +510,64 @@ function Order() {
                     </div>
                   </div>
                   <div className="management">
+                    {
+                      orderInfo.order.isFinished ?
+                        <div className="is-finished">
+                          <p className='big-title name'>Merci d'avoir commandé sur Like 🎉</p>
+                        </div> : null
+                    }
                     <div className='deliveries'>
-                        <p className="name big-title">
-                          Les dernières livraisons
-                        </p>
-                        {
-                          deliveries.length > 0 ?
-                            deliveries.map(delivery => (
-                              <div className='delivery-item'>
-                                <div className='delivery' key={delivery._id}>
-                                  {delivery.docs.map(doc => (
-                                    <Link target='_blank' key={doc} to={doc}>
-                                      {getFileExtensionFromUrl(doc)}
-                                    </Link>
-                                  ))}
-                                </div>
-                                <span>
-                                  {formatDistanceToNow(delivery.createdAt)}
-                                </span>
-                                {
-                                  delivery.isValid === null ?
-                                    <form className="form valid-delivery" onSubmit={(e) => handleValidationSubmit(e, delivery._id)}> {/* Passer l'ID de la livraison ici */}
-                                      <div className="field">
-                                        <label htmlFor="validation">
-                                          Validation
-                                        </label>
-                                        <select required name="validation" onChange={e=>setValidation(e.target.value)}>
-                                          <option value="accept">Valider</option>
-                                          <option value="reject">Refuser</option>
-                                        </select>
-                                      </div>
-                                      <div className="field">
-                                        <label htmlFor="feedback">
-                                          Feedback
-                                        </label>
-                                        <textarea onChange={e=>setFeedback(e.target.value)} placeholder='Expliquez les modifications que vous souhaitez apporter' required name="feedback" cols="30" rows="5">
-                                        </textarea>
-                                      </div>
-                                      <button className='btn' type="submit">Envoyer</button>
-                                    </form>
-                                  : <p>{delivery.feedback}</p>
-                                }
+                      <p className="name big-title">
+                        Les dernières livraisons
+                      </p>
+                      {
+                        deliveries.length > 0 ?
+                          deliveries.map(delivery => (
+                            <div className='delivery-item'>
+                              <div className='delivery' key={delivery._id}>
+                                {delivery.docs.map(doc => (
+                                  <Link target='_blank' key={doc} to={doc}>
+                                    {getFileExtensionFromUrl(doc)}
+                                  </Link>
+                                ))}
                               </div>
-                            ))
-                            :
-                            <p className='wait-delivery'>En attente de la première livraison</p>
-                        }
-                      </div>
+                              <span>
+                                {formatDistanceToNow(delivery.createdAt)}
+                              </span>
+                              {
+                                delivery.isValid === null ?
+                                  <form className="form valid-delivery" onSubmit={(e) => handleValidationSubmit(e, delivery._id)}> {/* Passer l'ID de la livraison ici */}
+                                    <div className="field">
+                                      <label htmlFor="validation">
+                                        Validation
+                                      </label>
+                                      <select required name="validation" onChange={e => setValidation(e.target.value)}>
+                                        <option value="accept">Valider</option>
+                                        <option value="reject">Refuser</option>
+                                      </select>
+                                    </div>
+                                    <div className="field">
+                                      <label htmlFor="feedback">
+                                        Feedback
+                                      </label>
+                                      <textarea onChange={e => setFeedback(e.target.value)} placeholder='Expliquez les modifications que vous souhaitez apporter' required name="feedback" cols="30" rows="5">
+                                      </textarea>
+                                    </div>
+                                    <button className='btn' type="submit">Envoyer</button>
+                                  </form>
+                                  : <div className='feedback'>
+                                    <p className="name">Feedback<span className='info'>· {formatDistanceToNow(delivery.updatedAt)}</span></p>
+                                    <p className="desc">
+                                      {delivery.feedback}
+                                    </p>
+                                  </div>
+                              }
+                            </div>
+                          ))
+                          :
+                          <p className='wait-delivery'>En attente de la première livraison</p>
+                      }
+                    </div>
                   </div>
                 </div>
                 :
@@ -559,7 +610,7 @@ function Order() {
                     </section>
                     <section>
                       <p className="title">Nombre de modifications</p>
-                      <p className="desc">{orderInfo.gig.revisionNumber} modifcations disponibles</p>
+                      <p className="desc">{orderInfo.gig.revisionNumber} modifications disponibles</p>
                     </section>
                     <section>
                       <p className="title">Prix</p>
