@@ -88,33 +88,26 @@ function Search() {
         <div className="gigs">
           {result ? (
             result.map(gig => (
-              <div key={gig._id} className='gig-result'>
-                <Link to={`/gig/${gig._id}`} className="gig">
-                  <p className="title">{gig.title}</p>
-                  <p className='desc'>{gig.desc}</p>
-                  <div className="infos">
-                    <span className="info">{gig.price}€</span>
-                    <span className="info">{gig.deliveryTime} jours</span>
-                    <span className="info">{gig.revisionNumber} modifications</span>
-                    <span className="info">{gig.tag}</span>
-                  </div>
-                </Link>
-                {gig.user ? ( /* Add this condition to check if 'gig.user' is defined */
-                  <>
-                    <div className="user">
-                      <Link to={`/user/${gig.userId}`}>
-                        <ProfilePicture photo={gig.user.img} badge={gig.user.sub} />
+              gig.user ?
+              <div className="gig-result">
+                  <Link to={`gig/${gig._id}`} className="card-content">
+                      <Link to={`/user/${gig.user._id}`}>
+                          <ProfilePicture photo={gig.user.img} badge={gig.user.sub ? gig.user.sub : 0} />
                       </Link>
-                      <LikeCounter nbr={gig.user.like} />
-                    </div>
-                    {
-                      currentUser._id !== gig.user._id ?
-                        <Link className='btn' to={`/pay/${gig._id}`}>Commander</Link>
-                        : <Link className='arrow-button' to={`/editgig/${gig._id}`}><span>Modifier</span><BackArrow/></Link>
-                    }
-                  </>
-                ) : null}
-              </div>
+                      <div className="gig">
+                          <p className="gig-title">
+                              {gig.title}
+                          </p>
+                          <p className="gig-name">
+                              {`${gig.user.name} ${gig.user.lastname.charAt(0)}.`}
+                          </p>
+                          <div className="infos">
+                              <span className="info">{gig.price}€</span>
+                              <span className="info">{gig.tag}</span>
+                          </div>
+                      </div>
+                  </Link>
+              </div> : null
             ))
           ) : null}
         </div>

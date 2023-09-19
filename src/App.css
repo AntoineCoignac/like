@@ -171,6 +171,12 @@ button, img, video{
   left: 8px;
 }
 
+.title{
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--white);
+}
+
 /* ===== Scrollbar CSS ===== */
   /* Firefox */
   .filters:hover {

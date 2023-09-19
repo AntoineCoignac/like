@@ -61,53 +61,43 @@ function Card({ rate, userId }) {
 
     const windowWidth = window.innerWidth;
 
-    return (
-        <div className="card" ref={cardRef}>
-            <div className="media-ctn">
-                <Media type={rate.cover.includes('video/') ? "video" : "image"} src={rate.cover} play={windowWidth < 600 ? play : false} />
-            </div>
-            <div className="card-content">
-                <div>
-                    <Link to={`gig/${rate._id}`} className="gig">
-                        <p className="title">{rate.title}</p>
-                        <p className='desc'>{rate.desc}</p>
-                        <div className="infos">
-                            <span className="info">{rate.price}€</span>
-                            <span className="info">{rate.deliveryTime} jours</span>
-                            <span className="info">{rate.revisionNumber} modifications</span>
-                            <span className="info">{rate.tag}</span>
-                        </div>
-                    </Link>
-                    {
-                        user ? (
-                            <div className="user">
-                                <Link to={`/user/${user._id}`}>
-                                    <ProfilePicture photo={user.img} badge={user.sub ? user.sub : 0} />
-                                </Link>
-                                <LikeCounter nbr={user.like} />
-                            </div>
-                        ) : null
-                    }
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
+    function formatPrice(price) {
+        return price.toLocaleString('fr-FR', { minimumFractionDigits: 2 });
+    }
+
+    if (user) {
+        return (
+            <div className="card" ref={cardRef}>
+                <div className="media-ctn">
+                    <Media type={rate.cover.includes('video/') ? "video" : "image"} src={rate.cover} play={windowWidth < 600 ? play : false} />
                 </div>
-                {user ? (
-                    currentUser ? (
-                        userId !== currentUser._id ? (
-                            <Link className='btn' to={`/pay/${rate._id}`}>
-                                Commander à {`${user.name} ${user.lastname.charAt(0)}.`}
-                            </Link>
-                        ) : (
-                            <Link className='arrow-button' to={`/editgig/${rate._id}`}>
-                                <span>Modifier</span>
-                                <BackArrow />
-                            </Link>
-                        )) : <Link className='btn' to={`/login`}>
-                                Commander à {`${user.name} ${user.lastname.charAt(0)}.`}
-                            </Link>
-                ) : null}
+                <Link to={`gig/${rate._id}`} className="card-content">
+                    <Link to={`/user/${user._id}`}>
+                        <ProfilePicture photo={user.img} badge={user.sub ? user.sub : 0} />
+                    </Link>
+                    <div className="gig">
+                        <p className="gig-title">
+                            {rate.title}
+                        </p>
+                        <p className="gig-name">
+                            {`${user.name} ${user.lastname.charAt(0)}.`}
+                        </p>
+                        <div className="infos">
+                            <span className="info">{formatPrice(rate.price)}€</span>
+                            <span className="info">{capitalizeFirstLetter(rate.tag)}</span>
+                        </div>
+                    </div>
+                </Link>
             </div>
-        </div>
-    )
+        )
+    }else{
+        return "load"
+    }
+    
 }
 
 export default Card;

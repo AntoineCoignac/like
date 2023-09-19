@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
 import LikeCounter from '../../components/LikeCounter/LikeCounter';
+import Media from '../../components/Media/Media';
 
 function Gig() {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -47,6 +48,7 @@ function Gig() {
             try {
                 const gigData = await loadGig(); // Attendre la résolution de la promesse
                 setGig(gigData);
+                console.log(gigData)
 
                 // Après avoir récupéré les données du gig, vous pouvez maintenant charger l'utilisateur en utilisant gigData.userId
                 loadUser(gigData.userId);
@@ -58,7 +60,15 @@ function Gig() {
         fetchData(); // Appeler la fonction asynchrone pour commencer le chargement des données
     }, []);
 
-    if (user != {} && gig != {}) {
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function formatPrice(price) {
+        return price.toLocaleString('fr-FR', { minimumFractionDigits: 2 });
+    }
+
+    if (user != {} && gig.cover && gig.price) {
         return (
             <>
                 <div className="top-bar">
@@ -73,14 +83,26 @@ function Gig() {
                         </Link>
                         <LikeCounter nbr={user.like} />
                     </div>
-
-                    <div className="infos">
-                        <span className="info">{gig.price}€</span>
-                        <span className="info">{gig.deliveryTime} jours</span>
-                        <span className="info">{gig.revisionNumber} modifications</span>
-                        <span className="info">{gig.tag}</span>
+                    <div className="gig-media">
+                        <Media type={gig.cover.includes('video/') ? "video" : "image"} src={gig.cover} />
                     </div>
+                    <div className="gig-recap">
+                        <div className="recap-item">
+                            <span>{formatPrice(gig.price)}€</span>
+                            <p>à payer</p>
+                        </div>
+                        <div className="recap-item">
+                            <span>{gig.deliveryTime} jour{gig.deliveryTime > 1 ? "s" : null }</span>
+                            <p>de livraison</p>
+                        </div>
+                        <div className="recap-item">
+                            <span>{gig.revisionNumber}</span>
+                            <p>modification{gig.revisionNumber > 1 ? "s" : null }</p>
+                        </div>
+                    </div>
+                    <p className='title'>{gig.title}</p>
                     <p className='desc'>{gig.desc}</p>
+                    <p className="category">Catégorie : {capitalizeFirstLetter(gig.tag)}</p>
                 </div>
                 {
                     currentUser ? (

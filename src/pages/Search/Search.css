@@ -46,34 +46,9 @@
 
 .gig-result{
     width: 100%;
-    padding: 20px 0;
+    padding: 0;
     position: relative;
     border-top: 1px solid var(--dark);
-}
-
-.gig-result .infos{
-    padding: 5px 0 20px;
-}
-
-.gig-result .user{
-    flex-direction: row;
-    align-items: center;
-    column-gap: 26px;
-    margin: 0;
-}
-
-.gig-result .btn{
-    width: fit-content;
-    position: absolute;
-    bottom: 20px;
-    right: 0;
-}
-
-.gig-result .arrow-button{
-    width: fit-content;
-    position: absolute;
-    bottom: 20px;
-    right: 0;
 }
 
 .user-result{

@@ -18,84 +18,73 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: ease 0.2s;
 }
 
-.card-content {
+.card .card-content {
     position: absolute;
     z-index: 2;
-    bottom: 30px;
-    padding: 0 20px;
+    bottom: 0px;
+    padding: 20px;
+}
+
+.card-content{
+    padding: 20px 0;
     color: var(--white);
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.card:has(>.card-content:active){
+    background-color: var(--dark);
+}
+
+.card:hover .media-ctn{
+    border-radius: 1px;
+}
+
+.card-content .gig{
+    display: flex;
+    flex-direction: column;
     width: 100%;
 }
 
-.user {
-    display: flex;
-    flex-direction: column;
-    row-gap: 26px;
-    margin-bottom: 26px;
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
+
+.card-content .gig .gig-name{
+    color: var(--grey);
 }
 
-.user a {
-    width: fit-content;
-    display: block;
-}
-
-.card-content>div:first-child {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.title {
-    color: var(--white);
-    font-weight: 600;
+.card-content .gig .gig-title{
+    font-size: 15px;
+    font-weight: 500;
     margin-bottom: 5px;
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
-}
-
-.desc {
-    color: var(--white);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: initial;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
-}
-
-.card-content .infos {
-    padding: 5px 0 20px;
-    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.20));
 }
 
 @media screen and (min-width : 600px) {
     .card {
         height: fit-content;
-        padding: 20px;
         display: flex;
-        align-items: flex-end;
-        gap: 26px;
+        flex-direction: column;
     }
 
     .media-ctn {
-        min-width: calc(180px + 4.5vw);
-        width: calc(180px + 4.5vw);
-        height: calc(320px + 8vw);
+        width: 100%;
+        height: 280px;
         position: static;
         z-index: 1;
         border-radius: 10px;
     }
 
-    .card-content {
+    .card .card-content {
         position: static;
-        padding: 0;
-    }
-
-    .card-content .btn{
-        width: fit-content;
+        padding: 20px 0;
     }
     
 }
