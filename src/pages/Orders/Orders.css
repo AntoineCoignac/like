@@ -22,7 +22,7 @@
     color: var(--grey);
 }
 
-.order-item#previous{
+.order-item#previous .transaction{
     opacity: 0.5;
 }
 
@@ -61,6 +61,24 @@
     width: 10px;
     height: 10px;
     stroke:var(--red);
+}
+
+.like-action{
+    background-color: var(--dark);
+    color: var(--grey);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.like-action:hover{
+    color: var(--white);
+}
+
+.like-action .like{
+    width: 14px;
 }
 
 

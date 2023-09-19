@@ -22,6 +22,7 @@ function Order() {
   const [feedback, setFeedback] = useState("");
   const [likeText, setLikeText] = useState("Alors, vous likez ?");
   const [isLiked, setIsLiked] = useState(null);
+  const [likePopup, setLikePopup] = useState(true);
 
   useEffect(() => {
     const fetchDeliveries = async () => {
@@ -64,6 +65,7 @@ function Order() {
 
         setIsLoading(false);
         setIsLiked(orderData.isLiked);
+        setLikePopup(orderData.isLiked ? false : true)
         setIsAccepting(orderData.acceptedBySeller);
         console.log(orderData, buyerData, sellerData, gigData);
       } catch (err) {
@@ -141,6 +143,17 @@ function Order() {
       console.log(validation, deliveryId);
       const res = await newRequest.patch(`/deliveries/${deliveryId}`, { validation, feedback });
       navigate("/work/orders");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleLike = async () => {
+    try {
+      const res = await newRequest.post(`/orders/like/${orderId}`);
+      console.log(res);
+      setIsLiked(true);
+      setLikeText("Merci d'avoir liké !");
     } catch (err) {
       console.log(err);
     }
@@ -442,24 +455,30 @@ function Order() {
               (isAccepting ?
                 <div className='order-dashboard' >
                   {
-                    orderInfo.order.isFinished && (orderInfo.order.isLiked === null) ? 
-                    <div className={`like-popup ${isLiked}`} >
-                      <div className="close-popup">
-                      </div>
-                      <div className="popup">
-                        <p className="big-title name">
-                          {likeText}
-                        </p>
-                        <button className="close">
-                          <Cross/>
-                        </button>
-                        <button className='like-btn'>
-                          <svg width="120" height="98" viewBox="0 0 120 98" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M120 31.0373C120 21.359 115.32 12.0144 107.632 6.34096C102.284 2.00241 95.5989 0 88.9136 0C86.2396 0 83.2312 0.333735 80.5571 1.0012C71.1978 3.67108 63.5097 10.3458 60.1671 19.6903C56.4902 10.6795 49.1365 3.67108 39.7772 1.0012C36.7688 0.333735 33.7604 0 31.0863 0C24.4011 0 17.7159 2.33614 12.3677 6.34096C4.67966 12.3482 0 21.359 0 31.0373C0 51.3951 14.3733 62.0746 31.0863 74.0891C39.7772 80.43 49.4707 87.7722 58.4958 97.1168C58.8301 97.4505 59.4986 97.7842 60.1671 97.7842C60.8356 97.7842 61.1699 97.4505 61.8384 97.1168C70.8635 87.7722 80.5571 80.43 89.2479 74.0891C105.627 62.0746 120 51.3951 120 31.0373Z" fill="white"/>
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
+                    orderInfo.order.isFinished && (orderInfo.order.isLiked === null) ?
+                    (
+                      likePopup ?
+                      <div className={`like-popup ${isLiked ? "is-liked" : null}`} >
+                        <div className="close-popup" onClick={()=> setLikePopup(false)}>
+                        </div>
+                        <div className="popup">
+                          <p className="big-title name">
+                            {likeText}
+                          </p>
+                          <p className="desc">
+                            Cliquez sur le coeur si vous avez aimé la prestation.
+                          </p>
+                          <button className="close" onClick={()=> setLikePopup(false)}>
+                            <Cross/>
+                          </button>
+                          <button className='like-btn' onClick={handleLike}>
+                            <svg width="120" height="98" viewBox="0 0 120 98" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M120 31.0373C120 21.359 115.32 12.0144 107.632 6.34096C102.284 2.00241 95.5989 0 88.9136 0C86.2396 0 83.2312 0.333735 80.5571 1.0012C71.1978 3.67108 63.5097 10.3458 60.1671 19.6903C56.4902 10.6795 49.1365 3.67108 39.7772 1.0012C36.7688 0.333735 33.7604 0 31.0863 0C24.4011 0 17.7159 2.33614 12.3677 6.34096C4.67966 12.3482 0 21.359 0 31.0373C0 51.3951 14.3733 62.0746 31.0863 74.0891C39.7772 80.43 49.4707 87.7722 58.4958 97.1168C58.8301 97.4505 59.4986 97.7842 60.1671 97.7842C60.8356 97.7842 61.1699 97.4505 61.8384 97.1168C70.8635 87.7722 80.5571 80.43 89.2479 74.0891C105.627 62.0746 120 51.3951 120 31.0373Z" fill="white"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div> : null
+                    ) 
                     : null
                   }
                   <div className="order-recap">
