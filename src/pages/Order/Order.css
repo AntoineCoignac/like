@@ -73,6 +73,7 @@
     border: 1px solid var(--dark);
     border-left: 0;
     border-radius: 0 20px 20px 0;
+    transition: ease 0.2s;
 }
 
 .order-title{
@@ -174,6 +175,7 @@
     background-color: var(--dark);
     border-radius: 5px;
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
@@ -348,4 +350,35 @@
 
 .like-popup .popup .close:hover{
     background-color: var(--white-01);
+}
+
+@media screen and (max-width : 1000px) {
+    .order-recap{
+        max-width: 240px ;
+    }
+
+    .management{
+        margin: 0 40px;
+    }
+}
+
+@media screen and (max-width : 600px) {
+    .order-dashboard{
+        flex-direction: column-reverse;
+    }
+
+    .management{
+        width: 100%;
+        padding: 0 20px 40px;
+        margin: 0;
+        height: fit-content;
+    }
+
+    .order-recap{
+        max-width: calc(100% - 40px);
+        margin: 0 20px;
+        border-radius: 20px 20px 0 0;
+        border-left: 1px solid var(--dark);
+        border-bottom: 0;
+    }
 }

@@ -54,7 +54,7 @@ const ChatItem = ({ conversation, currentUser }) => {
   }, [conversation, currentUser]);
 
   if (!user) {
-    return null; // Render a loading state or placeholder here if needed
+    return <></>
   }
 
   return (

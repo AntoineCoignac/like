@@ -9,6 +9,7 @@ import TimeRemaining from '../../components/TimeRemaining/TimeRemaining';
 import Transaction from '../../icons/transaction/Transaction';
 import Cross from "../../icons/cross/Cross";
 import Like from "../../icons/like/Like";
+import Load from '../../components/Load/Load';
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -47,13 +48,21 @@ function Orders() {
     loadOrders();
   }, []);
 
+  function formatPrice(price) {
+    return price.toLocaleString('fr-FR', { minimumFractionDigits: 2 });
+  }
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   return (
     <>
       <Nav />
       <div className="orders-ctn">
         <NavWork />
         {isLoading ? (
-          <p>Loading...</p>
+          <Load/>
         ) : (
           orders.map(({ order, user, gig, seller }) => (
             !order.isFinished ? (
@@ -75,9 +84,9 @@ function Orders() {
                 <div>
                   <p className="title">{gig.title}</p>
                   <div className="infos">
-                    <span className="info">{order.price}€</span>
+                    <span className="info">{formatPrice(order.price)}€</span>
                     <span className="info"><TimeRemaining endTime={order.deadline} /></span>
-                    <span className="info">{gig.tag}</span>
+                    <span className="info">{capitalizeFirstLetter(gig.tag)}</span>
                   </div>
                   <p className="desc">
                     {
@@ -133,9 +142,9 @@ function Orders() {
                 <div>
                   <p className="title">{gig.title}</p>
                   <div className="infos">
-                    <span className="info">{order.price}€</span>
+                    <span className="info">{formatPrice(order.price)}€</span>
                     <span className="info"><TimeRemaining endTime={order.deadline} /></span>
-                    <span className="info">{gig.tag}</span>
+                    <span className="info">{capitalizeFirstLetter(gig.tag)}</span>
                   </div>
                   <p className="desc">
                     {

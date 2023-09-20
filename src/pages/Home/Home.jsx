@@ -6,6 +6,7 @@ import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
 import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
+import Load from '../../components/Load/Load';
 
 function Home() {
   const navigate = useNavigate();
@@ -39,15 +40,15 @@ function Home() {
   const [filters, setFilters] = useState(
     {
       tag : "me",
-      min : 0,
-      max : 1000000000,
+      min : undefined,
+      max : undefined,
     }
   )
   const [gigs, setGigs] = useState([]);
 
   const loadGigs = async () => {
     try {
-      const url = `/gigs?${"me" != filters.tag ? `tag=${filters.tag}` : "" }&min=${filters.min}&max=${filters.max}`
+      const url = `/gigs?${"me" != filters.tag ? `tag=${filters.tag}` : "" }${filters.min ? `&min=${filters.min}` : ""}${filters.max ? `&max=${filters.max}` : ""}`
       const res = await newRequest.get(url);
       setGigs(res.data);
       console.log(url);
@@ -66,7 +67,10 @@ function Home() {
     <>
         <Nav transparent={true} />
         <Filter filters={filters} setFilters={setFilters}/>
-        <CardList rates={gigs}/>
+        {
+          gigs ? <CardList rates={gigs}/> : <Load/>
+        }
+        
     </>
   )
 }

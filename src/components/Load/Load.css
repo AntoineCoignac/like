@@ -1,0 +1,22 @@
+.loader-ctn{
+    width: 100%;
+    height: 100%;
+    padding: 100px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader{
+    width: 40px;
+    height: 40px;
+    animation: load 1s ease infinite;
+}
+
+@keyframes load{
+    0%{
+        rotate: 0;
+    }100%{
+        rotate: 360deg;
+    }
+}

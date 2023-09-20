@@ -6,6 +6,7 @@ import "./Chat.css";
 import ChatBox from '../../components/ChatBox/ChatBox';
 import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
+import Load from '../../components/Load/Load';
 
 
 function Chat() {
@@ -54,7 +55,7 @@ function Chat() {
           <ChatBox fullscreen={true} user={user} />
         </>
       ) : (
-        <div>Loading ...</div>
+        <Load/>
       )}
     </>
   );

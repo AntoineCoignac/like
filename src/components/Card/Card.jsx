@@ -75,7 +75,7 @@ function Card({ rate, userId }) {
                 <div className="media-ctn">
                     <Media type={rate.cover.includes('video/') ? "video" : "image"} src={rate.cover} play={windowWidth < 600 ? play : false} />
                 </div>
-                <Link to={`gig/${rate._id}`} className="card-content">
+                <Link to={`/gig/${rate._id}`} className="card-content">
                     <Link to={`/user/${user._id}`}>
                         <ProfilePicture photo={user.img} badge={user.sub ? user.sub : 0} />
                     </Link>
@@ -95,7 +95,7 @@ function Card({ rate, userId }) {
             </div>
         )
     }else{
-        return "load"
+        return ""
     }
     
 }

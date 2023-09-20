@@ -13,6 +13,7 @@ import Like from '../../icons/like/Like';
 import { useState } from 'react';
 import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
+import Load from '../../components/Load/Load';
 
 function User() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -46,9 +47,17 @@ function User() {
     loadUserGigs();
   }, []); // Empty dependency array to ensure this effect runs only once
 
+  function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function formatPrice(price) {
+      return price.toLocaleString('fr-FR', { minimumFractionDigits: 2 });
+  }
+
   // Check if user data is still loading
   if (!user || !userGigs) {
-    return <div>Loading user data...</div>;
+    return <Load/>;
   } else {
     if (user.isSeller) {
       return (
@@ -125,18 +134,27 @@ function User() {
                     <div>Loading gigs...</div>
                   ) : (
                     userGigs.map(gig => (
-                      <div key={gig._id} className='gig-result'>
-                        <Media type={gig.cover.includes('/video/') ? "video" : "image"} src={gig.cover} />
-                        <Link to={`/gig/${gig._id}`} className="gig">
-                          <p className="title">{gig.title}</p>
-                          <p className='desc'>{gig.desc}</p>
-                          <div className="infos">
-                            <span className="info">{gig.price}€</span>
-                            <span className="info">{gig.deliveryTime} jours</span>
-                            <span className="info">{gig.revisionNumber} modifications</span>
-                            <span className="info">{gig.tag}</span>
+                      <div className="gig-result">
+                          <div className="media-ctn">
+                              <Media type={gig.cover.includes('video/') ? "video" : "image"} src={gig.cover} />
                           </div>
-                        </Link>
+                          <Link to={`/gig/${gig._id}`} className="card-content">
+                              <Link to={`/user/${user._id}`}>
+                                  <ProfilePicture photo={user.img} badge={user.sub ? user.sub : 0} />
+                              </Link>
+                              <div className="gig">
+                                  <p className="gig-title">
+                                      {gig.title}
+                                  </p>
+                                  <p className="gig-name">
+                                      {`${user.name} ${user.lastname.charAt(0)}.`}
+                                  </p>
+                                  <div className="infos">
+                                      <span className="info">{formatPrice(gig.price)}€</span>
+                                      <span className="info">{capitalizeFirstLetter(gig.tag)}</span>
+                                  </div>
+                              </div>
+                          </Link>
                       </div>
                     )
                     )

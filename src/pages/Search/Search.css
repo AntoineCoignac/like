@@ -70,3 +70,11 @@
     color: var(--white);
     font-weight: 600;
 }
+
+.no-result{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: var(--grey);
+}

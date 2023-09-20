@@ -9,6 +9,7 @@ import Cross from '../../icons/cross/Cross';
 import SendIcon from '../../icons/send/SendIcon';
 import Dropzone from '../../components/Dropzone/Dropzone';
 import { useNavigate } from 'react-router-dom';
+import Load from '../../components/Load/Load';
 
 function Order() {
   const { orderId } = useParams();
@@ -23,6 +24,7 @@ function Order() {
   const [likeText, setLikeText] = useState("Alors, vous likez ?");
   const [isLiked, setIsLiked] = useState(null);
   const [likePopup, setLikePopup] = useState(true);
+  const [recapActive, setRecapActive] = useState(true);
 
   useEffect(() => {
     const fetchDeliveries = async () => {
@@ -159,10 +161,18 @@ function Order() {
     }
   }
 
+  
+  function formatPrice(price) {
+    return price.toLocaleString('fr-FR', { minimumFractionDigits: 2 });
+  }
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
   return (
     isLoading ? (
-      <p>Loading...</p>
+      <Load/>
     ) : (
 
       currentUser._id === orderInfo.seller._id ?
@@ -173,7 +183,12 @@ function Order() {
             <div className='chat-top'>
               <Link to={`/user/${orderInfo.buyer._id}`} className="profile">
                 <ProfilePicture photo={orderInfo.buyer.img} badge={orderInfo.buyer.sub} />
-                <p className='name'>{orderInfo.buyer.name}</p>
+                <p className='name'>
+                  {
+                    orderInfo.buyer.isSeller ?
+                        `${orderInfo.buyer.name} ${orderInfo.buyer.lastname.charAt(0)}.` : orderInfo.buyer.name
+                  }
+                </p>
               </Link>
             </div>
           </div>
@@ -210,7 +225,7 @@ function Order() {
                   </section>
                   <section>
                     <p className="title">Catégorie</p>
-                    <p className="desc">{orderInfo.gig.tag}</p>
+                    <p className="desc">{capitalizeFirstLetter(orderInfo.gig.tag)}</p>
                   </section>
                   <section>
                     <p className="title">Délai</p>
@@ -222,7 +237,7 @@ function Order() {
                   </section>
                   <section>
                     <p className="title">Prix</p>
-                    <p className="desc">{orderInfo.gig.price}€</p>
+                    <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
                   </section>
                 </div>
                 <div className="order-bottom">
@@ -264,7 +279,7 @@ function Order() {
                       </section>
                       <section>
                         <p className="title">Catégorie</p>
-                        <p className="desc">{orderInfo.gig.tag}</p>
+                        <p className="desc">{capitalizeFirstLetter(orderInfo.gig.tag)}</p>
                       </section>
                       <section>
                         <p className="title">Délai</p>
@@ -276,7 +291,7 @@ function Order() {
                       </section>
                       <section>
                         <p className="title">Prix</p>
-                        <p className="desc">{orderInfo.gig.price}€</p>
+                        <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
                       </section>
                     </div>
                   </div>
@@ -356,7 +371,7 @@ function Order() {
                     </section>
                     <section>
                       <p className="title">Catégorie</p>
-                      <p className="desc">{orderInfo.gig.tag}</p>
+                      <p className="desc">{capitalizeFirstLetter(orderInfo.gig.tag)}</p>
                     </section>
                     <section>
                       <p className="title">Délai</p>
@@ -368,7 +383,7 @@ function Order() {
                     </section>
                     <section>
                       <p className="title">Prix</p>
-                      <p className="desc">{orderInfo.gig.price}€</p>
+                      <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
                     </section>
                   </div>
                   <div className="order-bottom">
@@ -390,7 +405,12 @@ function Order() {
             <div className='chat-top'>
               <Link to={`/user/${orderInfo.seller._id}`} className="profile">
                 <ProfilePicture photo={orderInfo.seller.img} badge={orderInfo.seller.sub} />
-                <p className='name'>{orderInfo.seller.name}</p>
+                <p className='name'><p className='name'>
+                  {
+                    orderInfo.seller.isSeller ?
+                        `${orderInfo.seller.name} ${orderInfo.seller.lastname.charAt(0)}.` : orderInfo.seller.name
+                  }
+                </p></p>
               </Link>
             </div>
           </div>
@@ -427,7 +447,7 @@ function Order() {
                   </section>
                   <section>
                     <p className="title">Catégorie</p>
-                    <p className="desc">{orderInfo.gig.tag}</p>
+                    <p className="desc">{capitalizeFirstLetter(orderInfo.gig.tag)}</p>
                   </section>
                   <section>
                     <p className="title">Délai</p>
@@ -439,7 +459,7 @@ function Order() {
                   </section>
                   <section>
                     <p className="title">Prix</p>
-                    <p className="desc">{orderInfo.gig.price}€</p>
+                    <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
                   </section>
                 </div>
                 <div className="order-bottom">
@@ -512,7 +532,7 @@ function Order() {
                       </section>
                       <section>
                         <p className="title">Catégorie</p>
-                        <p className="desc">{orderInfo.gig.tag}</p>
+                        <p className="desc">{capitalizeFirstLetter(orderInfo.gig.tag)}</p>
                       </section>
                       <section>
                         <p className="title">Délai</p>
@@ -524,7 +544,7 @@ function Order() {
                       </section>
                       <section>
                         <p className="title">Prix</p>
-                        <p className="desc">{orderInfo.gig.price}€</p>
+                        <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
                       </section>
                     </div>
                   </div>
@@ -621,7 +641,7 @@ function Order() {
                     </section>
                     <section>
                       <p className="title">Catégorie</p>
-                      <p className="desc">{orderInfo.gig.tag}</p>
+                      <p className="desc">{capitalizeFirstLetter(orderInfo.gig.tag)}</p>
                     </section>
                     <section>
                       <p className="title">Délai</p>
@@ -633,7 +653,7 @@ function Order() {
                     </section>
                     <section>
                       <p className="title">Prix</p>
-                      <p className="desc">{orderInfo.gig.price}€</p>
+                      <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
                     </section>
                   </div>
                   <div className="order-bottom">

@@ -87,3 +87,17 @@
     bottom: 0;
     left: 0;
 }
+
+@media screen and (max-width: 450px) {
+    .top-gig{
+        width: 100%;
+    }
+
+    .recap-item{
+        width: 100%;
+    }
+
+    .gig-recap{
+        margin: 20px 0;
+    }
+}

@@ -9,6 +9,7 @@ import LikeCounter from '../../components/LikeCounter/LikeCounter';
 import newRequest from '../../utils/newRequest';
 import Enterprise from '../../icons/enterprise/Enterprise';
 import BackArrow from '../../icons/back/BackArrow';
+import Load from '../../components/Load/Load';
 
 function Search() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -71,6 +72,13 @@ function Search() {
     loadSearchResults();
   }, [type, search]);
 
+  function formatPrice(price) {
+    return price.toLocaleString('fr-FR', { minimumFractionDigits: 2 });
+  }
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   return (
     <div className="search">
@@ -86,11 +94,11 @@ function Search() {
       {search !== "" ? <NavSearch setType={setType} activeType={type} /> : null}
       {type === "gig" ? (
         <div className="gigs">
-          {result ? (
+          {result.length > 0 ? (
             result.map(gig => (
               gig.user ?
               <div className="gig-result">
-                  <Link to={`gig/${gig._id}`} className="card-content">
+                  <Link to={`/gig/${gig._id}`} className="card-content">
                       <Link to={`/user/${gig.user._id}`}>
                           <ProfilePicture photo={gig.user.img} badge={gig.user.sub ? gig.user.sub : 0} />
                       </Link>
@@ -102,18 +110,18 @@ function Search() {
                               {`${gig.user.name} ${gig.user.lastname.charAt(0)}.`}
                           </p>
                           <div className="infos">
-                              <span className="info">{gig.price}€</span>
-                              <span className="info">{gig.tag}</span>
+                              <span className="info">{formatPrice(gig.price)}€</span>
+                              <span className="info">{capitalizeFirstLetter(gig.tag)}</span>
                           </div>
                       </div>
                   </Link>
               </div> : null
             ))
-          ) : null}
+          ) : (search != "" ? <p className='no-result'>Il n'y a aucun résultat</p> : <p className='no-result'>Recherchez un tarif, un créateur ou une entreprise</p> ) }
         </div>
       ) : (
         <div className="users">
-          {result ? (
+          {result.length > 0 ? (
             result.map(user => (
               <Link key={user._id} to={`/user/${user._id}`} className='user-result'>
                 <div className="profile">
@@ -123,7 +131,7 @@ function Search() {
                 {user.isSeller ? <LikeCounter nbr={user.like} /> : <Enterprise />}
               </Link>
             ))
-          ) : null}
+          ) : (search != "" ? <p className='no-result'>Il n'y a aucun résultat</p> : <p className='no-result'>Recherchez un tarif, un créateur ou une entreprise</p> ) }
         </div>
       )}
     </div>
