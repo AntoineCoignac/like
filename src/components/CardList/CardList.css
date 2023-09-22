@@ -60,27 +60,3 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
-
-@media screen and (min-width : 1300px){
-  .card-list {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  }
-}
-
-@media screen and (min-width : 1600px){
-  .card-list {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  }
-}
-
-@media screen and (min-width : 1900px){
-  .card-list {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  }
-}
-
-@media screen and (min-width : 2200px){
-  .card-list {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  }
-}

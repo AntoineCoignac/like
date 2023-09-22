@@ -5,6 +5,7 @@
     position: fixed;
     top: 80px;
     width: 100%;
+    max-width: var(--max-width);
     overflow-x: initial;
     overflow-y: visible;
     z-index: 10;
@@ -32,6 +33,7 @@
     align-items: center;
     justify-content: center;
     user-select: none;
+    cursor: pointer;
 }
 
 .filter.active{

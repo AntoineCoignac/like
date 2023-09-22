@@ -81,6 +81,7 @@
 
 .fixed-btn{
     width: 100%;
+    max-width: var(--max-width);
     padding: 20px;
     background: linear-gradient(180deg, rgba(11,11,11,0) 0%, rgba(11,11,11,1) 100%);
     position: fixed;
