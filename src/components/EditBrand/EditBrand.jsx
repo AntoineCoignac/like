@@ -11,6 +11,8 @@ function EditBrand() {
   const currentUser = currentUserJson && currentUserJson !== 'undefined' ? JSON.parse(currentUserJson) : null;
   const [searchQuery, setSearchQuery] = useState(currentUser.location ? currentUser.location : '');
   const [preview, setPreview] = useState(currentUser.img ? currentUser.img : "/img/pp/noavatar.jpg");
+  const [fileSizeExceeded, setFileSizeExceeded] = useState(false);
+  const MAX_FILE_SIZE = 10000000;
   
   const [updatedUser, setUpdatedUser] = useState({
     img : currentUser.img ? currentUser.img : null,
@@ -50,11 +52,14 @@ function EditBrand() {
 
   const handleChangeFile = (e) => {
     const newFile = e.target.files[0];
-    if (newFile) {
-      setFile(newFile);
-      const url = URL.createObjectURL(newFile);
-      setPreview(url);
+    if (newFile.size > MAX_FILE_SIZE) {
+      setFileSizeExceeded(true);
+      return;
     }
+    setFile(newFile);
+    const url = URL.createObjectURL(newFile);
+    setPreview(url);
+    setFileSizeExceeded(false);
   }
 
   const handleCitySelection = (city) => {
@@ -92,7 +97,12 @@ function EditBrand() {
     <form className='form' onSubmit={handleSubmit}>
           <div className="image-field">
             <img src={preview} alt="" />
-            <input type="file" onChange={handleChangeFile} />
+            <input type="file" accept='.png, .jpg, .jpeg' onChange={handleChangeFile} />
+            {fileSizeExceeded && (
+                <p className='error'>
+                    Votre fichier ne doit pas dépasser {MAX_FILE_SIZE / 1000000} MB
+                </p>
+            )}
           </div>
           <div className="field">
             <label htmlFor="name">Dénomination sociale</label>

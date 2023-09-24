@@ -83,10 +83,14 @@
     width: 100%;
     max-width: var(--max-width);
     padding: 20px;
-    background: linear-gradient(180deg, rgba(11,11,11,0) 0%, rgba(11,11,11,1) 100%);
     position: fixed;
     bottom: 0;
-    left: 0;
+    margin: auto;
+}
+
+.fixed-btn .btn{
+    margin: auto;
+    max-width: 415px;
 }
 
 @media screen and (max-width: 450px) {

@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Back from '../../components/Back/Back';
 import "./NewGig.css";
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
 import upload from '../../utils/upload';
-
 
 function NewGig() {
   const [error, setError] = useState(null);
@@ -20,16 +18,37 @@ function NewGig() {
     cover: ""
   });
   const [preview, setPreview] = useState("");
+  const [fileSizeExceeded, setFileSizeExceeded] = useState(false);
+  const MAX_IMAGE_SIZE = 10000000; // 10 MB
+  const MAX_VIDEO_SIZE = 100000000; // 100 MB
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setGig((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-    setError(null);
-    console.log(gig);
-    console.log(file);
+    const { name, value } = e.target;
+    setGig((prevGig) => ({
+      ...prevGig,
+      [name]: value
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    const newFile = e.target.files[0];
+    if (newFile) {
+      if (isImage(newFile) && newFile.size > MAX_IMAGE_SIZE) {
+        setFileSizeExceeded(true);
+        return;
+      }
+      if (isVideo(newFile) && newFile.size > MAX_VIDEO_SIZE) {
+        setFileSizeExceeded(true);
+        return;
+      }
+
+      setFileSizeExceeded(false);
+      setFile(newFile);
+      const url = URL.createObjectURL(newFile);
+      setPreview(url);
+    }
   };
 
   const isImage = (file) => {
@@ -43,7 +62,8 @@ function NewGig() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (gig.title.trim() !== "" &&
+    if (
+      gig.title.trim() !== "" &&
       gig.desc.trim() !== "" &&
       gig.tag.trim() !== "" &&
       Number(gig.price) > 0 &&
@@ -57,9 +77,9 @@ function NewGig() {
           ...gig,
           cover: url,
         });
-        navigate("/")
+        navigate("/");
       } catch (err) {
-        // En cas d'erreur du serveur, gérer l'erreur et afficher un message convivial pour l'utilisateur
+        // Handle server errors and display a user-friendly error message
         if (err.response && err.response.data && err.response.data.message) {
           setError(err.response.data.message);
         } else {
@@ -77,8 +97,8 @@ function NewGig() {
         <Back />
         <p className="name">Nouveau tarif</p>
       </div>
-      <div className="newgig" onSubmit={handleSubmit}>
-        <form className='form' >
+      <div className="newgig">
+        <form className='form' onSubmit={handleSubmit}>
           <div className="field">
             <label htmlFor="title">Nom du tarif</label>
             <input name='title' type="text" placeholder='ex : Pack 5 photos de votre choix' onChange={handleChange} />
@@ -121,34 +141,31 @@ function NewGig() {
           </div>
           <div className="field">
             <label>Couverture</label>
-            {preview !== "" ? (
+            {preview !== undefined && preview !== "" ? (
               <div className="preview">
-                {isVideo(file) ? (
-                  <video controls>
-                    <source src={preview} />
-                  </video>
-                ) : isImage(file) ? (
-                  <img src={preview} alt="" />
+                {file !== null ? (
+                  isVideo(file) ? (
+                    <video key={Date.now()} controls>
+                      <source src={URL.createObjectURL(file)} />
+                    </video>
+                  ) : (
+                    <img src={URL.createObjectURL(file)} alt="" />
+                  )
                 ) : null}
               </div>
             ) : null}
-
             <input
               name="file"
               type="file"
-              onChange={(e) => {
-                const newFile = e.target.files[0];
-                if (newFile) {
-                  setFile(newFile);
-                  const url = URL.createObjectURL(newFile);
-                  setPreview(url);
-                }
-              }}
+              accept='.png, .jpg, .jpeg, video/mp4, video/x-m4v, video/*'
+              onChange={handleFileChange}
             />
+            {fileSizeExceeded && (
+              <p className="error">Le fichier est trop volumineux.</p>
+            )}
           </div>
-
           <button className='btn' type="submit">Créer</button>
-          {error && error}
+          {error && <p className="error">{error}</p>}
         </form>
       </div>
     </>

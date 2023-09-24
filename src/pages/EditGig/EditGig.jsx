@@ -8,6 +8,9 @@ import upload from '../../utils/upload';
 function EditGig() {
   const { gigId } = useParams();
   const navigate = useNavigate();
+  const [fileSizeExceeded, setFileSizeExceeded] = useState(false);
+  const MAX_IMAGE_SIZE = 10000000;
+  const MAX_VIDEO_SIZE = 100000000;
 
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
@@ -45,10 +48,30 @@ function EditGig() {
   }, [gigId]);
 
   const handleChange = (e) => {
-    setGig((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-    setError(null);
+    const { name, value } = e.target;
+    setGig((prevGig) => ({
+      ...prevGig,
+      [name]: value
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    const newFile = e.target.files[0];
+    if (newFile) {
+      if (isImage(newFile) && newFile.size > MAX_IMAGE_SIZE) {
+        setFileSizeExceeded(true);
+        return;
+      }
+      if (isVideo(newFile) && newFile.size > MAX_VIDEO_SIZE) {
+        setFileSizeExceeded(true);
+        return;
+      }
+
+      setFileSizeExceeded(false);
+      setFile(newFile);
+      const url = URL.createObjectURL(newFile);
+      setPreview(url);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -85,24 +108,21 @@ function EditGig() {
     }
   };
 
-  // Reste du contenu du composant, similaire à NewGig, mais avec les valeurs de l'état gig et les valeurs par défaut dans les champs
-
   return (
-    // Le JSX restant du composant
     <>
       <div className="top-bar">
         <Back />
         <p className="name">Modifier le tarif</p>
       </div>
-      <div className="newgig" onSubmit={handleSubmit}>
-        <form className='form' >
+      <div className="newgig">
+        <form className='form' onSubmit={handleSubmit}>
           <div className="field">
             <label htmlFor="title">Nom du tarif</label>
-            <input name='title' type="text" defaultValue={gig.title} placeholder='ex : Pack 5 photos de votre choix' onChange={handleChange} />
+            <input name='title' type="text" value={gig.title} placeholder='ex : Pack 5 photos de votre choix' onChange={handleChange} />
           </div>
           <div className="field">
             <label htmlFor="desc">Description</label>
-            <input name='desc' type="text" defaultValue={gig.desc} placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
+            <input name='desc' type="text" value={gig.desc} placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
           </div>
           <div className="field">
             <label htmlFor="tag">Tag</label>
@@ -126,53 +146,49 @@ function EditGig() {
           </div>
           <div className="field">
             <label htmlFor="price">Prix (€)</label>
-            <input name='price' min="10" max="1000000000" step={0.01} defaultValue={gig.price} type="number" onChange={handleChange} />
+            <input name='price' min="10" max="1000000000" step={0.01} type="number" value={gig.price} onChange={handleChange} />
           </div>
           <div className="field">
             <label htmlFor="deliveryTime">Temps de livraison (jours)</label>
-            <input name='deliveryTime' min="1" step={1} max="365" defaultValue={gig.deliveryTime} type="number" onChange={handleChange} />
+            <input name='deliveryTime' min="1" step={1} max="365" type="number" value={gig.deliveryTime} onChange={handleChange} />
           </div>
           <div className="field">
             <label htmlFor="revisionNumber">Nombre de modifications maximum</label>
-            <input name='revisionNumber' min="1" step={1} max="10" defaultValue={gig.revisionNumber} type="number" onChange={handleChange} />
+            <input name='revisionNumber' min="1" step={1} max="10" type="number" value={gig.revisionNumber} onChange={handleChange} />
           </div>
           <div className="field">
-      <label>Couverture</label>
-      {preview !== undefined && preview !== "" ? (
-        <div className="preview">
-          {file !== null ? (
-            isVideo(file) ? (
-              <video controls>
-                <source src={URL.createObjectURL(file)} />
-              </video>
-            ) : isImage(file) ? (
-              <img src={URL.createObjectURL(file)} alt="" />
-            ) : null
-          ) : preview.includes('video/') ? (
-            <video controls>
-              <source src={preview} />
-            </video>
-          ) : (
-            <img src={preview} alt="" />
-          )}
-        </div>
-      ) : null}
-      <input
-        name="file"
-        type="file"
-        onChange={(e) => {
-          const newFile = e.target.files[0];
-          if (newFile) {
-            setFile(newFile);
-            const url = URL.createObjectURL(newFile);
-            setPreview(url);
-          }
-        }}
-      />
-    </div>
-
+            <label>Couverture</label>
+            {preview !== undefined && preview !== "" ? (
+              <div className="preview">
+                {file !== null ? (
+                  isVideo(file) ? (
+                    <video key={Date.now()} controls>
+                      <source src={URL.createObjectURL(file)} />
+                    </video>
+                  ) : (
+                    <img src={URL.createObjectURL(file)} alt="" />
+                  )
+                ) : preview.includes('video/') ? (
+                  <video key={Date.now()} controls>
+                    <source src={preview} />
+                  </video>
+                ) : (
+                  <img src={preview} alt="" />
+                )}
+              </div>
+            ) : null}
+            <input
+              name="file"
+              type="file"
+              accept='.png, .jpg, .jpeg, video/mp4, video/x-m4v, video/*'
+              onChange={handleFileChange}
+            />
+            {fileSizeExceeded && (
+              <p className="error">Le fichier est trop volumineux.</p>
+            )}
+          </div>
           <button className='btn' type="submit">Enregistrer les modifications</button>
-          {error && error}
+          {error && <p className="error">{error}</p>}
         </form>
       </div>
     </>
