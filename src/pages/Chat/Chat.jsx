@@ -22,6 +22,7 @@ function Chat() {
       console.log(res.data); // This should log the data fetched from the API
     } catch (err) {
       console.log(err);
+      navigate(-1);
     }
   };
 
@@ -32,7 +33,7 @@ function Chat() {
 
     // Check if currentUser._id === userId and redirect if necessary
     if (currentUser._id === userId) {
-      navigate('/'); // Redirect to the homepage using navigate
+      navigate("/"); 
     }
   }, [userId, currentUser, navigate]);
 

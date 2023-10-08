@@ -1,5 +1,3 @@
-// ChatBox.jsx
-
 import React, { useState, useEffect, useRef } from 'react';
 import SendIcon from '../../icons/send/SendIcon';
 import "./ChatBox.css";

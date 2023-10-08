@@ -4,6 +4,7 @@ import { useState } from 'react';
 import newRequest from "../../utils/newRequest";
 import upload from '../../utils/upload';
 import { useNavigate } from 'react-router-dom';
+import Download from '../../components/Download/Download';
 
 function EditCreator() {
   const [suggestions, setSuggestions] = useState([]);
@@ -13,6 +14,7 @@ function EditCreator() {
   const [preview, setPreview] = useState(currentUser.img ? currentUser.img : "/img/pp/noavatar.jpg");
   const [fileSizeExceeded, setFileSizeExceeded] = useState(false);
   const MAX_FILE_SIZE = 10000000;
+  const [uploading, setUploading] = useState(false);
   
   const [updatedUser, setUpdatedUser] = useState({
     img : currentUser.img ? currentUser.img : null,
@@ -79,7 +81,9 @@ function EditCreator() {
     // Upload the image if it has changed
     let imageUrl = currentUser.img;
     if (file) {
+      setUploading(true);
       imageUrl = await upload(file);
+      setUploading(false);
     }
 
     try {
@@ -101,6 +105,9 @@ function EditCreator() {
 
   return (
     <form className='form' onSubmit={handleSubmit}>
+          {
+              uploading ? <Download /> : null
+          }
           <div className="image-field">
             <img src={preview} alt="" />
             <input type="file" accept='.png, .jpg, .jpeg' onChange={handleChangeFile} />

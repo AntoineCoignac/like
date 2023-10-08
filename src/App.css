@@ -80,14 +80,14 @@ button, img, video{
 }
 
 .btn.absolute{
-  z-index: 1000;
+  z-index: 100;
   position: absolute;
   bottom: 15px;
   right: calc(2% + 10px);
 }
 
 .btn.fixed{
-  z-index: 1000;
+  z-index: 100;
   position: fixed;
   bottom: 15px;
   right: calc(2% + 10px);
@@ -117,7 +117,7 @@ button, img, video{
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 990;
   background-color: var(--black);
 }
 
@@ -260,3 +260,21 @@ button, img, video{
     border-radius: 10px;
     border: 3px solid transparent;
   }
+
+.info-message{
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+  padding: 100px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--grey);
+}
+
+.info-message a{
+  color: var(--white);
+  text-decoration: underline;
+}

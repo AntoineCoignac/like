@@ -8,12 +8,14 @@ import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
 import LikeCounter from '../../components/LikeCounter/LikeCounter';
 import Media from '../../components/Media/Media';
+import { useNavigate } from 'react-router-dom';
 
 function Gig() {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const { gigId } = useParams();
     const [gig, setGig] = useState({});
     const [user, setUser] = useState({});
+    const navigate = useNavigate();
 
     const loadUser = async (userId) => {
         try {
@@ -31,6 +33,7 @@ function Gig() {
             setUser(updatedData);
         } catch (err) {
             console.log(err);
+            navigate(-1);
         }
     };
 
@@ -40,6 +43,7 @@ function Gig() {
             return res.data;
         } catch (err) {
             console.log(err);
+            navigate(-1);
         }
     };
 
@@ -54,6 +58,7 @@ function Gig() {
                 loadUser(gigData.userId);
             } catch (err) {
                 console.log(err);
+                navigate(-1);
             }
         };
 

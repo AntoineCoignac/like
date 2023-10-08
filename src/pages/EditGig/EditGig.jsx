@@ -4,6 +4,7 @@ import Back from '../../components/Back/Back';
 import "./EditGig.css";
 import newRequest from '../../utils/newRequest';
 import upload from '../../utils/upload';
+import Download from '../../components/Download/Download';
 
 function EditGig() {
   const { gigId } = useParams();
@@ -24,6 +25,7 @@ function EditGig() {
     cover: ""
   });
   const [preview, setPreview] = useState();
+  const [uploading, setUploading] = useState(false);
 
   const isImage = (file) => {
     return file && file.type && file.type.startsWith('image/');
@@ -42,6 +44,7 @@ function EditGig() {
         setPreview(fetchedGig.cover);
       } catch (err) {
         console.error(err);
+        navigate(-1);
       }
     }
     fetchGig();
@@ -88,7 +91,9 @@ function EditGig() {
       try {
         let updatedUrl = gig.cover;
         if (file) {
+          setUploading(true);
           updatedUrl = await upload(file);
+          setUploading(false);
         }
 
         await newRequest.put(`/gigs/${gigId}`, {
@@ -110,6 +115,9 @@ function EditGig() {
 
   return (
     <>
+    {
+      uploading ? <Download /> : null
+    }
       <div className="top-bar">
         <Back />
         <p className="name">Modifier le tarif</p>

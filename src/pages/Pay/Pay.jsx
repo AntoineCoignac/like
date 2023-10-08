@@ -3,15 +3,18 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useState } from 'react';
 import newRequest from '../../utils/newRequest';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CheckoutForm from '../../components/CheckoutForm/CheckoutForm';
 import "./Pay.css";
+import { useNavigate } from 'react-router-dom';
 
 const stripePromise = loadStripe("pk_test_51NflPFHKqiimyixL9JrW6CQaTqDMzuAWGKmMK6CYI9rTDWrARrxEG5OhsWkSZzxjxSG0f2WfTzIt4DHd7rxVFrO300WpUSvRZ6");
 
 function Pay() {
     const [clientSecret, setClientSecret] = useState("");
     const [gig, setGig] = useState({});
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const navigate = useNavigate();
 
     const { id } = useParams();
 
@@ -21,6 +24,7 @@ function Pay() {
             return res.data;
         } catch (err) {
             console.log(err);
+            navigate(-1);
         }
     };
 
@@ -31,6 +35,7 @@ function Pay() {
                 setClientSecret(res.data.clientSecret);
             } catch (err) {
                 console.log(err);
+                navigate(-1);
             }
         }
         makeRequest();
@@ -43,6 +48,7 @@ function Pay() {
                 setGig(gigData);
             } catch (err) {
                 console.log(err);
+                navigate(-1);
             }
         };
 
@@ -58,18 +64,24 @@ function Pay() {
         appearance
     };
 
-    if (gig !== {}){
+    if (JSON.stringify(gig) !== JSON.stringify({})){
         return (
-            <div className='pay'>
-                {clientSecret && (
-                    <Elements options={options} stripe={stripePromise}>
-                        <CheckoutForm gig={gig} />
-                    </Elements>
-                )}
-            </div>
+                !currentUser.isSeller ? (
+                    <div className='pay'>
+                        {clientSecret && (
+                            <Elements options={options} stripe={stripePromise}>
+                                <CheckoutForm gig={gig} />
+                            </Elements>
+                        )}
+                    </div>
+                ) : (
+                    <>
+                        <span className='info-message'>Vous n'avez pas la possibilité d'acheter en tant que créateur durant la Tech Launch. <Link to={"/"}>Retourner à l'accueil</Link></span>
+                    </>
+                )
         )
     }else{
-        return (<></>)
+        return (<><span className='info-message'>Nous n'avons pas pu charger les données nécessaires. <Link to={"/"}>Retourner à l'accueil</Link></span></>)
     }
     
 }

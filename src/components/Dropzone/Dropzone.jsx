@@ -5,16 +5,21 @@ import Cross from '../../icons/cross/Cross';
 import upload from '../../utils/upload';
 import newRequest from '../../utils/newRequest';
 import { useNavigate } from 'react-router-dom';
+import Download from '../../components/Download/Download';
 
 function Dropzone ({ order }) {
     const [acceptedFiles, setAcceptedFiles] = useState([]);
     const [fileTooLargeError, setFileTooLargeError] = useState(false); // Ajout de l'état pour gérer l'erreur
     const navigate = useNavigate();
+    const [uploading, setUploading] = useState(false);
 
     const handleSubmitDelivery = async () => {
         try {
+            
             const urls = await Promise.all(acceptedFiles.map(async (file) => {
+                setUploading(true);
                 const url = await upload(file);
+                setUploading(false);
                 return url;
             }));
     
@@ -72,6 +77,9 @@ function Dropzone ({ order }) {
 
     return (
         <section className="dropzone-container">
+            {
+                uploading ? <Download /> : null
+            }
             <div {...getRootProps({ className: `dropzone ${isDragActive ? 'active' : null}` })}>
                 <input {...getInputProps()} />
                 <p>Déposez vos fichiers ici</p>

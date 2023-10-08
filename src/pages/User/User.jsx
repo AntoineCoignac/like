@@ -14,12 +14,14 @@ import { useState } from 'react';
 import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
 import Load from '../../components/Load/Load';
+import { useNavigate } from 'react-router-dom';
 
 function User() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const [user, setUser] = useState(null);
   const [userGigs, setUserGigs] = useState(null);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const loadUser = async () => {
     try {
@@ -28,6 +30,7 @@ function User() {
       console.log(res.data); // This should log the data fetched from the API
     } catch (err) {
       console.log(err);
+      navigate(-1);
     }
   };
 
@@ -38,6 +41,7 @@ function User() {
       console.log(res.data); // This should log the data fetched from the API
     } catch (err) {
       console.log(err);
+      navigate(-1);
     }
   };
 

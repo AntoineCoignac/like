@@ -4,6 +4,7 @@ import "./NewGig.css";
 import { useNavigate } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
 import upload from '../../utils/upload';
+import Download from '../../components/Download/Download';
 
 function NewGig() {
   const [error, setError] = useState(null);
@@ -21,7 +22,7 @@ function NewGig() {
   const [fileSizeExceeded, setFileSizeExceeded] = useState(false);
   const MAX_IMAGE_SIZE = 10000000; // 10 MB
   const MAX_VIDEO_SIZE = 100000000; // 100 MB
-
+  const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -72,7 +73,9 @@ function NewGig() {
       file
     ) {
       try {
+        setUploading(true);
         const url = await upload(file);
+        setUploading(false);
         await newRequest.post("/gigs", {
           ...gig,
           cover: url,
@@ -93,6 +96,9 @@ function NewGig() {
 
   return (
     <>
+      {
+          uploading ? <Download /> : null
+      }
       <div className="top-bar">
         <Back />
         <p className="name">Nouveau tarif</p>

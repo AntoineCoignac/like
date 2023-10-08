@@ -1,14 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Media from '../Media/Media';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
-import LikeCounter from '../LikeCounter/LikeCounter';
 import { Link } from 'react-router-dom';
 import "./Card.css";
 import newRequest from '../../utils/newRequest';
-import BackArrow from '../../icons/back/BackArrow';
 
 function Card({ rate, userId }) {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
     const [play, setPlay] = useState(false);
     const cardRef = useRef(null);
@@ -35,6 +32,7 @@ function Card({ rate, userId }) {
             entries.forEach((entry) => {
                 if (entry.target === cardRef.current) {
                     if (entry.intersectionRatio >= 0.8) {
+                        console.log("ok");
                         setPlay(true); // Le composant est visible à plus de 80%
                     } else {
                         setPlay(false); // Le composant n'est pas suffisamment visible

@@ -25,6 +25,7 @@ function Order() {
   const [isLiked, setIsLiked] = useState(null);
   const [likePopup, setLikePopup] = useState(true);
   const [recapActive, setRecapActive] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDeliveries = async () => {
@@ -39,6 +40,7 @@ function Order() {
         }
       } catch (error) {
         console.error(error);
+        navigate(-1);
       }
     };
 
@@ -72,6 +74,7 @@ function Order() {
         console.log(orderData, buyerData, sellerData, gigData);
       } catch (err) {
         console.log(err);
+        navigate(-1);
         setIsLoading(false);
       }
     };
@@ -136,8 +139,6 @@ function Order() {
       return `il y a ${weeks} ${weeks === 1 ? 'semaine' : 'semaines'}`;
     }
   }
-
-  const navigate = useNavigate();
 
   const handleValidationSubmit = async (e, deliveryId) => { // Ajoutez deliveryId comme paramètre
     e.preventDefault();
