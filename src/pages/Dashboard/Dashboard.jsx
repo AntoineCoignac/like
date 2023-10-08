@@ -78,55 +78,91 @@ function Dashboard() {
         <NavWork />
         {userGigs && orders ? (
           <>
-            <div className="board-ctn">
-              <Link className="board-item" to={"/"}>
-                <p className="number">
-                  {formatPrice(
-                    orders
-                      .filter(
-                        (order) =>
-                          order.order.sellerId === currentUser._id &&
-                          order.order.isFinished
-                      )
-                      .reduce((accumulator, order) => {
-                        return accumulator + parseFloat(order.order.price);
-                      }, 0)
-                  )}
-                  €
-                </p>
-                <p className="legend">Au total</p>
-              </Link>
-              <div className="under-board">
-                <div className="like-recap board-item">
-                  <Like />
-                  <p className="number">{currentUser.like}</p>
+            {
+              currentUser.isSeller ? (
+                <div className="board-ctn">
+                  <Link className="board-item" to={"/"}>
+                    <p className="number">
+                      {formatPrice(
+                        orders
+                          .filter(
+                            (order) =>
+                              order.order.sellerId === currentUser._id &&
+                              order.order.isFinished
+                          )
+                          .reduce((accumulator, order) => {
+                            return accumulator + parseFloat(order.order.price);
+                          }, 0)
+                      )}
+                      €
+                    </p>
+                    <p className="legend">Au total</p>
+                  </Link>
+                  <div className="under-board">
+                    <div className="like-recap board-item">
+                      <Like />
+                      <p className="number">{currentUser.like}</p>
+                    </div>
+                    <Link className="board-item" to={"/work/orders"}>
+                      <p className="number">
+                        {
+                          orders.filter(
+                            (order) => order.order.sellerId === currentUser._id
+                          ).length
+                        }
+                      </p>
+                      <p className="legend">Collaborations</p>
+                    </Link>
+                  </div>
+                  <Link className="me-recap board-item" to={"/me"}>
+                    <ProfilePicture
+                      photo={currentUser.img}
+                      badge={currentUser.sub ? currentUser.sub : null}
+                    />
+                    <p className="legend">
+                      {currentUser.isSeller
+                        ? `${currentUser.name} ${currentUser.lastname.charAt(0)}.`
+                        : currentUser.name}
+                    </p>
+                  </Link>
                 </div>
-                <Link className="board-item" to={"/work/orders"}>
-                  <p className="number">
-                    {
-                      orders.filter(
-                        (order) => order.order.sellerId === currentUser._id
-                      ).length
-                    }
-                  </p>
-                  <p className="legend">Commandes</p>
-                </Link>
-              </div>
-              <Link className="me-recap board-item" to={"/me"}>
-                <ProfilePicture
-                  photo={currentUser.img}
-                  badge={currentUser.sub ? currentUser.sub : null}
-                />
-                <p className="legend">
-                  {currentUser.isSeller
-                    ? `${currentUser.name} ${currentUser.lastname.charAt(0)}.`
-                    : currentUser.name}
-                </p>
-              </Link>
-            </div>
+              ) : (
+                <div className="board-ctn">
+                  <div className="like-recap board-item">
+                    <Like />
+                    <p className="number">{
+                        orders.filter(
+                          (order) => order.order.buyerId === currentUser._id && order.order.isLiked === true
+                        ).length
+                      }</p>
+                  </div>
+                  <Link className="board-item" to={"/work/orders"}>
+                    <p className="number">
+                      {
+                        orders.filter(
+                          (order) => order.order.buyerId === currentUser._id
+                        ).length
+                      }
+                    </p>
+                    <p className="legend">Collaborations</p>
+                  </Link>
+                  <Link className="me-recap board-item" to={"/me"}>
+                    <ProfilePicture
+                      photo={currentUser.img}
+                      badge={currentUser.sub ? currentUser.sub : null}
+                    />
+                    <p className="legend">
+                      {currentUser.isSeller
+                        ? `${currentUser.name} ${currentUser.lastname.charAt(0)}.`
+                        : currentUser.name}
+                    </p>
+                  </Link>
+                </div>
+              )
+            }
             <div className="section">
               <span className="section-title big-title">
-                Commandes en cours
+                Collaborations en cours
               </span>
               {orders
                 .filter(

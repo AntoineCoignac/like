@@ -11,6 +11,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [seePW, setSeePW] = useState(false);
   
   const navigate = useNavigate();
 
@@ -45,7 +46,8 @@ function Login() {
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
-              <input name='password' type="password" placeholder='8 caractères minimum'onChange={e=>setPassword(e.target.value)}/>
+              <input name='password' type={seePW ? "text" : "password"} placeholder='8 caractères minimum'onChange={e=>setPassword(e.target.value)}/>
+              <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "Cacher" : "Voir"} le mot de passe</span>
             </div>
             <button className='btn' type="submit">Se connecter</button>
             {error && error}

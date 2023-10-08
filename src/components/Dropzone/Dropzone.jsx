@@ -13,7 +13,21 @@ function Dropzone ({ order }) {
 
     const handleSubmitDelivery = async () => {
         try {
-            // Reste du code inchangé
+            const urls = await Promise.all(acceptedFiles.map(async (file) => {
+                const url = await upload(file);
+                return url;
+            }));
+    
+            urls.forEach((url) => {
+                console.log(url);
+            });
+    
+            const submitDelivery = await newRequest.post(`/deliveries/create`, {
+                orderId: order._id,
+                docs: urls,
+            });
+
+            navigate("/work/orders")
         } catch (err) {
             console.log(err);
         }

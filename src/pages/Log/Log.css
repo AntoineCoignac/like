@@ -87,3 +87,16 @@
         padding: 20px;
     }
 }
+
+.log .see{
+    padding:5px 10px;
+    background-color: var(--dark);
+    color: var(--grey);
+    border-radius: 3px;
+    width: fit-content;
+    cursor: pointer;
+    margin: 0 0 0 auto;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}

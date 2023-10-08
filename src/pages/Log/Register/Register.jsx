@@ -16,6 +16,7 @@ function Register() {
   });
   const [type, setType] = useState("creator");
   const [error, setError] = useState(null);
+  const [seePW, setSeePW] = useState(false);
 
   const handleClick = (event) => {
     const elementId = event.target.id;
@@ -40,7 +41,7 @@ function Register() {
       await newRequest.post("/auth/register", user);
       navigate("/login")
     } catch (err) {
-      setError(err.response.data);
+      setError(err.response.data.error);
     }
   };
 
@@ -78,7 +79,8 @@ function Register() {
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
-              <input onChange={handleChange} name='password' type="password" placeholder='8 caractères minimum' />
+              <input onChange={handleChange} name='password' type={seePW ? "text" : "password"} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder='8 caractères minimum' title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)."/>
+              <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "Cacher" : "Voir"} le mot de passe</span>
             </div>
             {error && error}
             <button className='btn' type="submit">S'inscrire</button>
@@ -99,9 +101,10 @@ function Register() {
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
-              <input onChange={handleChange} name='password' type="password" placeholder='8 caractères minimum' />
+              <input onChange={handleChange} name='password' type={seePW ? "text" : "password"} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder='8 caractères minimum' title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)."/>
+              <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "Cacher" : "Voir"} le mot de passe</span>
             </div>
-            {error && error}
+            {error && <p className="error">{error}</p>}
             <button className='btn' type="submit">S'inscrire</button>
             <Link to="/login" className='link'>J'ai déjà un compte</Link>
           </form>
