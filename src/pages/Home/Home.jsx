@@ -48,8 +48,10 @@ function Home() {
 
   const loadGigs = async () => {
     try {
+      console.log("test");
       const url = `/gigs?${"me" != filters.tag ? `tag=${filters.tag}` : "" }${filters.min ? `&min=${filters.min}` : ""}${filters.max ? `&max=${filters.max}` : ""}`
       const res = await newRequest.get(url);
+      console.log("test1");
       setGigs(res.data);
       console.log(url);
       console.log(res.data); // This should log the data fetched from the API
