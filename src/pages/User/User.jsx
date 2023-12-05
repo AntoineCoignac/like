@@ -8,6 +8,7 @@ import InstagramIcon from '../../icons/social/InstagramIcon';
 import YoutubeIcon from '../../icons/social/YoutubeIcon';
 import TwitterIcon from '../../icons/social/TwitterIcon';
 import TiktokIcon from '../../icons/social/TiktokIcon';
+import LinkedinIcon from '../../icons/social/LinkedinIcon';
 import Media from '../../components/Media/Media';
 import Like from '../../icons/like/Like';
 import { useState } from 'react';
@@ -96,38 +97,46 @@ function User() {
                     </span>
                   ) : null
                 }
-                {
+                {/*
                   user.instagram ? (
                     <span key={"instagram"} className="info">
                       <InstagramIcon />
                       <span>{user.instagram}</span>
                     </span>
                   ) : null
-                }
-                {
+                  */}
+                {/*
                   user.youtube ? (
                     <span key={"youtube"} className="info">
                       <YoutubeIcon />
                       <span>{user.location}</span>
                     </span>
                   ) : null
-                }
-                {
+                */}
+                {/*
                   user.twitter ? (
                     <span key={"twitter"} className="info">
                       <TwitterIcon />
                       <span>{user.twitter}</span>
                     </span>
                   ) : null
-                }
-                {
+                */}
+                {/*
                   user.tiktok ? (
                     <span key={"tiktok"} className="info">
                       <TiktokIcon />
                       <span>{user.tiktok}</span>
                     </span>
                   ) : null
-                }
+                */}
+                {/*
+                  user.linkedin ? (
+                    <span key={"linkedin"} className="info">
+                      <LinkedinIcon />
+                      <span>{user.linkedin}</span>
+                    </span>
+                  ) : null
+                */}
               </div>
             </div>
             <div className="section">

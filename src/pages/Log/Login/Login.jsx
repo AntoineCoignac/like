@@ -19,9 +19,7 @@ function Login() {
     e.preventDefault();
     try{
       const res = await newRequest.post("/auth/login", {username,password});
-      const secretKey = 'VotreCleSecrete';
-      const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
-      localStorage.setItem("currentUser", JSON.stringify({...res.data, password: encryptedPassword}));
+      localStorage.setItem("currentUser", JSON.stringify({...res.data}));
       navigate("/")
     }catch(err){
       setError(err.response.data);
@@ -42,7 +40,7 @@ function Login() {
           <form className='form' onSubmit={handleSubmit}>
             <div className="field">
               <label htmlFor="username">Identifiant</label>
-              <input name="username" type="text" placeholder='ex : jeandupont' onChange={e=>setUsername(e.target.value)} />
+              <input name="username" type="text" placeholder='jeandupont' onChange={e=>setUsername(e.target.value)} />
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>

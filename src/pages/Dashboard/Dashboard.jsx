@@ -162,7 +162,7 @@ function Dashboard() {
             }
             <div className="section">
               <span className="section-title big-title">
-                Collaborations en cours
+                Collaboration en cours
               </span>
               {orders
                 .filter(

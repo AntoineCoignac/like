@@ -6,10 +6,8 @@ import "./Card.css";
 import newRequest from '../../utils/newRequest';
 
 function Card({ rate, userId }) {
-
     const [play, setPlay] = useState(false);
     const cardRef = useRef(null);
-
     const [user, setUser] = useState(null);
 
     const loadUser = async () => {
@@ -22,6 +20,9 @@ function Card({ rate, userId }) {
     };
 
     useEffect(() => {
+        console.log("Component mounted");
+        console.log(cardRef.current); // Vérifiez si cardRef est correctement attaché
+        // Configure the IntersectionObserver when the component is mounted
         const options = {
             root: null,
             rootMargin: '0px',
@@ -30,13 +31,12 @@ function Card({ rate, userId }) {
 
         const handleIntersection = (entries) => {
             entries.forEach((entry) => {
-                if (entry.target === cardRef.current) {
-                    if (entry.intersectionRatio >= 0.8) {
-                        console.log("ok");
-                        setPlay(true); // Le composant est visible à plus de 80%
-                    } else {
-                        setPlay(false); // Le composant n'est pas suffisamment visible
-                    }
+                if (entry.isIntersecting) {
+                    console.log("ok");
+                    setPlay(true);
+                } else {
+                    console.log("pas ok");
+                    setPlay(false);
                 }
             });
         };
@@ -51,10 +51,10 @@ function Card({ rate, userId }) {
                 observer.unobserve(cardRef.current);
             }
         };
-    }, []);
+    }, [user]); // Empty dependency array ensures this effect runs once on mount
 
     useEffect(() => {
-        loadUser(); // Call the loadUser function here to fetch user data
+        loadUser();
     }, []);
 
     const windowWidth = window.innerWidth;
@@ -92,10 +92,9 @@ function Card({ rate, userId }) {
                 </Link>
             </div>
         )
-    }else{
+    } else {
         return ""
     }
-    
 }
 
 export default Card;

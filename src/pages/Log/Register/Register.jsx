@@ -63,19 +63,19 @@ function Register() {
           <form onSubmit={handleSubmit} className='form'>
             <div className="field">
               <label htmlFor="name">Prénom</label>
-              <input onChange={handleChange} name='name' type="text" placeholder='ex : Jean' />
+              <input onChange={handleChange} name='name' type="text" placeholder='Jean' />
             </div>
             <div className="field">
               <label htmlFor="lastname">Nom</label>
-              <input onChange={handleChange} name='lastname' type="text" placeholder='ex : Dupont' />
+              <input onChange={handleChange} name='lastname' type="text" placeholder='Dupont' />
             </div>
             <div className="field">
               <label htmlFor="username">Identifiant</label>
-              <input onChange={handleChange} name="username" type="text" placeholder='ex : jeandupont' />
+              <input onChange={handleChange} name="username" type="text" placeholder='jeandupont' />
             </div>
             <div className="field">
               <label htmlFor="email">Email</label>
-              <input onChange={handleChange} name='email' type="email" placeholder='ex : jeandupont@mail.com' />
+              <input onChange={handleChange} name='email' type="email" placeholder='jeandupont@mail.com' />
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
@@ -89,15 +89,15 @@ function Register() {
           <form onSubmit={handleSubmit} className='form'>
             <div className="field">
               <label htmlFor="name">Dénomination sociale</label>
-              <input onChange={handleChange} name='name' type="text" placeholder='ex : Like' />
+              <input onChange={handleChange} name='name' type="text" placeholder='Like' />
             </div>
             <div className="field">
               <label htmlFor="username">Identifiant</label>
-              <input onChange={handleChange} name='username' type="text" placeholder='ex : likecompany' />
+              <input onChange={handleChange} name='username' type="text" placeholder='likecompany' />
             </div>
             <div className="field">
               <label htmlFor="email">Email</label>
-              <input onChange={handleChange} name='email' type="email" placeholder='ex : like@mail.com' />
+              <input onChange={handleChange} name='email' type="email" placeholder='like@mail.com' />
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>

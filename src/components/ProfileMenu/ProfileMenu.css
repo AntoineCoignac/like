@@ -15,13 +15,22 @@
     display: flex;
 }
 
-.profile-menu-list a{
-    padding: 5px 10px;
-    border-radius: 3px;
+
+.profile-menu-list .menu-item:hover{
+    background-color: var(--dark);
 }
 
-.profile-menu-list a:hover{
-    background-color: var(--dark);
+.profile-menu-list .menu-item{
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: var(--white);
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.profile-menu-list .menu-item.negative{
+    color: var(--red);
 }
 
 .pp-btn{

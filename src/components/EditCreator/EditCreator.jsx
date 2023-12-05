@@ -12,7 +12,9 @@ function EditCreator() {
   const currentUser = currentUserJson && currentUserJson !== 'undefined' ? JSON.parse(currentUserJson) : null;
   const [searchQuery, setSearchQuery] = useState(currentUser.location ? currentUser.location : '');
   const [preview, setPreview] = useState(currentUser.img ? currentUser.img : "/img/pp/noavatar.jpg");
-  const [fileSizeExceeded, setFileSizeExceeded] = useState(false);
+  const [previewContract, setPreviewContract] = useState(currentUser.contract ? currentUser.contract : null);
+  const [ppSizeExceeded, setPPSizeExceeded] = useState(false);
+  const [contractSizeExceeded, setContractSizeExceeded] = useState(false);
   const MAX_FILE_SIZE = 10000000;
   const [uploading, setUploading] = useState(false);
   
@@ -22,14 +24,17 @@ function EditCreator() {
     lastname : currentUser.lastname ? currentUser.lastname : null,
     desc : currentUser.desc ? currentUser.desc : null,
     location : currentUser.location ? currentUser.location : null,
-    instagram : currentUser.instagram ? currentUser.instagram : null,
+    contract : currentUser.contract ? currentUser.contract : null
+    /*instagram : currentUser.instagram ? currentUser.instagram : null,
     tiktok : currentUser.tiktok ? currentUser.tiktok : null,
-    twitter : currentUser.twitter ? currentUser.twitetr : null,
+    twitter : currentUser.twitter ? currentUser.twitter : null,
     youtube : currentUser.youtube ? currentUser.youtube : null,
     twitch : currentUser.twitch ? currentUser.twitch : null,
+    linkedin : currentUser.linkedin ? currentUser.linkedin : null,*/
   });
 
-  const [file, setFile] = useState(null);
+  const [pp, setPP] = useState(null);
+  const [contract, setContract] = useState(null);
   const navigate = useNavigate();
 
   const handleLocationChange = (event) => {
@@ -58,16 +63,29 @@ function EditCreator() {
     });
   };
 
-  const handleChangeFile = (e) => {
-    const newFile = e.target.files[0];
-    if (newFile.size > MAX_FILE_SIZE) {
-      setFileSizeExceeded(true);
+  const handleChangePP = (e) => {
+    const newPP = e.target.files[0];
+    if (newPP && newPP.size > MAX_FILE_SIZE) {
+      setPPSizeExceeded(true);
       return;
     }
-    setFile(newFile);
-    const url = URL.createObjectURL(newFile);
+    setPP(newPP);
+    const url = URL.createObjectURL(newPP);
+    console.log(url);
     setPreview(url);
-    setFileSizeExceeded(false);
+    setPPSizeExceeded(false);
+  }
+
+  const handleChangeContract = (e) => {
+    const newContract = e.target.files[0];
+    if (newContract && newContract.size > MAX_FILE_SIZE) {
+      setContractSizeExceeded(true);
+      return;
+    }
+    setContract(newContract);
+    const url = URL.createObjectURL(newContract);
+    setPreviewContract(url);
+    setContractSizeExceeded(false);
   }
 
   const handleCitySelection = (city) => {
@@ -80,23 +98,34 @@ function EditCreator() {
 
     // Upload the image if it has changed
     let imageUrl = currentUser.img;
-    if (file) {
+    if (pp) {
       setUploading(true);
-      imageUrl = await upload(file);
-      setUploading(false);
+      imageUrl = await upload(pp);
+      console.log(imageUrl);
+    }
+
+    // Upload the image if it has changed
+    let contractUrl = currentUser.contract;
+    if (contract) {
+      setUploading(true);
+      contractUrl = await upload(contract);
+      console.log(contractUrl);
     }
 
     try {
       await newRequest.put(`/users/${currentUser._id}`, {
         ...updatedUser,
         img: imageUrl,
+        contract: contractUrl
       });
 
       localStorage.setItem('currentUser', JSON.stringify({
         ...currentUser,
         ...updatedUser,
         img: imageUrl,
+        contract: contractUrl
       }));
+      setUploading(false);
       navigate("/")
     } catch (err) {
       console.log(err);
@@ -110,8 +139,8 @@ function EditCreator() {
           }
           <div className="image-field">
             <img src={preview} alt="" />
-            <input type="file" accept='.png, .jpg, .jpeg' onChange={handleChangeFile} />
-            {fileSizeExceeded && (
+            <input type="file" accept='.png, .jpg, .jpeg' onChange={handleChangePP} />
+            {ppSizeExceeded && (
                 <p className='error'>
                     Votre fichier ne doit pas dépasser {MAX_FILE_SIZE / 1000000} MB
                 </p>
@@ -142,6 +171,21 @@ function EditCreator() {
             </ul>
           </div>
           <div className="field">
+            <label htmlFor="lastname">Contrat</label>
+            {
+              previewContract ? 
+                <iframe className='preview-pdf' src={previewContract} width="100%" height="600px"></iframe>
+              : null
+            }
+            <input type="file" accept='.pdf' onChange={handleChangeContract} />
+            {contractSizeExceeded && (
+                <p className='error'>
+                    Votre fichier ne doit pas dépasser {MAX_FILE_SIZE / 1000000} MB
+                </p>
+            )}
+          </div>
+          {/*
+          <div className="field">
             <label htmlFor="instagram">Instagram</label>
             <input name='instagram' type="text" placeholder='ex : https://www.instagram.com/identifiant' onChange={handleChange} defaultValue={currentUser.instagram ? currentUser.instagram : ""}/>
           </div>
@@ -161,6 +205,10 @@ function EditCreator() {
             <label htmlFor="twitch">Twitch</label>
             <input name='twitch' type="text" placeholder='ex : https://www.twitch.tv/identifiant' onChange={handleChange} defaultValue={currentUser.twitch ? currentUser.twitch : ""}/>
           </div>
+          <div className="field">
+            <label htmlFor="linkedin">LinkedIn</label>
+            <input name='linkedin' type="text" placeholder='ex : https://www.linkedin.com/in/identifiant' onChange={handleChange} defaultValue={currentUser.linkedin ? currentUser.linkedin : ""}/>
+              </div>*/}
           <button className='btn' type="submit">Enregister les modifications</button>
         </form>
   )

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
 import Cross from '../../icons/cross/Cross';
 import SendIcon from '../../icons/send/SendIcon';
+import Transaction from '../../icons/transaction/Transaction';
 import Dropzone from '../../components/Dropzone/Dropzone';
 import { useNavigate } from 'react-router-dom';
 import Load from '../../components/Load/Load';
@@ -257,9 +258,9 @@ function Order() {
                       <section>
                         <p className="title">Brief</p>
                         <p className="desc">{orderInfo.order.brief}</p>
-                        <Link to={`/chat/${orderInfo.seller._id}`}>
+                        <Link to={`/chat/${orderInfo.buyer._id}`}>
                           <SendIcon />
-                          Discuter avec le créateur
+                          Discuter avec le client
                         </Link>
                       </section>
                       <section>
@@ -386,6 +387,13 @@ function Order() {
                       <p className="title">Prix</p>
                       <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
                     </section>
+                    <section>
+                      <p className="title">Contrat</p>
+                      <Link to={orderInfo.seller.contract}>
+                        <Transaction />
+                        Voir le contrat
+                      </Link>
+                    </section>
                   </div>
                   <div className="order-bottom">
                     <div className='situation' id='no'>
@@ -462,6 +470,13 @@ function Order() {
                     <p className="title">Prix</p>
                     <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
                   </section>
+                  <section>
+                      <p className="title">Contrat</p>
+                      <Link to={orderInfo.seller.contract}>
+                        <Transaction />
+                        Voir le contrat
+                      </Link>
+                    </section>
                 </div>
                 <div className="order-bottom">
                   <div className='situation' >
@@ -546,6 +561,13 @@ function Order() {
                       <section>
                         <p className="title">Prix</p>
                         <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
+                      </section>
+                      <section>
+                        <p className="title">Contrat</p>
+                        <Link to={orderInfo.seller.contract}>
+                          <Transaction />
+                          Voir le contrat
+                        </Link>
                       </section>
                     </div>
                   </div>
@@ -655,6 +677,13 @@ function Order() {
                     <section>
                       <p className="title">Prix</p>
                       <p className="desc">{formatPrice(orderInfo.gig.price)}€</p>
+                    </section>
+                    <section>
+                      <p className="title">Contrat</p>
+                      <Link to={orderInfo.seller.contract}>
+                      <Transaction />
+                        Voir le contrat
+                      </Link>
                     </section>
                   </div>
                   <div className="order-bottom">

@@ -36,10 +36,6 @@
     gap: 10px;
 }
 
-.card:has(>.card-content:active){
-    background-color: var(--dark);
-}
-
 .card:hover .media-ctn{
     border-radius: 1px;
 }

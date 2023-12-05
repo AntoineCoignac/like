@@ -153,6 +153,12 @@ input[type="file"]::file-selector-button {
     color: var(--white);
 }
 
+.preview-pdf{
+    border: 0;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
 @media screen and (max-width : 768px) {
     .pf-list{
         grid-template-columns: 1fr 1fr;
