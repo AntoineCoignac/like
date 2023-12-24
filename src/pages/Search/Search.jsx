@@ -98,7 +98,7 @@ function Search() {
             result.map(gig => (
               gig.user ?
               <div className="gig-result">
-                  <Link to={`/gig/${gig._id}`} className="card-content">
+                  <Link to={`/user/${gig.user._id}`} className="card-content">
                       <Link to={`/user/${gig.user._id}`}>
                           <ProfilePicture photo={gig.user.img} badge={gig.user.sub ? gig.user.sub : 0} />
                       </Link>

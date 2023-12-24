@@ -16,6 +16,8 @@ import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
 import Load from '../../components/Load/Load';
 import { useNavigate } from 'react-router-dom';
+import BackArrow from '../../icons/back/BackArrow';
+import { useRef } from 'react';
 
 function User() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -60,6 +62,28 @@ function User() {
       return price.toLocaleString('fr-FR', { minimumFractionDigits: 2 });
   }
 
+  const gigsWrapperRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (gigsWrapperRef.current) {
+      gigsWrapperRef.current.scrollBy({
+        top: 0,
+        left: -gigsWrapperRef.current.offsetWidth,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (gigsWrapperRef.current) {
+      gigsWrapperRef.current.scrollBy({
+        top: 0,
+        left: gigsWrapperRef.current.offsetWidth,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   // Check if user data is still loading
   if (!user || !userGigs) {
     return <Load/>;
@@ -71,109 +95,103 @@ function User() {
             <Back />
             <p className="name big-title">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
           </div>
-          <div className="profile-ctn">
-            <div className="top">
-              <ProfilePicture photo={user.img} badge={user.sub} />
-              <p className="name big-title">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
-              {
-                currentUser ? (
-                currentUser._id !== user._id ?
-                  <Link className='btn' to={`/chat/${user._id}`}>Discuter</Link> : null) : <Link className='btn' to={`/login`}>Discuter</Link>
-              }
-              
-              <p className="desc">
-                {user.desc ? user.desc : "Aucune information"}
-              </p>
-              <div className="infos">
-                <span className="info">
-                  <Like />
-                  <span>{user.like}</span>
-                </span>
+          <div className="grid-wrapper">
+            <div className="portfolio-wrapper">
+              <div className="left">
+                <div className="user-wrapper">
+                  <div className="user">
+                    <ProfilePicture photo={user.img} badge={user.sub} />
+                    <p className="name">{`${user.name} ${user.lastname.charAt(0)}.`}</p>
+                  </div>
+                  <p className="desc">
+                    {user.desc ? user.desc : "Aucune information"}
+                  </p>
+                  <div className="infos">
+                    {
+                      user.tag ? (
+                        <span className="info">
+                          #
+                          <span>{user.tag}</span>
+                        </span>) :null 
+                    }
+                    {
+                      user.location ? (
+                        <span key={"location"} className="info">
+                          <LocationIcon />
+                          <span>{user.location}</span>
+                        </span>
+                      ) : null
+                    }
+                    <span className="info">
+                      <Like />
+                      <span>{user.like}</span>
+                    </span>
+                  </div>
+                </div>
                 {
-                  user.location ? (
-                    <span key={"location"} className="info">
-                      <LocationIcon />
-                      <span>{user.location}</span>
-                    </span>
-                  ) : null
+                  currentUser ? (
+                  currentUser._id !== user._id ?
+                    <Link className='btn secondary' to={`/chat/${user._id}`}>Discuter</Link> : null) : <Link className='btn secondary' to={`/login`}>Discuter</Link>
                 }
-                {/*
-                  user.instagram ? (
-                    <span key={"instagram"} className="info">
-                      <InstagramIcon />
-                      <span>{user.instagram}</span>
-                    </span>
-                  ) : null
-                  */}
-                {/*
-                  user.youtube ? (
-                    <span key={"youtube"} className="info">
-                      <YoutubeIcon />
-                      <span>{user.location}</span>
-                    </span>
-                  ) : null
-                */}
-                {/*
-                  user.twitter ? (
-                    <span key={"twitter"} className="info">
-                      <TwitterIcon />
-                      <span>{user.twitter}</span>
-                    </span>
-                  ) : null
-                */}
-                {/*
-                  user.tiktok ? (
-                    <span key={"tiktok"} className="info">
-                      <TiktokIcon />
-                      <span>{user.tiktok}</span>
-                    </span>
-                  ) : null
-                */}
-                {/*
-                  user.linkedin ? (
-                    <span key={"linkedin"} className="info">
-                      <LinkedinIcon />
-                      <span>{user.linkedin}</span>
-                    </span>
-                  ) : null
-                */}
+                <div className="medias-wrapper">
+                  {
+                    user.medias && user.medias.map(media =>
+                      media && <div className='media-wrapper'><Media type={media.includes('video/') ? "video" : "image"} src={media} /></div>
+                    )
+                  }
+                </div>
+              </div>
+              <div className="right">
+                <Media type={"image"} src={user.img} />
               </div>
             </div>
-            <div className="section">
-              <span className='section-title big-title'>Prestations</span>
-              <div className="gallery">
+            <div className="gigs-wrapper" ref={gigsWrapperRef}>
                 {
                   !userGigs ? (
                     <div>Loading gigs...</div>
                   ) : (
                     userGigs.map(gig => (
-                      <div className="gig-result">
-                          <div className="media-ctn">
-                              <Media type={gig.cover.includes('video/') ? "video" : "image"} src={gig.cover} />
-                          </div>
-                          <Link to={`/gig/${gig._id}`} className="card-content">
-                              <Link to={`/user/${user._id}`}>
-                                  <ProfilePicture photo={user.img} badge={user.sub ? user.sub : 0} />
-                              </Link>
-                              <div className="gig">
-                                  <p className="gig-title">
-                                      {gig.title}
-                                  </p>
-                                  <p className="gig-name">
-                                      {`${user.name} ${user.lastname.charAt(0)}.`}
-                                  </p>
-                                  <div className="infos">
-                                      <span className="info">{formatPrice(gig.price)}€</span>
-                                      <span className="info">{capitalizeFirstLetter(gig.tag)}</span>
-                                  </div>
+                      <div className="gig-wrapper" key={gig.id}>
+                          <Media type={gig.cover.includes('video/') ? "video" : "image"} src={gig.cover} />
+                          <div className="gig">
+                            <div className="text-wrapper">
+                              <p className="name big-title">
+                                  {gig.title}
+                              </p>
+                              <p className="desc">{gig.desc}</p>
+                              <div className="infos">
+                                  <span className="info">{formatPrice(gig.price)}€ à payer</span>
+                                  <span className="info">{gig.deliveryTime} jour{gig.deliveryTime  > 0 && 's'} de livraison</span>
+                                  <span className="info">{gig.revisionNumber} modification{ gig.revisionNumber > 0 && 's'}</span>
                               </div>
-                          </Link>
+                              {
+                                  currentUser ? (
+                                      currentUser._id !== user._id ?
+                                          <Link className='btn secondary' to={`/pay/${gig._id}`}>Commander</Link>
+                                          : null)
+                                      : 
+                                      <Link className='btn secondary' to={`/login`}>Commander</Link>
+                              }
+                            </div>
+                            {
+                              userGigs.length > 1 && 
+                              <div className="gig-nav">
+                                <button className="prev" onClick={scrollLeft}>
+                                  <button className="back"><BackArrow/></button>
+                                  <p className="name big-title">Précédent</p>
+                                </button>
+                                <button className="next" onClick={scrollRight}>
+                                  <p className="name big-title">Suivant</p>
+                                  <button className="back"><BackArrow/></button>
+                                </button>
+                              </div>
+                            }
+                          </div>
                       </div>
                     )
                     )
                   )
                 }
-              </div>
             </div>
           </div>
         </>

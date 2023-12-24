@@ -81,7 +81,7 @@ function Dashboard() {
             {
               currentUser.isSeller ? (
                 <div className="board-ctn">
-                  <Link className="board-item" to={"/"}>
+                  <Link className="board-item" to={"/work/orders"}>
                     <p className="number">
                       {formatPrice(
                         orders
@@ -274,6 +274,15 @@ function Dashboard() {
                     </div>
                   </Link>
                 ))}
+                {orders.filter(
+                  (order) =>
+                    order.order.isFinished !== true &&
+                    order.order.acceptedBySeller !== false
+                ).length === 0 && (
+                  <div className="no-result">
+                    Aucune collaboration en cours
+                  </div>
+                )}
             </div>
             {currentUser.isSeller ? (
               <div className="section">

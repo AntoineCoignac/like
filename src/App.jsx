@@ -45,7 +45,7 @@ function App() {
         <Route path="/login" Component={Login}/>
         <Route path="/settings" Component={Settings}/>
         <Route path='/newgig' Component={NewGig}/>
-        <Route path='/gig/:gigId' Component={Gig}/>
+        {/*<Route path='/gig/:gigId' Component={Gig}/>*/}
         <Route path='/editgig/:gigId' Component={EditGig}/>
         <Route path='/pay/:id' Component={Pay}/>
         <Route path='/success' Component={Success}/>

@@ -79,6 +79,11 @@ button, img, video{
   user-select: none;
 }
 
+.btn.secondary{
+  color: var(--white);
+  background-color: var(--dark);
+}
+
 .btn.absolute{
   z-index: 100;
   position: absolute;
@@ -177,7 +182,7 @@ button, img, video{
 }
 
 .title{
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--white);
 }

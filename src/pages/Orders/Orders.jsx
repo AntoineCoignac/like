@@ -64,6 +64,11 @@ function Orders() {
         {isLoading ? (
           <Load/>
         ) : (
+           orders.length === 0 ? (
+            <div className="no-result">
+              Aucune commande en cours
+            </div>
+          ) : (
           orders.map(({ order, user, gig, seller }) => (
             !order.isFinished ? (
               <Link key={order._id} className='order-item' to={`/work/order/${order._id}`}>
@@ -162,7 +167,7 @@ function Orders() {
                 </div>
               </Link>
             )
-          ))
+          )))
         )}
       </div>
     </>

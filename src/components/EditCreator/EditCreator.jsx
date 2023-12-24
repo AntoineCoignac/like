@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import newRequest from "../../utils/newRequest";
 import upload from '../../utils/upload';
 import { useNavigate } from 'react-router-dom';
@@ -17,14 +17,20 @@ function EditCreator() {
   const [contractSizeExceeded, setContractSizeExceeded] = useState(false);
   const MAX_FILE_SIZE = 10000000;
   const [uploading, setUploading] = useState(false);
+  const [mediaFiles, setMediaFiles] = useState([currentUser.medias[0], currentUser.medias[1], currentUser.medias[2], currentUser.medias[3]]);
+  const [mediaPreviews, setMediaPreviews] = useState([currentUser.medias[0], currentUser.medias[1], currentUser.medias[2], currentUser.medias[3]]);
+  const MAX_MEDIA_SIZE = 10000000;
+
   
   const [updatedUser, setUpdatedUser] = useState({
     img : currentUser.img ? currentUser.img : null,
     name : currentUser.name ? currentUser.name : null,
     lastname : currentUser.lastname ? currentUser.lastname : null,
     desc : currentUser.desc ? currentUser.desc : null,
+    tag : currentUser.tag ? currentUser.tag : null,
     location : currentUser.location ? currentUser.location : null,
-    contract : currentUser.contract ? currentUser.contract : null
+    contract : currentUser.contract ? currentUser.contract : null,
+    medias : currentUser.medias ? currentUser.medias : null
     /*instagram : currentUser.instagram ? currentUser.instagram : null,
     tiktok : currentUser.tiktok ? currentUser.tiktok : null,
     twitter : currentUser.twitter ? currentUser.twitter : null,
@@ -88,6 +94,30 @@ function EditCreator() {
     setContractSizeExceeded(false);
   }
 
+  const handleMediaChange = (index, e) => {
+    const newMedia = e.target.files[0];
+  
+    if (newMedia && newMedia.size > MAX_MEDIA_SIZE) {
+      console.log("Média trop grand.");
+      return;
+    }
+  
+    setMediaFiles(prevMediaFiles => {
+      const updatedMediaFiles = [...prevMediaFiles];
+      updatedMediaFiles[index] = newMedia;
+      return updatedMediaFiles;
+    });
+  
+    if (newMedia) {
+      const url = URL.createObjectURL(newMedia);
+      setMediaPreviews(prevMediaPreviews => {
+        const updatedMediaPreviews = [...prevMediaPreviews];
+        updatedMediaPreviews[index] = url;
+        return updatedMediaPreviews;
+      });
+    }
+  };
+
   const handleCitySelection = (city) => {
     setSearchQuery(city);
     setSuggestions([]);
@@ -95,42 +125,79 @@ function EditCreator() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Upload the image if it has changed
-    let imageUrl = currentUser.img;
-    if (pp) {
-      setUploading(true);
-      imageUrl = await upload(pp);
-      console.log(imageUrl);
-    }
-
-    // Upload the image if it has changed
-    let contractUrl = currentUser.contract;
-    if (contract) {
-      setUploading(true);
-      contractUrl = await upload(contract);
-      console.log(contractUrl);
-    }
-
+  
     try {
+      let imageUrl = currentUser.img;
+      let contractUrl = currentUser.contract;
+  
+      // Upload the image if it has changed
+      if (pp) {
+        setUploading(true);
+        imageUrl = await upload(pp);
+        console.log('Image uploaded:', imageUrl);
+      }
+  
+      // Upload the contract if it has changed
+      if (contract) {
+        setUploading(true);
+        contractUrl = await upload(contract);
+        console.log('Contract uploaded:', contractUrl);
+      }
+  
+      const uploadedMediaUrls = [];
+  
+      const uploadMediaSequentially = async () => {
+        for (let i = 0; i < mediaFiles.length; i++) {
+          const media = mediaFiles[i];
+          if (media) {
+            try {
+              setUploading(true);
+              const uploadedMedia = await upload(media);
+              uploadedMediaUrls.push(uploadedMedia);
+              console.log(`Media ${i + 1} uploaded:`, uploadedMedia);
+            } catch (error) {
+              console.log(`Error uploading Media ${i + 1}:`, error);
+              uploadedMediaUrls.push(null);
+            }
+          } else {
+            uploadedMediaUrls.push(null);
+          }
+        }
+      };
+  
+      await uploadMediaSequentially();
+  
       await newRequest.put(`/users/${currentUser._id}`, {
         ...updatedUser,
         img: imageUrl,
-        contract: contractUrl
+        contract: contractUrl,
+        medias: uploadedMediaUrls,
       });
-
+  
       localStorage.setItem('currentUser', JSON.stringify({
         ...currentUser,
         ...updatedUser,
         img: imageUrl,
-        contract: contractUrl
+        contract: contractUrl,
+        medias: uploadedMediaUrls,
       }));
+  
       setUploading(false);
-      navigate("/")
+      navigate('/');
     } catch (err) {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    const mediaURLs = currentUser.medias || [];
+    const updatedMediaPreviews = mediaURLs.map(mediaURL => (
+      mediaURL ? mediaURL : null
+    ));
+    setMediaPreviews(prevPreviews => (
+      prevPreviews.every(prev => prev === null) ? updatedMediaPreviews : prevPreviews
+    ));
+  }, []);
 
   return (
     <form className='form' onSubmit={handleSubmit}>
@@ -159,6 +226,26 @@ function EditCreator() {
             <input name='desc' type="text" placeholder='ex : Streamer depuis 5 ans' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
           </div>
           <div className="field">
+            <label htmlFor="tag">Tag</label>
+            <select defaultValue={currentUser.tag ? currentUser.tag : ""} name="tag" onChange={handleChange}>
+              <option value="influence">Influence</option>
+              <option value="streaming">Streaming</option>
+              <option value="vidéo">Vidéo</option>
+              <option value="musique">Musique</option>
+              <option value="photo">Photo</option>
+              <option value="podcast">Podcast</option>
+              <option value="ugc">UGC</option>
+              <option value="montage vidéo">Montage vidéo</option>
+              <option value="blog">Blog</option>
+              <option value="design graphique">Design Graphique</option>
+              <option value="animation 2d/3d">Animation 2d/3d</option>
+              <option value="ui/ux">UI/UX</option>
+              <option value="développement web">Développement web</option>
+              <option value="rédaction">Rédaction</option>
+              <option value="voix off">Voix off</option>
+            </select>
+          </div>
+          <div className="field">
             <label htmlFor="location">Localisation</label>
             <input name="location" type="text" placeholder='ex : Paris, France' value={searchQuery}
         onChange={handleLocationChange}/>
@@ -170,6 +257,16 @@ function EditCreator() {
               ))}
             </ul>
           </div>
+          {mediaFiles.map((media, index) => (
+            <div key={index} className="field">
+              <label htmlFor={`media-${index + 1}`}>{`Fichier ${index + 1}`}</label>
+              {mediaPreviews[index] && (
+                <img className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} />
+              )}
+              <input type="file" accept=".png, .jpg, .jpeg, .mp4, .avi" onChange={(e) => handleMediaChange(index, e)} />
+              {/* Gérer la taille du fichier si nécessaire */}
+            </div>
+          ))}
           <div className="field">
             <label htmlFor="lastname">Contrat</label>
             {

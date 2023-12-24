@@ -18,7 +18,6 @@ function EditGig() {
   const [gig, setGig] = useState({
     title: "",
     desc: "",
-    tag: "influence",
     price: 199,
     deliveryTime: 3,
     revisionNumber: 3,
@@ -83,7 +82,6 @@ function EditGig() {
     if (
       gig.title.trim() !== "" &&
       gig.desc.trim() !== "" &&
-      gig.tag.trim() !== "" &&
       Number(gig.price) > 0 &&
       Number(gig.deliveryTime) > 0 &&
       Number(gig.revisionNumber) > 0
@@ -113,6 +111,15 @@ function EditGig() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await newRequest.delete(`/gigs/${gigId}`);
+      navigate(`/work/dashboard`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
     {
@@ -131,26 +138,6 @@ function EditGig() {
           <div className="field">
             <label htmlFor="desc">Description</label>
             <input name='desc' type="text" value={gig.desc} placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
-          </div>
-          <div className="field">
-            <label htmlFor="tag">Tag</label>
-            <select defaultValue={gig.tag} name="tag" onChange={handleChange}>
-              <option value="influence">Influence</option>
-              <option value="streaming">Streaming</option>
-              <option value="vidéo">Vidéo</option>
-              <option value="musique">Musique</option>
-              <option value="photo">Photo</option>
-              <option value="podcast">Podcast</option>
-              <option value="ugc">UGC</option>
-              <option value="montage vidéo">Montage vidéo</option>
-              <option value="blog">Blog</option>
-              <option value="design graphique">Design Graphique</option>
-              <option value="animation 2d/3d">Animation 2d/3d</option>
-              <option value="ui/ux">UI/UX</option>
-              <option value="développement web">Développement web</option>
-              <option value="rédaction">Rédaction</option>
-              <option value="voix off">Voix off</option>
-            </select>
           </div>
           <div className="field">
             <label htmlFor="price">Prix (€)</label>
@@ -197,6 +184,7 @@ function EditGig() {
           </div>
           <button className='btn' type="submit">Enregistrer les modifications</button>
           {error && <p className="error">{error}</p>}
+          <button className='btn secondary' type='button' onClick={handleDelete}>Supprimer</button>
         </form>
       </div>
     </>
