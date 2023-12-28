@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Cross.css";
+import "./Cross.scss";
 
 function Cross() {
     return (

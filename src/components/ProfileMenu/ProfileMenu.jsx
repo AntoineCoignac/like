@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import { Link } from 'react-router-dom';
-import "./ProfileMenu.css";
+import "./ProfileMenu.scss";
 import newRequest from '../../utils/newRequest';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,9 +14,7 @@ function ProfileMenu() {
   const handleDisconnect = async () => {
     try {
       await newRequest.post("/auth/logout");
-      console.log("Before removal:", localStorage.getItem("currentUser"));
       localStorage.removeItem('currentUser');
-      console.log("After removal:", localStorage.getItem("currentUser"));
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -35,10 +33,13 @@ function ProfileMenu() {
             }
         </button>
         <div className="profile-menu-list" id={open ? "open" : ""}>
-            <Link className='menu-item' to="/me">Mon compte</Link>
-            <Link className='menu-item' to="/settings">Paramètres</Link>
-            <Link className='menu-item' to="/help">Aide</Link>
-            <button className='menu-item negative' onClick={handleDisconnect}>Se déconnecter</button>
+          <p className='separator'>Mon compte</p>
+            <Link className='menu-item' to="/me">🎒 Portfolio</Link>
+            <Link className='menu-item' to="/settings">⚙️Paramètres</Link>
+            <p className='separator'>Besoin d'aide ?</p>
+            <Link className='menu-item' to="https://forms.gle/9WgzeTDbya8S8uFL7">🚧 Signaler un bug</Link>
+            <Link className='menu-item discord' to="https://discord.com/invite/UYKHwS6UhT">💜 Discord</Link>
+            <button className='menu-item negative' onClick={handleDisconnect}>💔 Se déconnecter</button>
         </div>
     </>
   )

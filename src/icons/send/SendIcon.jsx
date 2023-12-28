@@ -1,5 +1,5 @@
 import React from 'react';
-import "./SendIcon.css";
+import "./SendIcon.scss";
 
 function SendIcon() {
     return (

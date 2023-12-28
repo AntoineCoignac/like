@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Back from '../../components/Back/Back';
-import "./EditGig.css";
+import "./EditGig.scss";
 import newRequest from '../../utils/newRequest';
 import upload from '../../utils/upload';
 import Download from '../../components/Download/Download';
@@ -127,17 +127,17 @@ function EditGig() {
     }
       <div className="top-bar">
         <Back />
-        <p className="name">Modifier le tarif</p>
+        <p className="name">Modifier ma presta</p>
       </div>
       <div className="newgig">
         <form className='form' onSubmit={handleSubmit}>
           <div className="field">
-            <label htmlFor="title">Nom du tarif</label>
-            <input name='title' type="text" value={gig.title} placeholder='ex : Pack 5 photos de votre choix' onChange={handleChange} />
+            <label htmlFor="title">Nom de la presta</label>
+            <input maxLength={100} name='title' type="text" value={gig.title} placeholder='ex : Pack 5 photos de votre choix' onChange={handleChange} />
           </div>
           <div className="field">
             <label htmlFor="desc">Description</label>
-            <input name='desc' type="text" value={gig.desc} placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
+            <input name='desc' maxLength={300} type="text" value={gig.desc} placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
           </div>
           <div className="field">
             <label htmlFor="price">Prix (€)</label>
@@ -182,7 +182,7 @@ function EditGig() {
               <p className="error">Le fichier est trop volumineux.</p>
             )}
           </div>
-          <button className='btn' type="submit">Enregistrer les modifications</button>
+          <button className='btn' type="submit">💾 Enregistrer les modifications</button>
           {error && <p className="error">{error}</p>}
           <button className='btn secondary' type='button' onClick={handleDelete}>Supprimer</button>
         </form>

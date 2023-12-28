@@ -1,5 +1,5 @@
 import React from 'react';
-import "./ProfilePicture.css";
+import "./ProfilePicture.scss";
 
 function ProfilePicture({photo="/img/pp/noavatar.jpg", badge=0}) {
   return (

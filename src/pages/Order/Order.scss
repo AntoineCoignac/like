@@ -42,8 +42,8 @@
     padding: 20px;
     border: 1px solid var(--dark);
     border-bottom: 0;
-    height: calc(100vh - 80px);
-    max-height: calc(100vh - 80px);
+    height: calc(100dvh - 80px);
+    max-height: calc(100dvh - 80px);
     overflow: hidden;
     border-radius: 20px 20px 0 0;
     position: relative;
@@ -57,16 +57,16 @@
     margin: 0 100px;
     width: 100%;
     color: var(--white);
-    height: calc(100vh - 80px);
-    max-height: calc(100vh - 80px);
+    height: calc(100dvh - 80px);
+    max-height: calc(100dvh - 80px);
     overflow: scroll;
     padding-bottom: 40px;
 }
 
 .order-recap{
     width: 100%;
-    height: calc(100vh - 80px);
-    max-height: calc(100vh - 100px);
+    height: calc(100dvh - 80px);
+    max-height: calc(100dvh - 100px);
     max-width: 400px;
     padding: 20px;
     overflow: hidden;
@@ -89,7 +89,7 @@
     gap: 20px;
     padding: 20px 0;
     height: 100%;
-    max-height: calc(100vh - 215.8px);
+    max-height: calc(100dvh - 215.8px);
     overflow: scroll;
 }
 
@@ -98,7 +98,7 @@
 }
 
 .order-recap .order-content{
-    max-height: 100vh;
+    max-height: 100dvh;
 }
 
 .order-content section a {

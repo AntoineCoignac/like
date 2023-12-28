@@ -5,7 +5,7 @@ import { useState } from 'react';
 import newRequest from '../../utils/newRequest';
 import { Link, useParams } from "react-router-dom";
 import CheckoutForm from '../../components/CheckoutForm/CheckoutForm';
-import "./Pay.css";
+import "./Pay.scss";
 import { useNavigate } from 'react-router-dom';
 
 const stripePromise = loadStripe("pk_test_51NflPFHKqiimyixL9JrW6CQaTqDMzuAWGKmMK6CYI9rTDWrARrxEG5OhsWkSZzxjxSG0f2WfTzIt4DHd7rxVFrO300WpUSvRZ6");

@@ -19,7 +19,8 @@ function EditCreator() {
   const [uploading, setUploading] = useState(false);
   const [mediaFiles, setMediaFiles] = useState([currentUser.medias[0], currentUser.medias[1], currentUser.medias[2], currentUser.medias[3]]);
   const [mediaPreviews, setMediaPreviews] = useState([currentUser.medias[0], currentUser.medias[1], currentUser.medias[2], currentUser.medias[3]]);
-  const MAX_MEDIA_SIZE = 10000000;
+  const MAX_MEDIA_SIZE = 100000000;
+  const [mediaSizeExceeded, setMediaSizeExceeded] = useState(Array(4).fill(false)); // État pour gérer les tailles excessives des fichiers media
 
   
   const [updatedUser, setUpdatedUser] = useState({
@@ -77,7 +78,6 @@ function EditCreator() {
     }
     setPP(newPP);
     const url = URL.createObjectURL(newPP);
-    console.log(url);
     setPreview(url);
     setPPSizeExceeded(false);
   }
@@ -97,10 +97,33 @@ function EditCreator() {
   const handleMediaChange = (index, e) => {
     const newMedia = e.target.files[0];
   
-    if (newMedia && newMedia.size > MAX_MEDIA_SIZE) {
-      console.log("Média trop grand.");
-      return;
+    // Vérification pour les images
+    if (newMedia && newMedia.type.startsWith('image')) {
+      if (newMedia.size > MAX_FILE_SIZE) { // Limite pour les images à 10 MB
+        setMediaSizeExceeded(prevState => {
+          const newState = [...prevState];
+          newState[index] = true;
+          return newState;
+        });
+        return;
+      }
+    } else { // Pour les autres types de médias (vidéos, etc.)
+      if (newMedia && newMedia.size > MAX_MEDIA_SIZE) { // Limite pour les autres médias à 100 MB
+        setMediaSizeExceeded(prevState => {
+          const newState = [...prevState];
+          newState[index] = true;
+          return newState;
+        });
+        return;
+      }
     }
+  
+    // Réinitialiser l'état s'il n'y a pas d'erreur de taille de fichier
+    setMediaSizeExceeded(prevState => {
+      const newState = [...prevState];
+      newState[index] = false;
+      return newState;
+    });
   
     setMediaFiles(prevMediaFiles => {
       const updatedMediaFiles = [...prevMediaFiles];
@@ -134,14 +157,12 @@ function EditCreator() {
       if (pp) {
         setUploading(true);
         imageUrl = await upload(pp);
-        console.log('Image uploaded:', imageUrl);
       }
   
       // Upload the contract if it has changed
       if (contract) {
         setUploading(true);
         contractUrl = await upload(contract);
-        console.log('Contract uploaded:', contractUrl);
       }
   
       const uploadedMediaUrls = [];
@@ -154,7 +175,6 @@ function EditCreator() {
               setUploading(true);
               const uploadedMedia = await upload(media);
               uploadedMediaUrls.push(uploadedMedia);
-              console.log(`Media ${i + 1} uploaded:`, uploadedMedia);
             } catch (error) {
               console.log(`Error uploading Media ${i + 1}:`, error);
               uploadedMediaUrls.push(null);
@@ -209,45 +229,48 @@ function EditCreator() {
             <input type="file" accept='.png, .jpg, .jpeg' onChange={handleChangePP} />
             {ppSizeExceeded && (
                 <p className='error'>
-                    Votre fichier ne doit pas dépasser {MAX_FILE_SIZE / 1000000} MB
+                    Votre fichier ne doit pas dépasser {MAX_FILE_SIZE / 10000000} MB
                 </p>
             )}
           </div>
           <div className="field">
             <label htmlFor="name">Prénom</label>
-            <input name='name' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.name}/>
+            <input maxLength={100} name='name' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.name}/>
           </div>
           <div className="field">
             <label htmlFor="lastname">Nom</label>
-            <input name='lastname' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.lastname ? currentUser.lastname : ""}/>
+            <input maxLength={100} name='lastname' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.lastname ? currentUser.lastname : ""}/>
           </div>
           <div className="field">
             <label htmlFor="desc">Bio</label>
-            <input name='desc' type="text" placeholder='ex : Streamer depuis 5 ans' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
+            <input name='desc' type="text" maxLength={300} placeholder='ex : Streamer depuis 5 ans' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
           </div>
           <div className="field">
             <label htmlFor="tag">Tag</label>
             <select defaultValue={currentUser.tag ? currentUser.tag : ""} name="tag" onChange={handleChange}>
-              <option value="influence">Influence</option>
-              <option value="streaming">Streaming</option>
-              <option value="vidéo">Vidéo</option>
-              <option value="musique">Musique</option>
-              <option value="photo">Photo</option>
-              <option value="podcast">Podcast</option>
-              <option value="ugc">UGC</option>
-              <option value="montage vidéo">Montage vidéo</option>
-              <option value="blog">Blog</option>
-              <option value="design graphique">Design Graphique</option>
-              <option value="animation 2d/3d">Animation 2d/3d</option>
-              <option value="ui/ux">UI/UX</option>
-              <option value="développement web">Développement web</option>
-              <option value="rédaction">Rédaction</option>
-              <option value="voix off">Voix off</option>
+              <option value="monteur vidéo">Monteur Vidéo</option>
+              <option value="vidéaste">Vidéaste</option>
+              <option value="youtuber">Youtuber</option>
+              <option value="streamer">Streamer</option>
+              <option value="motion designer">Motion Designer</option>
+              <option value="podcaster">Podcaster</option>
+              <option value="rédacteur web">Rédacteur Web</option>
+              <option value="développeur web">Développeur Web</option>
+              <option value="blogger">Blogger</option>
+              <option value="copywriter">Copywriter</option>
+              <option value="ghostwriter">Ghostwriter</option>
+              <option value="traducteur">Traducteur</option>
+              <option value="photographe">Photographe</option>
+              <option value="graphiste">Graphiste</option>
+              <option value="illustrateur">Illustrateur</option>
+              <option value="ux/ui designer">UX/UI Designer</option>
+              <option value="influenceur">Influenceur</option>
+              <option value="créateur ugc">Créateur UGC</option>
             </select>
           </div>
           <div className="field">
             <label htmlFor="location">Localisation</label>
-            <input name="location" type="text" placeholder='ex : Paris, France' value={searchQuery}
+            <input maxLength={100} name="location" type="text" placeholder='ex : Paris, France' value={searchQuery}
         onChange={handleLocationChange}/>
             <ul className='suggestions'>
               {suggestions.map((city, index) => (
@@ -259,12 +282,20 @@ function EditCreator() {
           </div>
           {mediaFiles.map((media, index) => (
             <div key={index} className="field">
-              <label htmlFor={`media-${index + 1}`}>{`Fichier ${index + 1}`}</label>
+              <label htmlFor={`media-${index + 1}`}>{`Média ${index + 1}`}</label>
               {mediaPreviews[index] && (
-                <img className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} />
+                mediaPreviews[index].includes('video') ? (
+                  <video className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} controls />
+                ) : (
+                  mediaPreviews[index].includes('image') ? <img className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} /> : null
+                )
               )}
               <input type="file" accept=".png, .jpg, .jpeg, .mp4, .avi" onChange={(e) => handleMediaChange(index, e)} />
-              {/* Gérer la taille du fichier si nécessaire */}
+              {mediaSizeExceeded[index] && (
+                <p className='error'>
+                  Votre fichier média ne doit pas dépasser {MAX_MEDIA_SIZE / 1000000} MB pour les vidéos et {MAX_FILE_SIZE / 1000000} MB pour les photos.
+                </p>
+              )}
             </div>
           ))}
           <div className="field">
@@ -306,7 +337,7 @@ function EditCreator() {
             <label htmlFor="linkedin">LinkedIn</label>
             <input name='linkedin' type="text" placeholder='ex : https://www.linkedin.com/in/identifiant' onChange={handleChange} defaultValue={currentUser.linkedin ? currentUser.linkedin : ""}/>
               </div>*/}
-          <button className='btn' type="submit">Enregister les modifications</button>
+          <button className='btn' type="submit">💾 Enregister les modifications</button>
         </form>
   )
 }

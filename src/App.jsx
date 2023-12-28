@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Search from './pages/Search/Search';
@@ -22,9 +22,33 @@ import Gig from './pages/Gig/Gig';
 import EditGig from './pages/EditGig/EditGig';
 import Pay from './pages/Pay/Pay';
 import Success from './pages/Success/Success';
+import { useNavigate } from 'react-router-dom';
+import newRequest from './utils/newRequest';
+import { useEffect } from 'react';
 
 function App() {
   const queryClient = new QueryClient();
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const response = await newRequest.get('/auth/isloggedin'); 
+
+        if (!response.data.isLoggedIn) {
+          try {
+            await newRequest.post('/auth/logout');
+            localStorage.removeItem('currentUser');
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
 
   return (
     <Router>

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import "./Media.css";
+import "./Media.scss";
 
 function Media({ type = "video", src, play = false }) {
   const videoRef = useRef(null);

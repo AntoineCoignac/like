@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SearchIcon from '../../icons/nav/SearchIcon';
 import NotificationsIcon from '../../icons/nav/NotificationsIcon';
 import WorkIcon from '../../icons/nav/WorkIcon';
-import "./Nav.css";
+import "./Nav.scss";
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
 function Nav({transparent=false}) {
@@ -24,7 +24,7 @@ function Nav({transparent=false}) {
         </a>
         {
           !currentUser ? 
-            <Link to="/login" className='btn'>Se connecter</Link>
+            <Link to="/login" className='btn'>❤️ Se connecter</Link>
           : 
           <div className="nav-list">
               <Link to="/search">

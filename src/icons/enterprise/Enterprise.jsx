@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Enterprise.css";
+import "./Enterprise.scss";
 
 function Enterprise() {
     return (

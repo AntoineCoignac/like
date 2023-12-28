@@ -1,7 +1,7 @@
 import newRequest from "../../../utils/newRequest"
 import { Link } from 'react-router-dom'
 import Logo from '../../../icons/logo/Logo'
-import "../Log.css";
+import "../Log.scss";
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,6 @@ function Register() {
     setUser((prev) => {
       return { ...prev, isSeller: (elementId === "creator") };
     });
-    console.log(elementId);
   }
 
   const navigate = useNavigate();
@@ -48,13 +47,14 @@ function Register() {
   return (
     <div className='log'>
       <div className="banner">
-        <img src="/img/design/fond.webp" alt="" />
+        <img src="/img/design/mobile.webp" alt="" />
       </div>
       <div className="log-ctn">
-        <Link to='https://like.cr'>
+        <Link to='/'>
           <Logo/>
         </Link>
         <p className="log-title">Inscription</p>
+        <p className="desc">L'écosystème créatif pour les créateurs et les entreprises.</p>
         <div className="toggle">
           <button className={type === "creator" ? "active" : ""} onClick={handleClick} id='creator'>Créateur</button>
           <button className={type === "brand" ? "active" : ""} onClick={handleClick} id='brand'>Entreprise</button>
@@ -63,23 +63,23 @@ function Register() {
           <form onSubmit={handleSubmit} className='form'>
             <div className="field">
               <label htmlFor="name">Prénom</label>
-              <input onChange={handleChange} name='name' type="text" placeholder='Jean' />
+              <input maxLength={100} onChange={handleChange} name='name' type="text" placeholder='Jean' />
             </div>
             <div className="field">
               <label htmlFor="lastname">Nom</label>
-              <input onChange={handleChange} name='lastname' type="text" placeholder='Dupont' />
+              <input maxLength={100} onChange={handleChange} name='lastname' type="text" placeholder='Dupont' />
             </div>
             <div className="field">
               <label htmlFor="username">Identifiant</label>
-              <input onChange={handleChange} name="username" type="text" placeholder='jeandupont' />
+              <input maxLength={24} onChange={handleChange} name="username" type="text" placeholder='jeandupont' />
             </div>
             <div className="field">
               <label htmlFor="email">Email</label>
-              <input onChange={handleChange} name='email' type="email" placeholder='jeandupont@mail.com' />
+              <input maxLength={100} onChange={handleChange} name='email' type="email" placeholder='jeandupont@mail.com' />
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
-              <input onChange={handleChange} name='password' type={seePW ? "text" : "password"} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder='8 caractères minimum' title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)."/>
+              <input maxLength={32} onChange={handleChange} name='password' type={seePW ? "text" : "password"} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder='8 caractères minimum' title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)."/>
               <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "Cacher" : "Voir"} le mot de passe</span>
             </div>
             {error && error}
@@ -89,19 +89,19 @@ function Register() {
           <form onSubmit={handleSubmit} className='form'>
             <div className="field">
               <label htmlFor="name">Dénomination sociale</label>
-              <input onChange={handleChange} name='name' type="text" placeholder='Like' />
+              <input maxLength={100} onChange={handleChange} name='name' type="text" placeholder='Like' />
             </div>
             <div className="field">
               <label htmlFor="username">Identifiant</label>
-              <input onChange={handleChange} name='username' type="text" placeholder='likecompany' />
+              <input maxLength={24} onChange={handleChange} name='username' type="text" placeholder='likecompany' />
             </div>
             <div className="field">
               <label htmlFor="email">Email</label>
-              <input onChange={handleChange} name='email' type="email" placeholder='like@mail.com' />
+              <input maxLength={100} onChange={handleChange} name='email' type="email" placeholder='like@mail.com' />
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
-              <input onChange={handleChange} name='password' type={seePW ? "text" : "password"} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder='8 caractères minimum' title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)."/>
+              <input maxLength={32} onChange={handleChange} name='password' type={seePW ? "text" : "password"} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder='8 caractères minimum' title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)."/>
               <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "Cacher" : "Voir"} le mot de passe</span>
             </div>
             {error && <p className="error">{error}</p>}

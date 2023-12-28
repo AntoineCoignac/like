@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom'
 import Logo from '../../../icons/logo/Logo'
-import "../Log.css";
+import "../Log.scss";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import newRequest from '../../../utils/newRequest';
@@ -30,26 +30,27 @@ function Login() {
   return (
     <div className='log'>
       <div className="banner">
-        <img src="/img/design/fond.webp" alt="" />
+        <img src="/img/design/mobile.webp" alt="" />
       </div>
       <div className="log-ctn">
-        <Link to='https://like.cr'>
+        <Link to='/'>
           <Logo/>
         </Link>
         <p className="log-title">Connexion</p>
+        <p className='desc'>L'écosystème créatif pour les créateurs et les entreprises.</p>
           <form className='form' onSubmit={handleSubmit}>
             <div className="field">
               <label htmlFor="username">Identifiant</label>
-              <input name="username" type="text" placeholder='jeandupont' onChange={e=>setUsername(e.target.value)} />
+              <input maxLength={24} name="username" type="text" placeholder='jeandupont' onChange={e=>setUsername(e.target.value)} />
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
-              <input name='password' type={seePW ? "text" : "password"} placeholder='8 caractères minimum'onChange={e=>setPassword(e.target.value)}/>
+              <input maxLength={32} name='password' type={seePW ? "text" : "password"} placeholder='8 caractères minimum'onChange={e=>setPassword(e.target.value)}/>
               <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "Cacher" : "Voir"} le mot de passe</span>
             </div>
-            <button className='btn' type="submit">Se connecter</button>
+            <button className='btn' type="submit">❤️ Se connecter</button>
             {error && error}
-            <Link to="/register" className='link'>Je n'ai pas de compte</Link>
+            <Link to="https://forms.gle/dgb2uRwfmK8Nj5YG9" className='link'>Je m'inscris à la Bêta</Link>
           </form>
       </div>
     </div>

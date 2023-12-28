@@ -5,7 +5,7 @@ import MessageIcon from '../../icons/noti/MessageIcon'
 import LikeIcon from '../../icons/noti/LikeIcon'
 import TimeIcon from '../../icons/noti/TimeIcon'
 import WorkIcon from '../../icons/noti/WorkIcon'
-import "./Notification.css"
+import "./Notification.scss"
 
 function Notification({ type, from, order }) {
   if (type === "like") {

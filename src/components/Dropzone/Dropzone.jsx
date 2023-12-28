@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import "./Dropzone.css";
+import "./Dropzone.scss";
 import Cross from '../../icons/cross/Cross';
 import upload from '../../utils/upload';
 import newRequest from '../../utils/newRequest';
@@ -22,10 +22,6 @@ function Dropzone ({ order }) {
                 setUploading(false);
                 return url;
             }));
-    
-            urls.forEach((url) => {
-                console.log(url);
-            });
     
             const submitDelivery = await newRequest.post(`/deliveries/create`, {
                 orderId: order._id,

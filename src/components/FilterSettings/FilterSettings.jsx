@@ -1,5 +1,5 @@
 import React from 'react';
-import "./FilterSettings.css";
+import "./FilterSettings.scss";
 
 function FilterSettings({ active = "", filters = {}, setFilters = () => { } }) {
   return (

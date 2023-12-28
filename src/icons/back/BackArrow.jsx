@@ -1,5 +1,5 @@
 import React from 'react';
-import "./BackArrow.css";
+import "./BackArrow.scss";
 
 function BackArrow() {
   return (

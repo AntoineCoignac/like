@@ -1,5 +1,5 @@
 import React from 'react';
-import "./icon-nav.css"
+import "./icon-nav.scss"
 
 function NotificationsIcon() {
     return (

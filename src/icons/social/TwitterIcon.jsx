@@ -1,5 +1,5 @@
 import React from 'react';
-import "./social-icon.css";
+import "./social-icon.scss";
 
 function TwitterIcon() {
     return (

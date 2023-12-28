@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SendIcon from '../../icons/send/SendIcon';
-import "./ChatBox.css";
+import "./ChatBox.scss";
 import Message from '../Message/Message';
 import newRequest from '../../utils/newRequest';
 
@@ -76,7 +76,7 @@ function ChatBox({ fullscreen = false, user = {} }) {
           onKeyPress={handleKeyPress}
           type="text"
           placeholder='Rédiger un message'
-          value={value}
+          value={value} maxLength={1000}
         />
         <button onClick={handleSubmit} className='send-btn' disabled={!isWriting}>
           <SendIcon />

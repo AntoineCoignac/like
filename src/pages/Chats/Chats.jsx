@@ -3,7 +3,7 @@ import Nav from '../../components/Nav/Nav';
 import NavWork from '../../components/NavWork/NavWork';
 import { Link } from 'react-router-dom';
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
-import "./Chats.css";
+import "./Chats.scss";
 import newRequest from '../../utils/newRequest';
 
 function Chats() {
@@ -28,7 +28,7 @@ function Chats() {
       <Nav />
       <div className="chats-ctn">
         <NavWork />
-        {conversations.map((conversation) => (
+        {conversations.length === 0 ? <div className="no-result">Aucune discussion en cours 😔</div> : conversations.map((conversation) => (
           <ChatItem key={conversation._id} conversation={conversation} currentUser={currentUser} />
         ))}
       </div>

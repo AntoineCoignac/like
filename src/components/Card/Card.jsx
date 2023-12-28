@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Media from '../Media/Media';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import { Link } from 'react-router-dom';
-import "./Card.css";
+import "./Card.scss";
 import newRequest from '../../utils/newRequest';
 
 function Card({ rate, userId }) {
@@ -20,9 +20,6 @@ function Card({ rate, userId }) {
     };
 
     useEffect(() => {
-        console.log("Component mounted");
-        console.log(cardRef.current); // Vérifiez si cardRef est correctement attaché
-        // Configure the IntersectionObserver when the component is mounted
         const options = {
             root: null,
             rootMargin: '0px',
@@ -32,10 +29,8 @@ function Card({ rate, userId }) {
         const handleIntersection = (entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    console.log("ok");
                     setPlay(true);
                 } else {
-                    console.log("pas ok");
                     setPlay(false);
                 }
             });
@@ -86,7 +81,7 @@ function Card({ rate, userId }) {
                         </p>
                         <div className="infos">
                             <span className="info">{formatPrice(rate.price)}€</span>
-                            <span className="info">{capitalizeFirstLetter(rate.tag)}</span>
+                            <span className="info"># {capitalizeFirstLetter(rate.tag)}</span>
                         </div>
                     </div>
                 </Link>

@@ -7,7 +7,8 @@ const upload = async (file) => {
 
     try {
         const res = await axios.post(`https://api.cloudinary.com/v1_1/dapo2rsct/auto/upload`, data);
-        const {url} = res.data;
+        let {url} = res.data;
+        url = url.replace("http://", "https://");
         return url;
     } catch (err) {
         console.log(err)

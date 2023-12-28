@@ -1,5 +1,5 @@
 import React from 'react'
-import "./User.css";
+import "./User.scss";
 import { Link, useParams } from 'react-router-dom';
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 import Back from '../../components/Back/Back';
@@ -30,7 +30,6 @@ function User() {
     try {
       const res = await newRequest.get(`/users/${id}`);
       setUser(res.data);
-      console.log(res.data); // This should log the data fetched from the API
     } catch (err) {
       console.log(err);
       navigate(-1);
@@ -41,7 +40,6 @@ function User() {
     try {
       const res = await newRequest.get(`/gigs?userId=${id}`);
       setUserGigs(res.data);
-      console.log(res.data); // This should log the data fetched from the API
     } catch (err) {
       console.log(err);
       navigate(-1);
@@ -111,7 +109,7 @@ function User() {
                       user.tag ? (
                         <span className="info">
                           #
-                          <span>{user.tag}</span>
+                          <span>{capitalizeFirstLetter(user.tag)}</span>
                         </span>) :null 
                     }
                     {
@@ -131,7 +129,7 @@ function User() {
                 {
                   currentUser ? (
                   currentUser._id !== user._id ?
-                    <Link className='btn secondary' to={`/chat/${user._id}`}>Discuter</Link> : null) : <Link className='btn secondary' to={`/login`}>Discuter</Link>
+                    <Link className='btn secondary' to={`/chat/${user._id}`}>💬 Discuter</Link> : null) : <Link className='btn secondary' to={`/login`}>💬 Discuter</Link>
                 }
                 <div className="medias-wrapper">
                   {
@@ -150,7 +148,7 @@ function User() {
                   !userGigs ? (
                     <div>Loading gigs...</div>
                   ) : (
-                    userGigs.map(gig => (
+                    userGigs.map((gig, index) => (
                       <div className="gig-wrapper" key={gig.id}>
                           <Media type={gig.cover.includes('video/') ? "video" : "image"} src={gig.cover} />
                           <div className="gig">
@@ -167,21 +165,21 @@ function User() {
                               {
                                   currentUser ? (
                                       currentUser._id !== user._id ?
-                                          <Link className='btn secondary' to={`/pay/${gig._id}`}>Commander</Link>
+                                          <Link className='btn secondary' to={`/pay/${gig._id}`}>🛒 Commander</Link>
                                           : null)
                                       : 
-                                      <Link className='btn secondary' to={`/login`}>Commander</Link>
+                                      <Link className='btn secondary' to={`/login`}>🛒 Commander</Link>
                               }
                             </div>
                             {
                               userGigs.length > 1 && 
                               <div className="gig-nav">
-                                <button className="prev" onClick={scrollLeft}>
+                                <button className="prev" onClick={scrollLeft} disabled={index === 0}>
                                   <button className="back"><BackArrow/></button>
-                                  <p className="name big-title">Précédent</p>
+                                  <p>Précédent</p>
                                 </button>
-                                <button className="next" onClick={scrollRight}>
-                                  <p className="name big-title">Suivant</p>
+                                <button className="next" onClick={scrollRight} disabled={index === userGigs.length - 1}>
+                                  <p>Suivant</p>
                                   <button className="back"><BackArrow/></button>
                                 </button>
                               </div>
@@ -205,22 +203,11 @@ function User() {
           </div>
           <div className="profile-ctn">
             <div className="top">
-              <ProfilePicture photo={user.img} />
-              <p className="name big-title">{user.name}</p>
-              <Link className='btn' to={`/chat/${user._id}`}>Discuter</Link>
-              <p className="desc">
-                {user.desc ? user.desc : "Aucune information"}
-              </p>
-              <div className="infos">
-                {
-                  user.location ? (
-                    <span key={"location"} className="info">
-                      <LocationIcon />
-                      <span>{user.location}</span>
-                    </span>
-                  ) : null
-                }
+              <div className="user">
+                <ProfilePicture photo={user.img} />
+                <p className="name">{user.name}</p>
               </div>
+              <Link className='btn' to={`/chat/${user._id}`}>💬 Discuter</Link>
             </div>
           </div>
         </>

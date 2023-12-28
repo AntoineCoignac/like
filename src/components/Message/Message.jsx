@@ -1,5 +1,5 @@
 import React from 'react'
-import "./Message.css";
+import "./Message.scss";
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 
 function Message({received=true, text, user=null}) {

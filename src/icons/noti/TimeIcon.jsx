@@ -1,5 +1,5 @@
 import React from 'react';
-import "./noti-icon.css";
+import "./noti-icon.scss";
 
 function TimeIcon() {
   return (

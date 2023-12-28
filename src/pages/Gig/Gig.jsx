@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Back from '../../components/Back/Back'
 import { Link } from 'react-router-dom';
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
-import "./Gig.css";
+import "./Gig.scss";
 import { useParams } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
@@ -52,7 +52,6 @@ function Gig() {
             try {
                 const gigData = await loadGig(); // Attendre la résolution de la promesse
                 setGig(gigData);
-                console.log(gigData)
 
                 // Après avoir récupéré les données du gig, vous pouvez maintenant charger l'utilisateur en utilisant gigData.userId
                 loadUser(gigData.userId);

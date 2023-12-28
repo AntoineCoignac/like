@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import BackArrow from '../../icons/back/BackArrow';
-import "./Back.css";
+import "./Back.scss";
 
 function Back() {
 

@@ -9,6 +9,7 @@
     min-width: fit-content;
     z-index: 10;
     border: 1px solid var(--dark);
+    min-width: 200px;
 }
 
 .profile-menu-list#open{
@@ -27,10 +28,22 @@
     background-color: transparent;
     border: 0;
     cursor: pointer;
+    text-align: left;
+
+    &.discord{
+        color: #7289da;
+
+        &:hover{
+            background-color: #7289da29;
+        }
+    }
 }
 
 .profile-menu-list .menu-item.negative{
     color: var(--red);
+    &:hover{
+        background-color: #d91a3d29;
+    }
 }
 
 .pp-btn{
@@ -40,4 +53,26 @@
     border-radius: 50%;
     background-color: transparent;
     margin-left: 4px;
+    cursor: pointer;
+}
+
+.separator{
+    color: var(--grey);
+    font-size: 10px;
+    text-align: center;
+    margin: 4px 0 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    gap: 5px;
+    padding: 0 5px;
+}
+
+.separator::after, .separator::before{
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-color: var(--dark);
+    display: block;
 }

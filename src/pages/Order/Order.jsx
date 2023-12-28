@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Back from '../../components/Back/Back';
-import "./Order.css";
+import "./Order.scss";
 import { Link } from 'react-router-dom';
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 import { useParams } from 'react-router-dom';
@@ -33,7 +33,6 @@ function Order() {
       try {
         const response = await newRequest.get(`/deliveries/order/${orderId}`);
         setDeliveries(response.data);
-        console.log(response.data);
         if (response.data.length > 0) {
           if (response.data[0].isValid === null) {
             setIsWaiting(true);
@@ -72,7 +71,6 @@ function Order() {
         setIsLiked(orderData.isLiked);
         setLikePopup(orderData.isLiked ? false : true)
         setIsAccepting(orderData.acceptedBySeller);
-        console.log(orderData, buyerData, sellerData, gigData);
       } catch (err) {
         console.log(err);
         navigate(-1);
@@ -144,7 +142,6 @@ function Order() {
   const handleValidationSubmit = async (e, deliveryId) => { // Ajoutez deliveryId comme paramètre
     e.preventDefault();
     try {
-      console.log(validation, deliveryId);
       const res = await newRequest.patch(`/deliveries/${deliveryId}`, { validation, feedback });
       navigate("/work/orders");
     } catch (err) {
@@ -155,7 +152,6 @@ function Order() {
   const handleLike = async () => {
     try {
       const res = await newRequest.post(`/orders/like/${orderId}`);
-      console.log(res);
       setIsLiked(true);
       setLikeText("Merci d'avoir liké !");
     } catch (err) {
@@ -218,7 +214,7 @@ function Order() {
                     <p className="desc">{orderInfo.buyer.name}</p>
                   </section>
                   <section>
-                    <p className="title">Tarif</p>
+                    <p className="title">Presta</p>
                     <p className="desc">{orderInfo.gig.title}</p>
                   </section>
                   <section>
@@ -272,7 +268,7 @@ function Order() {
                         <p className="desc">{orderInfo.buyer.name}</p>
                       </section>
                       <section>
-                        <p className="title">Tarif</p>
+                        <p className="title">Presta</p>
                         <p className="desc">{orderInfo.gig.title}</p>
                       </section>
                       <section>
@@ -364,7 +360,7 @@ function Order() {
                       <p className="desc">{orderInfo.buyer.name}</p>
                     </section>
                     <section>
-                      <p className="title">Tarif</p>
+                      <p className="title">Presta</p>
                       <p className="desc">{orderInfo.gig.title}</p>
                     </section>
                     <section>
@@ -447,7 +443,7 @@ function Order() {
                     <p className="desc">{orderInfo.buyer.name}</p>
                   </section>
                   <section>
-                    <p className="title">Tarif</p>
+                    <p className="title">Presta</p>
                     <p className="desc">{orderInfo.gig.title}</p>
                   </section>
                   <section>
@@ -539,7 +535,7 @@ function Order() {
                         <p className="desc">{orderInfo.buyer.name}</p>
                       </section>
                       <section>
-                        <p className="title">Tarif</p>
+                        <p className="title">Presta</p>
                         <p className="desc">{orderInfo.gig.title}</p>
                       </section>
                       <section>
@@ -655,7 +651,7 @@ function Order() {
                       <p className="desc">{orderInfo.buyer.name}</p>
                     </section>
                     <section>
-                      <p className="title">Tarif</p>
+                      <p className="title">Presta</p>
                       <p className="desc">{orderInfo.gig.title}</p>
                     </section>
                     <section>

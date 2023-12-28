@@ -1,5 +1,5 @@
 import React from 'react';
-import './Download.css';
+import './Download.scss';
 
 function Download() {
 

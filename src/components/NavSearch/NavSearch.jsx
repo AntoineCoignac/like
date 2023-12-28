@@ -1,19 +1,18 @@
-import "./NavSearch.css";
+import "./NavSearch.scss";
 
 function NavSearch({ setType, activeType }) {
   const handleClick = (event) => {
     const elementId = event.target.id;
     setType(elementId);
-    console.log(elementId);
   }
 
   return (
     <div className="navsearch">
       <button onClick={handleClick} id="gig" className={activeType === "gig" ? "active" : ""}>
-        Tarifs
+      🚀 Prestas
       </button>
       <button onClick={handleClick} id="user" className={activeType === "user" ? "active" : ""}>
-        Profils
+      🕵️ Profils
       </button>
     </div>
   );

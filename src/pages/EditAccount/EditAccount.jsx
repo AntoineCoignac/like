@@ -1,6 +1,6 @@
 import React from 'react'
 import Nav from '../../components/Nav/Nav';
-import "./EditAccount.css";
+import "./EditAccount.scss";
 import EditBrand from '../../components/EditBrand/EditBrand';
 import EditCreator from '../../components/EditCreator/EditCreator';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ function EditAccount() {
       <>
         <div className="top-bar">
           <Back/>
-          <p className='name big-title'>Modifier mon compte</p>
+          <p className='name big-title'>Modifier mon portfolio</p>
         </div>
         <div className='me'>
           {

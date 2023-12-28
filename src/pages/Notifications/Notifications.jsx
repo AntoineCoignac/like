@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from '../../components/Nav/Nav';
 import Notification from '../../components/Notification/Notification';
-import "./Notifications.css"
+import "./Notifications.scss"
 
 function Notifications() {
   return (

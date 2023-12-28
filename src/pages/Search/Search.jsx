@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Back from '../../components/Back/Back';
-import "./Search.css";
+import "./Search.scss";
 import Cross from '../../icons/cross/Cross';
 import NavSearch from '../../components/NavSearch/NavSearch';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,6 @@ function Search() {
   const handleSearch = (e) => {
     setSearch(e.target.value);
     setIsSearching(e.target.value !== '');
-    console.log(e.target.value);
   }
 
   const handleDelete = () => {
@@ -34,8 +33,6 @@ function Search() {
       const url = `/gigs?search=${search}`
       const res = await newRequest.get(url);
       setResult(res.data);
-      console.log(url);
-      console.log(res.data); // This should log the data fetched from the API
     } catch (err) {
       console.log(err);
     }
@@ -46,8 +43,6 @@ function Search() {
       const url = `users/search-users?search=${encodeURIComponent(search)}`;
       const res = await newRequest.get(url);
       setResult(res.data);
-      console.log(url);
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -85,7 +80,7 @@ function Search() {
       <div className="top-bar">
         <Back />
         <div className='searchbar-ctn'>
-          <input onChange={handleSearch} value={search} className='searchbar' type="text" placeholder='Rechercher' autoFocus />
+          <input maxLength={100} onChange={handleSearch} value={search} className='searchbar' type="text" placeholder='Rechercher' autoFocus />
           <button onClick={handleDelete} className={`delete ${isSearching ? "active" : ""}`}>
             <Cross />
           </button>
@@ -117,7 +112,7 @@ function Search() {
                   </Link>
               </div> : null
             ))
-          ) : (search != "" ? <p className='no-result'>Il n'y a aucun résultat</p> : <p className='no-result'>Recherchez un tarif, un créateur ou une entreprise</p> ) }
+          ) : (search != "" ? <p className='no-result'>Il n'y a aucun résultat 😭</p> : <p className='no-result'>Recherchez une presta, un créateur ou une entreprise 🔎</p> ) }
         </div>
       ) : (
         <div className="users">
@@ -131,7 +126,7 @@ function Search() {
                 {user.isSeller ? <LikeCounter nbr={user.like} /> : <Enterprise />}
               </Link>
             ))
-          ) : (search != "" ? <p className='no-result'>Il n'y a aucun résultat</p> : <p className='no-result'>Recherchez un tarif, un créateur ou une entreprise</p> ) }
+          ) : (search != "" ? <p className='no-result'>Il n'y a aucun résultat 😭</p> : <p className='no-result'>Recherchez une presta, un créateur ou une entreprise 🔎</p> ) }
         </div>
       )}
     </div>

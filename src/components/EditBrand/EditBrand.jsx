@@ -113,15 +113,15 @@ function EditBrand() {
           </div>
           <div className="field">
             <label htmlFor="name">Dénomination sociale</label>
-            <input name='name' type="text" placeholder='ex : Like' onChange={handleChange} defaultValue={currentUser.name}/>
+            <input maxLength={100} name='name' type="text" placeholder='ex : Like' onChange={handleChange} defaultValue={currentUser.name}/>
           </div>
           <div className="field">
             <label htmlFor="desc">Description de l'entreprise</label>
-            <input name='desc' type="text" placeholder='ex : Application de mise en relation entre les entreprises et les créateurs de contenus' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
+            <input maxLength={300} name='desc' type="text" placeholder='ex : Application de mise en relation entre les entreprises et les créateurs de contenus' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
           </div>
           <div className="field">
             <label htmlFor="location">Localisation</label>
-            <input name="location" type="text" placeholder='ex : Paris, France' value={searchQuery}
+            <input maxLength={100} name="location" type="text" placeholder='ex : Paris, France' value={searchQuery}
         onChange={handleLocationChange}/>
             <ul className='suggestions'>
               {suggestions.map((city, index) => (

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Back from '../../components/Back/Back';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
-import "./Chat.css";
+import "./Chat.scss";
 import ChatBox from '../../components/ChatBox/ChatBox';
 import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
@@ -19,7 +19,6 @@ function Chat() {
     try {
       const res = await newRequest.get(`/users/${userId}`);
       setUser(res.data);
-      console.log(res.data); // This should log the data fetched from the API
     } catch (err) {
       console.log(err);
       navigate(-1);

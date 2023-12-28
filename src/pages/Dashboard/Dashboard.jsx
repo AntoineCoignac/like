@@ -3,7 +3,7 @@ import Nav from "../../components/Nav/Nav";
 import { Link } from "react-router-dom";
 import ProfilePicture from "../../components/ProfilePicture/ProfilePicture";
 import BackArrow from "../../icons/back/BackArrow";
-import "./Dashboard.css";
+import "./Dashboard.scss";
 import NavWork from "../../components/NavWork/NavWork";
 import { useEffect } from "react";
 import newRequest from "../../utils/newRequest";
@@ -40,7 +40,6 @@ function Dashboard() {
           })
         );
         setOrders(fetchedOrders);
-        console.log(fetchedOrders);
       } catch (err) {
         console.log(err);
       }
@@ -53,7 +52,6 @@ function Dashboard() {
     try {
       const res = await newRequest.get(`/gigs?userId=${currentUser._id}`);
       setUserGigs(res.data);
-      console.log(res.data); // This should log the data fetched from the API
     } catch (err) {
       console.log(err);
     }
@@ -144,7 +142,7 @@ function Dashboard() {
                         ).length
                       }
                     </p>
-                    <p className="legend">Collaborations</p>
+                    <p className="legend">Mes collabs</p>
                   </Link>
                   <Link className="me-recap board-item" to={"/me"}>
                     <ProfilePicture
@@ -162,7 +160,7 @@ function Dashboard() {
             }
             <div className="section">
               <span className="section-title big-title">
-                Collaboration en cours
+                Collaborations en cours
               </span>
               {orders
                 .filter(
@@ -280,14 +278,14 @@ function Dashboard() {
                     order.order.acceptedBySeller !== false
                 ).length === 0 && (
                   <div className="no-result">
-                    Aucune collaboration en cours
+                    Il n'y a rien par ici... C'est la loose 👀
                   </div>
                 )}
             </div>
             {currentUser.isSeller ? (
               <div className="section">
                 <span className="section-title big-title">
-                  Mes tarifs <Link to="/newgig" className="add"></Link>
+                  Mes prestas <Link to="/newgig" className="add"></Link>
                 </span>
                 {userGigs.map((gig) => (
                   <Link

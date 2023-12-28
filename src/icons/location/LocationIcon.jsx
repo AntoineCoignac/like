@@ -1,5 +1,5 @@
 import React from 'react';
-import "./LocationIcon.css";
+import "./LocationIcon.scss";
 
 function LocationIcon() {
     return (

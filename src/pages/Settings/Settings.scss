@@ -1,0 +1,17 @@
+.settings{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap:80px;
+
+    .row{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.negative{
+    background-color: var(--red);
+    color : var(--white);
+}

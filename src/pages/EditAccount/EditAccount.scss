@@ -79,6 +79,7 @@ input[type="file"]::-webkit-file-upload-button {
     border-radius: 30px;
     font-family: var(--font);
     margin-right: 20px;
+    cursor: pointer;
 }
 
 input[type="file"]::-moz-file-upload-button {

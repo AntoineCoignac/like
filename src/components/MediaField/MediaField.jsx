@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Cross from "../../icons/cross/Cross";
-import "./MediaField.css";
+import "./MediaField.scss";
 
 function MediaField({defaultType="image"}) {
     const [type, setType] = useState(defaultType);

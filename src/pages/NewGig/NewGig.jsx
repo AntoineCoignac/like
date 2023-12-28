@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Back from '../../components/Back/Back';
-import "./NewGig.css";
+import "./NewGig.scss";
 import { useNavigate } from 'react-router-dom';
 import newRequest from '../../utils/newRequest';
 import upload from '../../utils/upload';
@@ -99,17 +99,17 @@ function NewGig() {
       }
       <div className="top-bar">
         <Back />
-        <p className="name">Nouveau tarif</p>
+        <p className="name">Nouvelle presta</p>
       </div>
       <div className="newgig">
         <form className='form' onSubmit={handleSubmit}>
           <div className="field">
-            <label htmlFor="title">Nom du tarif</label>
-            <input name='title' type="text" placeholder='ex : Pack 5 photos de votre choix' onChange={handleChange} />
+            <label htmlFor="title">Nom de la presta</label>
+            <input maxLength={100} name='title' type="text" placeholder='ex : Pack 5 photos de votre choix' onChange={handleChange} />
           </div>
           <div className="field">
             <label htmlFor="desc">Description</label>
-            <input name='desc' type="text" placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
+            <input maxLength={1000} name='desc' type="text" placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
           </div>
           <div className="field">
             <label htmlFor="price">Prix (€)</label>
@@ -148,7 +148,7 @@ function NewGig() {
               <p className="error">Le fichier est trop volumineux.</p>
             )}
           </div>
-          <button className='btn' type="submit">Créer</button>
+          <button className='btn' type="submit">➕ Créer</button>
           {error && <p className="error">{error}</p>}
         </form>
       </div>

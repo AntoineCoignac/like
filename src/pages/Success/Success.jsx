@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import "./Success.css";
+import "./Success.scss";
 import { useLocation, useNavigate } from 'react-router-dom';
 import newRequest from "../../utils/newRequest";
 

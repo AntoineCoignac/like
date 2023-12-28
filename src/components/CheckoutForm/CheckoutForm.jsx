@@ -6,7 +6,7 @@ import {
     useElements
 } from "@stripe/react-stripe-js";
 import Back from "../Back/Back";
-import "./CheckoutForm.css";
+import "./CheckoutForm.scss";
 
 function CheckoutForm({ gig = {} }) {
     const stripe = useStripe();

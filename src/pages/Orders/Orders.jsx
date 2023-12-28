@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Nav from '../../components/Nav/Nav';
 import NavWork from '../../components/NavWork/NavWork';
 import { Link } from 'react-router-dom';
-import "./Orders.css";
+import "./Orders.scss";
 import ProfilePicture from '../../components/ProfilePicture/ProfilePicture';
 import newRequest from '../../utils/newRequest';
 import TimeRemaining from '../../components/TimeRemaining/TimeRemaining';
@@ -38,7 +38,6 @@ function Orders() {
         );
         setOrders(fetchedOrders);
         setIsLoading(false);
-        console.log(fetchedOrders);
       } catch (err) {
         console.log(err);
         setIsLoading(false);
@@ -66,7 +65,7 @@ function Orders() {
         ) : (
            orders.length === 0 ? (
             <div className="no-result">
-              Aucune commande en cours
+              Aucune commande en cours 😰
             </div>
           ) : (
           orders.map(({ order, user, gig, seller }) => (

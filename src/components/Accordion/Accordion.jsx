@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import "./Accordion.css";
+import "./Accordion.scss";
 
 function Accordion({ title, price, content }) {
     const [isExpanded, setIsExpanded] = useState(false);

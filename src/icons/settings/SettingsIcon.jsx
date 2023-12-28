@@ -1,5 +1,5 @@
 import React from 'react';
-import "./icon-settings.css";
+import "./icon-settings.scss";
 
 function SettingsIcon() {
   return (
