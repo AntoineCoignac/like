@@ -18,6 +18,7 @@ function EditCreator() {
   const MAX_FILE_SIZE = 10000000;
   const [uploading, setUploading] = useState(false);
   const [mediaFiles, setMediaFiles] = useState([currentUser.medias[0], currentUser.medias[1], currentUser.medias[2], currentUser.medias[3]]);
+  const [newMediaFiles, setNewMediaFiles] = useState([null, null, null, null]);
   const [mediaPreviews, setMediaPreviews] = useState([currentUser.medias[0], currentUser.medias[1], currentUser.medias[2], currentUser.medias[3]]);
   const MAX_MEDIA_SIZE = 100000000;
   const [mediaSizeExceeded, setMediaSizeExceeded] = useState(Array(4).fill(false)); // État pour gérer les tailles excessives des fichiers media
@@ -124,6 +125,12 @@ function EditCreator() {
       newState[index] = false;
       return newState;
     });
+
+    setNewMediaFiles(prevNewMediaFiles => {
+      const updatedNewMediaFiles = [...prevNewMediaFiles];
+      updatedNewMediaFiles[index] = newMedia; // Mettre à jour le nouveau média à l'index donné
+      return updatedNewMediaFiles;
+    });
   
     setMediaFiles(prevMediaFiles => {
       const updatedMediaFiles = [...prevMediaFiles];
@@ -166,34 +173,39 @@ function EditCreator() {
       }
   
       const uploadedMediaUrls = [];
-  
-      const uploadMediaSequentially = async () => {
-        for (let i = 0; i < mediaFiles.length; i++) {
-          const media = mediaFiles[i];
-          if (media) {
-            try {
-              setUploading(true);
-              const uploadedMedia = await upload(media);
-              uploadedMediaUrls.push(uploadedMedia);
-            } catch (error) {
-              console.log(`Error uploading Media ${i + 1}:`, error);
-              uploadedMediaUrls.push(null);
-            }
-          } else {
+      const existingMediaUrls = currentUser.medias || []; // Médias déjà existants
+
+      // Télécharger uniquement les nouveaux médias ajoutés dans le formulaire
+      for (let i = 0; i < mediaFiles.length; i++) {
+        const media = mediaFiles[i];
+        const newMedia = newMediaFiles[i];
+
+        if (newMedia) {
+          // Télécharger uniquement les nouveaux médias
+          try {
+            setUploading(true);
+            const uploadedMedia = await upload(newMedia);
+            uploadedMediaUrls.push(uploadedMedia);
+          } catch (error) {
+            console.log(`Error uploading new Media ${i + 1}:`, error);
             uploadedMediaUrls.push(null);
           }
+        } else {
+          // Si le média n'est pas nouveau, garder l'URL existante
+          uploadedMediaUrls.push(existingMediaUrls[i]);
         }
-      };
-  
-      await uploadMediaSequentially();
-  
-      await newRequest.put(`/users/${currentUser._id}`, {
+      }
+
+      // Mettre à jour les données utilisateur avec les nouvelles URL de médias téléchargées
+      const updatedUserData = {
         ...updatedUser,
         img: imageUrl,
         contract: contractUrl,
         medias: uploadedMediaUrls,
-      });
-  
+      };
+
+      await newRequest.put(`/users/${currentUser._id}`, updatedUserData);
+
       localStorage.setItem('currentUser', JSON.stringify({
         ...currentUser,
         ...updatedUser,
@@ -201,7 +213,7 @@ function EditCreator() {
         contract: contractUrl,
         medias: uploadedMediaUrls,
       }));
-  
+
       setUploading(false);
       navigate('/');
     } catch (err) {
@@ -289,10 +301,12 @@ function EditCreator() {
             <div key={index} className="field">
               <label htmlFor={`media-${index + 1}`}>{`Média ${index + 1}`}</label>
               {mediaPreviews[index] && (
-                mediaPreviews[index].includes('video') ? (
-                  <video className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} controls />
+                mediaPreviews[index].startsWith('blob:') ? (
+                  (media.type && media.type.startsWith('image/') && <img className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} />) ||
+                  (media.type && media.type.startsWith('video/') && <video className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} controls /> )
                 ) : (
-                  mediaPreviews[index].includes('image') ? <img className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} /> : null
+                  (mediaPreviews[index].includes('video') && <video className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} controls />) ||
+                  (mediaPreviews[index].includes('image') && <img className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} />)
                 )
               )}
               <input type="file" accept=".png, .jpg, .jpeg, .mp4, .avi" onChange={(e) => handleMediaChange(index, e)} />
