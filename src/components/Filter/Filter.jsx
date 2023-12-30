@@ -76,7 +76,6 @@ function Filter({ filters, setFilters }) {
     setIsAtStart(atStart);
 
     // Vérifie si le scroll est à la fin (dernière position - largeur visible)
-    console.log(container.scrollWidth - container.clientWidth, container.scrollLeft)
     const atEnd = container.scrollLeft + 1 >= (container.scrollWidth - container.clientWidth);
     setIsAtEnd(atEnd);
   };

@@ -117,7 +117,7 @@ function EditBrand() {
           </div>
           <div className="field">
             <label htmlFor="desc">Description de l'entreprise</label>
-            <input maxLength={300} name='desc' type="text" placeholder='ex : Application de mise en relation entre les entreprises et les créateurs de contenus' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
+            <textarea maxLength={300} name='desc' placeholder='ex : Application de mise en relation entre les entreprises et les créateurs de contenus' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
           </div>
           <div className="field">
             <label htmlFor="location">Localisation</label>

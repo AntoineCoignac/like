@@ -4,11 +4,15 @@ import Filter from '../../components/Filter/Filter';
 import CardList from '../../components/CardList/CardList';
 import newRequest from '../../utils/newRequest';
 import { useEffect } from 'react';
-import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import Load from '../../components/Load/Load';
 
 function Home() {
+
+  const currentUserJson = localStorage.getItem('currentUser');
+  const currentUser = currentUserJson && currentUserJson !== 'undefined' ? JSON.parse(currentUserJson) : null;
+
+  const navigate = useNavigate();
   
   const [filters, setFilters] = useState(
     {
@@ -17,6 +21,7 @@ function Home() {
       max : undefined,
     }
   )
+
   const [gigs, setGigs] = useState([]);
 
   const loadGigs = async () => {
@@ -32,18 +37,26 @@ function Home() {
   useEffect(() => {
     loadGigs();
   }, [filters]);
- 
-  return (
-    <>
-        <Nav transparent={true} />
-        <Filter filters={filters} setFilters={setFilters}/>
-        <h1 className='name big-title home-title'>Feed Creator</h1>
-        {
-          gigs ? <CardList rates={gigs}/> : <Load/>
-        }
-        
-    </>
+
+  if (currentUser) {
+    if (currentUser.isSeller) {
+      navigate("/work/dashboard");
+      return <></>
+    }
+  }else{
+    return (
+      <>
+          <Nav transparent={false} />
+          <h1 className='name big-title home-title'>Feed Creator</h1>
+          <Filter filters={filters} setFilters={setFilters}/>
+          {
+            gigs ? <CardList rates={gigs}/> : <Load/>
+          }
+          
+      </>
   )
+  }
+  
 }
 
 export default Home

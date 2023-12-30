@@ -84,11 +84,11 @@ function NewGig() {
         if (err.response && err.response.data && err.response.data.message) {
           setError(err.response.data.message);
         } else {
-          setError("An error occurred while creating the gig.");
+          setError("Une erreur s'est produite.");
         }
       }
     } else {
-      setError("All fields are required!");
+      setError("Tous les champs sont requis !");
     }
   };
 
@@ -99,7 +99,7 @@ function NewGig() {
       }
       <div className="top-bar">
         <Back />
-        <p className="name">Nouvelle presta</p>
+        <p className="name big-title">Nouvelle presta</p>
       </div>
       <div className="newgig">
         <form className='form' onSubmit={handleSubmit}>
@@ -109,12 +109,13 @@ function NewGig() {
           </div>
           <div className="field">
             <label htmlFor="desc">Description</label>
-            <input maxLength={1000} name='desc' type="text" placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
+            <textarea maxLength={1000} name='desc' placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
           </div>
           <div className="field">
             <label htmlFor="price">Prix (€)</label>
             <input name='price' min="10" max="1000000000" step={0.01} defaultValue={gig.price} type="number" onChange={handleChange} />
           </div>
+          <div className="field-grid">
           <div className="field">
             <label htmlFor="deliveryTime">Temps de livraison (jours)</label>
             <input name='deliveryTime' min="1" step={1} max="365" defaultValue={gig.deliveryTime} type="number" onChange={handleChange} />
@@ -122,6 +123,7 @@ function NewGig() {
           <div className="field">
             <label htmlFor="revisionNumber">Nombre de modifications maximum</label>
             <input name='revisionNumber' min="1" step={1} max="10" defaultValue={gig.revisionNumber} type="number" onChange={handleChange} />
+          </div>
           </div>
           <div className="field">
             <label>Couverture</label>

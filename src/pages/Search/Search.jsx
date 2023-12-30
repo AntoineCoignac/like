@@ -101,12 +101,10 @@ function Search() {
                           <p className="gig-title">
                               {gig.title}
                           </p>
-                          <p className="gig-name">
-                              {`${gig.user.name} ${gig.user.lastname.charAt(0)}.`}
-                          </p>
                           <div className="infos">
+                              <span className="info">{`${gig.user.name} ${gig.user.lastname.charAt(0)}.`}</span>
                               <span className="info">{formatPrice(gig.price)}€</span>
-                              <span className="info">{capitalizeFirstLetter(gig.tag)}</span>
+                              <span className="info"># {capitalizeFirstLetter(gig.tag)}</span>
                           </div>
                       </div>
                   </Link>

@@ -131,18 +131,26 @@ function User() {
                   currentUser._id !== user._id ?
                     <Link className='btn secondary' to={`/chat/${user._id}`}>💬 Discuter</Link> : null) : <Link className='btn secondary' to={`/login`}>💬 Discuter</Link>
                 }
+                {user.medias && user.medias.length > 0 && (
                 <div className="medias-wrapper">
                   {
-                    user.medias && user.medias.map(media =>
+                    user.medias.map(media =>
                       media && <div className='media-wrapper'><Media type={media.includes('video/') ? "video" : "image"} src={media} /></div>
                     )
                   }
-                </div>
+                </div>)}
               </div>
               <div className="right">
-                <Media type={"image"} src={user.img} />
+                {user.img && <Media type={"image"} src={user.img} />}
+                {
+                  currentUser ? (
+                  currentUser._id !== user._id ?
+                    <Link className='btn secondary' to={`/chat/${user._id}`}>💬 Discuter</Link> : null) : <Link className='btn secondary' to={`/login`}>💬 Discuter</Link>
+                }
               </div>
             </div>
+            {
+              userGigs.length > 0 &&
             <div className="gigs-wrapper" ref={gigsWrapperRef}>
                 {
                   !userGigs ? (
@@ -191,6 +199,7 @@ function User() {
                   )
                 }
             </div>
+            }
           </div>
         </>
       )

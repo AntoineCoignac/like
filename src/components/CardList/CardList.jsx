@@ -7,7 +7,7 @@ function CardList({rates=[]}) {
   return (
     rates.length === 0 ?
       (
-        <div className='full-height no-result'>Il n'y a aucun résultat 🔜</div>
+        <div className='large-height no-result'>Il n'y a aucun résultat 🔜</div>
       ) :
       (
       <div className="card-list">

@@ -35,9 +35,11 @@ function Nav({transparent=false}) {
                 <NotificationsIcon/>
               </Link>
               */}
-              <Link to="/work/dashboard">
+              {
+              !currentUser.isSeller && <Link to="/work/dashboard">
                 <WorkIcon/>
-              </Link>
+              </Link> 
+              }
               <ProfileMenu />
           </div>
         }

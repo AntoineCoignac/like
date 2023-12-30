@@ -23,7 +23,7 @@ function Card({ rate, userId }) {
         const options = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.8, // Définir la limite à 80% de la visibilité
+            threshold: 0.88, // Définir la limite à 80% de la visibilité
         };
 
         const handleIntersection = (entries) => {
@@ -76,10 +76,8 @@ function Card({ rate, userId }) {
                         <p className="gig-title">
                             {rate.title}
                         </p>
-                        <p className="gig-name">
-                            {`${user.name} ${user.lastname.charAt(0)}.`}
-                        </p>
                         <div className="infos">
+                            <span className='info'>{`${user.name} ${user.lastname.charAt(0)}.`}</span>
                             <span className="info">{formatPrice(rate.price)}€</span>
                             <span className="info"># {capitalizeFirstLetter(rate.tag)}</span>
                         </div>

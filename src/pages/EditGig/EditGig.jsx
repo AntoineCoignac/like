@@ -103,11 +103,11 @@ function EditGig() {
         if (err.response && err.response.data && err.response.data.message) {
           setError(err.response.data.message);
         } else {
-          setError("An error occurred while updating the gig.");
+          setError("Une erreur s'est produite.");
         }
       }
     } else {
-      setError("All fields are required!");
+      setError("Tous les champs sont requis !");
     }
   };
 
@@ -127,29 +127,31 @@ function EditGig() {
     }
       <div className="top-bar">
         <Back />
-        <p className="name">Modifier ma presta</p>
+        <p className="name big-title">Modifier ma presta</p>
       </div>
       <div className="newgig">
         <form className='form' onSubmit={handleSubmit}>
           <div className="field">
             <label htmlFor="title">Nom de la presta</label>
-            <input maxLength={100} name='title' type="text" value={gig.title} placeholder='ex : Pack 5 photos de votre choix' onChange={handleChange} />
+            <input maxLength={100} name='title' type="text" value={gig.title} placeholder='ex : Pack 5 photos de votre choix' onChange={handleChange} required/>
           </div>
           <div className="field">
             <label htmlFor="desc">Description</label>
-            <input name='desc' maxLength={300} type="text" value={gig.desc} placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} />
+            <textarea name='desc' maxLength={300} value={gig.desc} placeholder="ex : Je vais prendre 5 photos de votre produit, un endroit, une personne, ou ce que vous voulez..." onChange={handleChange} required/>
           </div>
           <div className="field">
             <label htmlFor="price">Prix (€)</label>
-            <input name='price' min="10" max="1000000000" step={0.01} type="number" value={gig.price} onChange={handleChange} />
+            <input name='price' min="10" max="1000000000" step={0.01} type="number" value={gig.price} onChange={handleChange} required/>
           </div>
+          <div className="field-grid">
           <div className="field">
             <label htmlFor="deliveryTime">Temps de livraison (jours)</label>
-            <input name='deliveryTime' min="1" step={1} max="365" type="number" value={gig.deliveryTime} onChange={handleChange} />
+            <input name='deliveryTime' min="1" step={1} max="365" type="number" value={gig.deliveryTime} onChange={handleChange} required/>
           </div>
           <div className="field">
             <label htmlFor="revisionNumber">Nombre de modifications maximum</label>
-            <input name='revisionNumber' min="1" step={1} max="10" type="number" value={gig.revisionNumber} onChange={handleChange} />
+            <input name='revisionNumber' min="1" step={1} max="10" type="number" value={gig.revisionNumber} onChange={handleChange} required/>
+          </div>
           </div>
           <div className="field">
             <label>Couverture</label>
@@ -177,6 +179,7 @@ function EditGig() {
               type="file"
               accept='.png, .jpg, .jpeg, video/mp4, video/x-m4v, video/*'
               onChange={handleFileChange}
+              required
             />
             {fileSizeExceeded && (
               <p className="error">Le fichier est trop volumineux.</p>
@@ -184,7 +187,7 @@ function EditGig() {
           </div>
           <button className='btn' type="submit">💾 Enregistrer les modifications</button>
           {error && <p className="error">{error}</p>}
-          <button className='btn secondary' type='button' onClick={handleDelete}>Supprimer</button>
+          <button className='btn secondary' type='button' onClick={handleDelete}>❌ Supprimer</button>
         </form>
       </div>
     </>

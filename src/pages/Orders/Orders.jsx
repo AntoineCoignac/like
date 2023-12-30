@@ -58,6 +58,7 @@ function Orders() {
   return (
     <>
       <Nav />
+      <h1 className="big-title home-title">Commandes</h1>
       <div className="orders-ctn">
         <NavWork />
         {isLoading ? (

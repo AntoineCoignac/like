@@ -220,7 +220,7 @@ function EditCreator() {
   }, []);
 
   return (
-    <form className='form' onSubmit={handleSubmit}>
+    <form className='form secondary' onSubmit={handleSubmit}>
           {
               uploading ? <Download /> : null
           }
@@ -233,6 +233,7 @@ function EditCreator() {
                 </p>
             )}
           </div>
+          <div className="field-grid">
           <div className="field">
             <label htmlFor="name">Prénom</label>
             <input maxLength={100} name='name' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.name}/>
@@ -241,10 +242,12 @@ function EditCreator() {
             <label htmlFor="lastname">Nom</label>
             <input maxLength={100} name='lastname' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.lastname ? currentUser.lastname : ""}/>
           </div>
+          </div>
           <div className="field">
             <label htmlFor="desc">Bio</label>
-            <input name='desc' type="text" maxLength={300} placeholder='ex : Streamer depuis 5 ans' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
+            <textarea name='desc' maxLength={300} placeholder='ex : Streamer depuis 5 ans' onChange={handleChange} defaultValue={currentUser.desc ? currentUser.desc : ""}/>
           </div>
+          <div className="field-grid">
           <div className="field">
             <label htmlFor="tag">Tag</label>
             <select defaultValue={currentUser.tag ? currentUser.tag : ""} name="tag" onChange={handleChange}>
@@ -280,6 +283,8 @@ function EditCreator() {
               ))}
             </ul>
           </div>
+          </div>
+          <div className="field-grid">
           {mediaFiles.map((media, index) => (
             <div key={index} className="field">
               <label htmlFor={`media-${index + 1}`}>{`Média ${index + 1}`}</label>
@@ -298,6 +303,7 @@ function EditCreator() {
               )}
             </div>
           ))}
+          </div>
           <div className="field">
             <label htmlFor="lastname">Contrat</label>
             {

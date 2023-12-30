@@ -31,10 +31,6 @@
     color: white;
 }
 
-.send input::placeholder{
-    color: var(--grey);
-}
-
 .send-btn{
     position: absolute;
     right: 0;
@@ -45,6 +41,7 @@
     align-items: center;
     background-color: transparent;
     border: 0;
+    cursor: pointer;
 }
 
 .messages{

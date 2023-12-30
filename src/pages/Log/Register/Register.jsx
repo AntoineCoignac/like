@@ -79,8 +79,8 @@ function Register() {
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
-              <input maxLength={32} onChange={handleChange} name='password' type={seePW ? "text" : "password"} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder='8 caractères minimum' title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)."/>
-              <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "Cacher" : "Voir"} le mot de passe</span>
+              <input maxLength={32} onChange={handleChange} name='password' type={seePW ? "text" : "password"} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder='8 caractères mini, avec au moins une lettre MAJ, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)' title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)."/>
+              <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "🙈 Cacher" : "👀 Voir"}</span>
             </div>
             {error && error}
             <button className='btn' type="submit">S'inscrire</button>
@@ -102,7 +102,7 @@ function Register() {
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
               <input maxLength={32} onChange={handleChange} name='password' type={seePW ? "text" : "password"} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" placeholder='8 caractères minimum' title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)."/>
-              <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "Cacher" : "Voir"} le mot de passe</span>
+              <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "🙈 Cacher" : "👀 Voir"}</span>
             </div>
             {error && <p className="error">{error}</p>}
             <button className='btn' type="submit">S'inscrire</button>

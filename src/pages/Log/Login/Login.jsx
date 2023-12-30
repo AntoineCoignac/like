@@ -45,8 +45,8 @@ function Login() {
             </div>
             <div className="field">
               <label htmlFor="password">Mot de passe</label>
-              <input maxLength={32} name='password' type={seePW ? "text" : "password"} placeholder='8 caractères minimum'onChange={e=>setPassword(e.target.value)}/>
-              <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "Cacher" : "Voir"} le mot de passe</span>
+              <input maxLength={32} name='password' type={seePW ? "text" : "password"} placeholder='8 caractères mini, avec au moins une lettre MAJ, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)' pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$" title="Le mot de passe doit contenir au moins 8 caractères, incluant au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (!@#$%^&*)." onChange={e=>setPassword(e.target.value)}/>
+              <span className="see" onClick={() => setSeePW(!seePW)}>{seePW ? "🙈 Cacher" : "👀 Voir"}</span>
             </div>
             <button className='btn' type="submit">❤️ Se connecter</button>
             {error && error}

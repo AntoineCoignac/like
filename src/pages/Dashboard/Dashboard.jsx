@@ -72,6 +72,7 @@ function Dashboard() {
   return (
     <>
       <Nav />
+      <h1 className="big-title home-title">Tableau de bord</h1>
       <div className="dashboard">
         <NavWork />
         {userGigs && orders ? (
@@ -112,17 +113,20 @@ function Dashboard() {
                       <p className="legend">Collaborations</p>
                     </Link>
                   </div>
-                  <Link className="me-recap board-item" to={"/me"}>
-                    <ProfilePicture
-                      photo={currentUser.img}
-                      badge={currentUser.sub ? currentUser.sub : null}
-                    />
-                    <p className="legend">
-                      {currentUser.isSeller
-                        ? `${currentUser.name} ${currentUser.lastname.charAt(0)}.`
-                        : currentUser.name}
-                    </p>
-                  </Link>
+                  <div className="under-board secondary">
+                    <Link className="me-recap board-item" to={"/me"}>
+                      <ProfilePicture
+                        photo={currentUser.img}
+                        badge={currentUser.sub ? currentUser.sub : null}
+                      />
+                      <p className="legend">
+                        {currentUser.isSeller
+                          ? `${currentUser.name} ${currentUser.lastname.charAt(0)}.`
+                          : currentUser.name}
+                      </p>
+                    </Link>
+                    <Link className='btn secondary' to={`/user/${currentUser._id}`}>🎒 Voir mon portfolio</Link>
+                  </div>
                 </div>
               ) : (
                 <div className="board-ctn">
@@ -158,6 +162,34 @@ function Dashboard() {
                 </div>
               )
             }
+            {currentUser.isSeller ? (
+              <div className="section">
+                <span className="section-title big-title">
+                  Mes prestas { userGigs.length < 3 ? <Link to="/newgig" className="add"></Link> : "(3 max)"}
+                </span>
+                {userGigs.map((gig) => (
+                  <Link
+                    key={gig._id}
+                    to={`/editgig/${gig._id}`}
+                    className="rate"
+                  >
+                    <div>
+                      <p className="title">{gig.title}</p>
+                      <div className="infos">
+                        <span className="info">{formatPrice(gig.price)}€</span>
+                        <span className="info">
+                          # {capitalizeFirstLetter(gig.tag)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="arrow-button">
+                      <span>Modifier</span>
+                      <BackArrow />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : null}
             <div className="section">
               <span className="section-title big-title">
                 Collaborations en cours
@@ -282,34 +314,6 @@ function Dashboard() {
                   </div>
                 )}
             </div>
-            {currentUser.isSeller ? (
-              <div className="section">
-                <span className="section-title big-title">
-                  Mes prestas <Link to="/newgig" className="add"></Link>
-                </span>
-                {userGigs.map((gig) => (
-                  <Link
-                    key={gig._id}
-                    to={`/editgig/${gig._id}`}
-                    className="rate"
-                  >
-                    <div>
-                      <p className="title">{gig.title}</p>
-                      <div className="infos">
-                        <span className="info">{formatPrice(gig.price)}€</span>
-                        <span className="info">
-                          {capitalizeFirstLetter(gig.tag)}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="arrow-button">
-                      <span>Modifier</span>
-                      <BackArrow />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            ) : null}
           </>
         ) : (
           <Load />

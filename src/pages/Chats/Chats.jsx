@@ -26,6 +26,7 @@ function Chats() {
   return (
     <>
       <Nav />
+      <h1 className="big-title home-title">Messages</h1>
       <div className="chats-ctn">
         <NavWork />
         {conversations.length === 0 ? <div className="no-result">Aucune discussion en cours 😔</div> : conversations.map((conversation) => (

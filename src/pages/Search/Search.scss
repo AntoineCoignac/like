@@ -15,10 +15,6 @@
     color: white;
 }
 
-.searchbar::placeholder{
-    color: var(--grey);
-}
-
 .searchbar-ctn .delete{
     position: absolute;
     top: 0;
@@ -37,11 +33,11 @@
 }
 
 .gigs{
-    padding: 20px;
+    padding: 20px 0;
 }
 
 .users{
-    padding: 20px;
+    padding: 20px 0;
 }
 
 .gig-result{
@@ -51,7 +47,7 @@
 }
 
 .user-result{
-    padding: 20px 0;
+    padding: 20px;
     width: 100%;
     display: flex;
     align-items: center;
