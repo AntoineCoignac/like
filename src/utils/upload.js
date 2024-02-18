@@ -1,15 +1,44 @@
 import axios from "axios";
 
 const upload = async (file) => {
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "likecdn");
+    let ext = file.name.split('.').pop().toLowerCase();
+
+    console.log(ext)
+
+    // Tableau des extensions de fichiers vidéo
+    const extensionsVideo = ['mp4', 'avi', 'mov', 'webm'];
+
+    // Tableau des extensions de fichiers image
+    const extensionsImage = ['jpg', 'jpeg', 'png', 'webp'];
+
+    // Créer un objet FormData
+    let formData = new FormData();
+    
+    // Vérifier si l'extension correspond à une vidéo
+    if (extensionsVideo.includes(ext)) {
+        console.log("video");
+        formData.append("video", file);
+    }
+
+    // Vérifier si l'extension correspond à une image
+    if (extensionsImage.includes(ext)) {
+        console.log("image");
+        formData.append("image", file);
+    }
+
+    // Boucle sur les entrées de FormData pour vérifier ce qui a été ajouté
+    for (let pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
 
     try {
-        const res = await axios.post(`https://api.cloudinary.com/v1_1/dapo2rsct/auto/upload`, data);
-        let {url} = res.data;
-        url = url.replace("http://", "https://");
-        url = url.replace("/upload/", "/upload/w_1000/q_70/");
+        // Envoyer la requête avec le bon en-tête
+        const res = await axios.post(`https://likestorageapp.azurewebsites.net/${extensionsVideo.includes(ext) ? 'video' : 'image'}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data' // Spécifier le type de contenu approprié
+            }
+        });
+        let url = res.data.url;
         return url;
     } catch (err) {
         console.log(err)

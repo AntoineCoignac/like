@@ -84,7 +84,7 @@ function EditGig() {
       gig.desc.trim() !== "" &&
       Number(gig.price) > 0 &&
       Number(gig.deliveryTime) > 0 &&
-      Number(gig.revisionNumber) > 0
+      Number(gig.revisionNumber) >= 0
     ) {
       try {
         let updatedUrl = gig.cover;
@@ -150,7 +150,7 @@ function EditGig() {
           </div>
           <div className="field">
             <label htmlFor="revisionNumber">Nombre de modifications maximum</label>
-            <input name='revisionNumber' min="1" step={1} max="10" type="number" value={gig.revisionNumber} onChange={handleChange} required/>
+            <input name='revisionNumber' min="0" step={1} max="10" type="number" value={gig.revisionNumber} onChange={handleChange} required/>
           </div>
           </div>
           <div className="field">
@@ -159,27 +159,26 @@ function EditGig() {
               <div className="preview">
                 {file !== null ? (
                   isVideo(file) ? (
-                    <video key={Date.now()} controls>
+                    <video loading='lazy' key={Date.now()} controls>
                       <source src={URL.createObjectURL(file)} />
                     </video>
                   ) : (
-                    <img src={URL.createObjectURL(file)} alt="" />
+                    <img loading='lazy' src={URL.createObjectURL(file)} alt="" />
                   )
                 ) : preview.includes('video/') ? (
-                  <video key={Date.now()} controls>
+                  <video loading='lazy' key={Date.now()} controls>
                     <source src={preview} />
                   </video>
                 ) : (
-                  <img src={preview} alt="" />
+                  <img loading='lazy' src={preview} alt="" />
                 )}
               </div>
             ) : null}
             <input
               name="file"
               type="file"
-              accept='.png, .jpg, .jpeg, video/mp4, video/x-m4v, video/*'
+              accept='.png, .jpg, .jpeg, video/mp4'
               onChange={handleFileChange}
-              required
             />
             {fileSizeExceeded && (
               <p className="error">Le fichier est trop volumineux.</p>

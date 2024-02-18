@@ -5,7 +5,6 @@ import "../Log.scss";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import newRequest from '../../../utils/newRequest';
-import CryptoJS from 'crypto-js';
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -19,6 +18,7 @@ function Login() {
     e.preventDefault();
     try{
       const res = await newRequest.post("/auth/login", {username,password});
+      localStorage.removeItem('currentUser');
       localStorage.setItem("currentUser", JSON.stringify({...res.data}));
       navigate("/")
     }catch(err){
@@ -30,7 +30,7 @@ function Login() {
   return (
     <div className='log'>
       <div className="banner">
-        <img src="/img/design/mobile.webp" alt="" />
+        <img loading='lazy' src="/img/design/mobile.webp" alt="" />
       </div>
       <div className="log-ctn">
         <Link to='/'>
@@ -50,7 +50,10 @@ function Login() {
             </div>
             <button className='btn' type="submit">❤️ Se connecter</button>
             {error && error}
+            <span style={{display:"flex", gap: "10px 20px", flexWrap: "wrap"}}>
+            <Link to="/forget" className='link'>Mot de passe oublié ?</Link>
             <Link to="https://forms.gle/dgb2uRwfmK8Nj5YG9" className='link'>Je m'inscris à la Bêta</Link>
+            </span>
           </form>
       </div>
     </div>

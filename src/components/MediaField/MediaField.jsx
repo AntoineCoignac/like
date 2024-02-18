@@ -11,9 +11,9 @@ function MediaField({defaultType="image"}) {
         </button>
         {
             type == "image" ? (
-                <img src="/img/pp/noavatar.jpg" alt="" />
+                <img loading='lazy' src="/img/pp/noavatar.jpg" alt="" />
             ) : (
-                <video src="/img/post/video/video2.mp4" controls loop></video>
+                <video loading='lazy' src="/img/post/video/video2.mp4" controls loop></video>
             )
         }
         <input type="file" name="" id="" />

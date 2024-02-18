@@ -25,6 +25,8 @@ import Success from './pages/Success/Success';
 import { useNavigate } from 'react-router-dom';
 import newRequest from './utils/newRequest';
 import { useEffect } from 'react';
+import Forget from './pages/Log/Forget/Forget';
+import Code from './pages/Log/Code/Code';
 
 function App() {
   const queryClient = new QueryClient();
@@ -73,6 +75,8 @@ function App() {
         <Route path='/editgig/:gigId' Component={EditGig}/>
         <Route path='/pay/:id' Component={Pay}/>
         <Route path='/success' Component={Success}/>
+        <Route path='/forget' Component={Forget}/>
+        <Route path='/code' Component={Code}/>
       </Routes>
       </QueryClientProvider>
     </Router>

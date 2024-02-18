@@ -29,7 +29,7 @@ function EditCreator() {
     name : currentUser.name ? currentUser.name : null,
     lastname : currentUser.lastname ? currentUser.lastname : null,
     desc : currentUser.desc ? currentUser.desc : null,
-    tag : currentUser.tag ? currentUser.tag : null,
+    tag : currentUser.tag ? currentUser.tag : "monteur vidéo",
     location : currentUser.location ? currentUser.location : null,
     contract : currentUser.contract ? currentUser.contract : null,
     medias : currentUser.medias ? currentUser.medias : null
@@ -237,7 +237,7 @@ function EditCreator() {
               uploading ? <Download /> : null
           }
           <div className="image-field">
-            <img src={preview} alt="" />
+            <img loading='lazy' src={preview} alt="" />
             <input type="file" accept='.png, .jpg, .jpeg' onChange={handleChangePP} />
             {ppSizeExceeded && (
                 <p className='error'>
@@ -248,11 +248,11 @@ function EditCreator() {
           <div className="field-grid">
           <div className="field">
             <label htmlFor="name">Prénom</label>
-            <input maxLength={100} name='name' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.name}/>
+            <input maxLength={100} name='name' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.name} required/>
           </div>
           <div className="field">
             <label htmlFor="lastname">Nom</label>
-            <input maxLength={100} name='lastname' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.lastname ? currentUser.lastname : ""}/>
+            <input maxLength={100} name='lastname' type="text" placeholder='ex : Jean' onChange={handleChange} defaultValue={currentUser.lastname ? currentUser.lastname : ""} required/>
           </div>
           </div>
           <div className="field">
@@ -302,14 +302,14 @@ function EditCreator() {
               <label htmlFor={`media-${index + 1}`}>{`Média ${index + 1}`}</label>
               {mediaPreviews[index] && (
                 mediaPreviews[index].startsWith('blob:') ? (
-                  (media.type && media.type.startsWith('image/') && <img className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} />) ||
-                  (media.type && media.type.startsWith('video/') && <video className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} controls /> )
+                  (media.type && media.type.startsWith('image/') && <img loading='lazy' className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} />) ||
+                  (media.type && media.type.startsWith('video/') && <video loading='lazy' className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} controls /> )
                 ) : (
-                  (mediaPreviews[index].includes('video') && <video className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} controls />) ||
-                  (mediaPreviews[index].includes('image') && <img className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} />)
+                  (mediaPreviews[index].includes('video') && <video loading='lazy' className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} controls />) ||
+                  (mediaPreviews[index].includes('image') && <img loading='lazy' className='preview-media' src={mediaPreviews[index]} alt={`Preview Media ${index + 1}`} />)
                 )
               )}
-              <input type="file" accept=".png, .jpg, .jpeg, .mp4, .avi" onChange={(e) => handleMediaChange(index, e)} />
+              <input type="file" accept=".png, .jpg, .jpeg, .mp4" onChange={(e) => handleMediaChange(index, e)} />
               {mediaSizeExceeded[index] && (
                 <p className='error'>
                   Votre fichier média ne doit pas dépasser {MAX_MEDIA_SIZE / 1000000} MB pour les vidéos et {MAX_FILE_SIZE / 1000000} MB pour les photos.

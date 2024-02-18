@@ -47,7 +47,7 @@ function Register() {
   return (
     <div className='log'>
       <div className="banner">
-        <img src="/img/design/mobile.webp" alt="" />
+        <img loading='lazy' src="/img/design/mobile.webp" alt="" />
       </div>
       <div className="log-ctn">
         <Link to='/'>

@@ -78,6 +78,7 @@ function Dashboard() {
         {userGigs && orders ? (
           <>
             {
+              console.log(currentUser, userGigs, orders)}{
               currentUser.isSeller ? (
                 <div className="board-ctn">
                   <Link className="board-item" to={"/work/orders"}>
@@ -165,9 +166,17 @@ function Dashboard() {
             {currentUser.isSeller ? (
               <div className="section">
                 <span className="section-title big-title">
-                  Mes prestas { userGigs.length < 3 ? <Link to="/newgig" className="add"></Link> : "(3 max)"}
+                  Mes prestas { userGigs.length < 3 ? (currentUser.tag && <Link to="/newgig" className="add"></Link>) : "(3 max)"}
                 </span>
-                {userGigs.map((gig) => (
+                { 
+
+                !currentUser.tag ?
+                  <p className="no-result">
+                    Vous n'avez sélectionné aucun tag dans votre <Link to={"/me"}>portfolio</Link>.
+                  </p>
+                :
+                
+                userGigs.map((gig) => (
                   <Link
                     key={gig._id}
                     to={`/editgig/${gig._id}`}

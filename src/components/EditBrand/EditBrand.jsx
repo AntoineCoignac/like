@@ -103,7 +103,7 @@ function EditBrand() {
                 uploading ? <Download /> : null
             }
           <div className="image-field">
-            <img src={preview} alt="" />
+            <img loading='lazy' src={preview} alt="" />
             <input type="file" accept='.png, .jpg, .jpeg' onChange={handleChangeFile} />
             {fileSizeExceeded && (
                 <p className='error'>
